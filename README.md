@@ -14,8 +14,9 @@ Below is a table of my progress. Row headings hyperlink to AoC puzzles. Column h
 
 ⭐️ Solved ・ 📝 Started ・ ❌ Blocked
 
-|    | [C](/aoc23c/) | [C++](/aoc23cpp/) | [Go](/aoc23go/) | [Java](/aoc23java/) | [JavaScript](/aoc23js/) | [Python](/aoc23py/) | [Rust](/aoc23rust/) | [Swift](/aoc23swift/) |
-|---:|:--------------|:------------------|:----------------|:--------------------|:--------------------|:--------------------|:----------------------|:----------------------|
+| Language | [C](/aoc23c/) | [C++](/aoc23cpp/) | [Go](/aoc23go/) | [Java](/aoc23java/) | [JavaScript](/aoc23js/) | [Python](/aoc23py/) | [Rust](/aoc23rust/) | [Swift](/aoc23swift/) |
+|--:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| Stars (/50) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 |  1 | | | | | | | | |
 |  2 | | | | | | | | |
 |  3 | | | | | | | | |
