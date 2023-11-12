@@ -10,7 +10,7 @@ Solutions across different languages will be written separately, not translitera
 
 ## Progress
 
-Below is a table of my progress. Row headings hypterlink to AoC problems. Column headings hyperlink to my solutions. What I am working on is indicated with the following key:
+Below is a table of my progress. Row headings hyperlink to AoC puzzles. Column headings hyperlink to my solutions. What I am working on is indicated with the following key. Blank cells are unstarted.
 
 ⭐️ Solved ・ 📝 Started ・ ❌ Blocked
 
