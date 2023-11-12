@@ -8,8 +8,6 @@ For 2023, I decided not to aim to finish to try to solve each day. Instead, I ai
 
 Solutions across different languages will be written separately, not transliterated, and attempt to make use of the typical programming paradigms of each language as far as I am able. Each language has a single solution project that covers each day, rather than writing 25 projects per language, so that I can build up a set of reusable functions as I go. All code was written from scratch with no LLMs or spoilers. I am also avoiding third-party code beyond the each language's built-in standard library, even if it means needing to hand-roll basic algorithms and data structures.
 
-https://github.com/leechristie/advent-of-code-2023/edit/main/README.md#progress
-
 ## Progress
 
 Below is a table of my progress. Row headings hypterlink to AoC problems. Column headings hyperlink to my solutions. What I am working on is indicated with the following key:
