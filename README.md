@@ -2,7 +2,7 @@
 
 My solutions to Eric Wastl's [Advent of Code 2023](https://adventofcode.com/2023).
 
-📝 [Logbook](diary/README.md)
+📝 [Logbook](logbook/README.md)
 
 Last year, [my first Advent of Code](https://github.com/leechristie/advent-of-code-2022), I solved each daily puzzle using Python on the same day of its release (except for [Day 19](https://adventofcode.com/2022/day/19)), getting all 50 stars by Christmas day.
 
