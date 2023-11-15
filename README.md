@@ -2,6 +2,8 @@
 
 My solutions to Eric Wastl's [Advent of Code 2023](https://adventofcode.com/2023).
 
+📝 [Logbook](diary/README.md)
+
 Last year, [my first Advent of Code](https://github.com/leechristie/advent-of-code-2022), I solved each daily puzzle using Python on the same day of its release (except for [Day 19](https://adventofcode.com/2022/day/19)), getting all 50 stars by Christmas day.
 
 For 2023, I decided not to aim to finish to try to solve each day. Instead, I aim to complete all puzzles in 8 different programming languages. I have chosen a mixture of languages I am very familiar with and those I am either new to or long out-of-practice.
@@ -12,7 +14,7 @@ Solutions across different languages will be written separately, not translitera
 
 Below is a table of my progress. Row headings (days) hyperlink to AoC puzzles. Column headings (languages) hyperlink to my solutions. What I am working on is indicated with the following key.
 
-⭐️ Solved ・ 📝 Started ・ ❌ Progress Blocked
+⭐️ Solved ・ ⚙️ Started ・ ❌ Progress Blocked
 
 | Language | [C](/aoc23c/) | [C++](/aoc23cpp/) | [Go](/aoc23go/) | [Java](/aoc23java/) | [JavaScript](/aoc23js/) | [Python](/aoc23py/) | [Rust](/aoc23rust/) | [Swift](/aoc23swift/) |
 |--:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
