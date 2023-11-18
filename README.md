@@ -10,7 +10,7 @@ My solutions to Eric Wastl's [Advent of Code 2023](https://adventofcode.com/2023
 
 | Language | [C](/aoc23c/) | [C++](/aoc23cpp/) | [Go](/aoc23go/) | [Java](/aoc23java/) | [JavaScript](/aoc23js/) | [Python](/aoc23py/) | [Rust](/aoc23rust/) | [Swift](/aoc23swift/) |
 |--:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| Stars | 0/50 | 0/50 | 0/50 | 0/50 | 0/50 | 0/50 | 0/50 | 0/50 |
+| Stars | 0<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> |
 |  1 | | | | | | | | |
 |  2 | | | | | | | | |
 |  3 | | | | | | | | |
