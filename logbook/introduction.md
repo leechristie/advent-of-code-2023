@@ -16,14 +16,14 @@ My approach to AoC 2022 in Python sparingly used a couple of third-party librari
 
 ### Languages and Editors
 
-For my own future reference, I have noted down the versions I used. All compilers / interpreters are the native Apple Silicon builds for macOS. For most languages, I am targeting the latest language version, except C and C++ because of the virtual impossibility of finding compiler support. Maybe I'll change my mind later and hunt for a more up-to-date compiler. I may not always use all relevant recent features of these versions, especially with unfamiliar languages.
+For my own future reference, I have noted down the versions I used. All compilers / interpreters are the native Apple Silicon builds for macOS. For most languages, I am targeting the latest language version, but may have some issues with compiler support for C and C++. I may not always use all relevant recent features of these versions, especially with unfamiliar languages.
 
 I use the [JetBrains All Products Pack](https://www.jetbrains.com/all/) for my IDEs of choice for consistent developer UX. Xcode would be better for Swift and AppCode is EOL, but I'm not likely to use the UI builder or simulators and want to simplify the editor choice.
 
 | Language   | Version | Compiler/Interpreter                | IDE                                       |
 |:-----------|:--------|:------------------------------------|:------------------------------------------|
 | C          | C17     | GCC 13.2.0 (Homebrew)†              | CLion 2023.2.2                            |
-| C++        | C++17   | GCC 13.2.0 (Homebrew)†              | CLion 2023.2.2                            |
+| C++        | C++20   | GCC 13.2.0 (Homebrew)†              | CLion 2023.2.2                            |
 | Go         | 1.20    | Go 1.21.4                           | GoLand 2023.2.4                           |
 | Java       | 21      | 21.0.1+12 LTS (Azul Zulu Community) | IntelliJ IDEA 2023.2.5 (Ultimate Edition) |
 | JavaScript | ES2021  | Node.js 21.1.0†                     | WebStorm 2023.2.4                         |
