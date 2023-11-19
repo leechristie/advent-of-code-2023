@@ -22,8 +22,8 @@ I use the [JetBrains All Products Pack](https://www.jetbrains.com/all/) for my I
 
 | Language   | Version | Compiler/Interpreter                | IDE                                       |
 |:-----------|:--------|:------------------------------------|:------------------------------------------|
-| C          | C17     | Apple Clang 15.0.0†                 | CLion 2023.2.2                            |
-| C++        | C++17   | Apple Clang 15.0.0†                 | CLion 2023.2.2                            |
+| C          | C17     | GCC 13.2.0 (Homebrew)†              | CLion 2023.2.2                            |
+| C++        | C++17   | GCC 13.2.0 (Homebrew)†              | CLion 2023.2.2                            |
 | Go         | 1.20    | Go 1.21.4                           | GoLand 2023.2.4                           |
 | Java       | 21      | 21.0.1+12 LTS (Azul Zulu Community) | IntelliJ IDEA 2023.2.5 (Ultimate Edition) |
 | JavaScript | ES2021  | Node.js 21.1.0†                     | WebStorm 2023.2.4                         |
@@ -32,3 +32,15 @@ I use the [JetBrains All Products Pack](https://www.jetbrains.com/all/) for my I
 | Swift      | 5.9     | Apple Clang 15.0.0†                 | AppCode 2023.1.4†                         |
 
 † May not provide full support for all features of the target language version
+
+### Reminders
+
+Homebrew GCC installs as `gcc-13`/`g++-13`.
+
+To set flags on C/C++ compiler in Clion, since this is difficult to find:
+
+**Settings** > **Build, Execution, Deployment** > **CMake** > **CMake Options**
+```
+-DCMAKE_C_FLAGS="-Wall -Wextra -Wpedantic -Werror"
+-DCMAKE_CXX_FLAGS="-Wall -Wextra -Wpedantic -Werror"
+```
