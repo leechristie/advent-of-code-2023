@@ -24,7 +24,7 @@ I use the [JetBrains All Products Pack](https://www.jetbrains.com/all/) for my I
 |:-----------|:--------|:------------------------------------|:------------------------------------------|
 | C          | C17     | GCC 13.2.0 (Homebrew)†              | CLion 2023.2.2                            |
 | C++        | C++20   | GCC 13.2.0 (Homebrew)†              | CLion 2023.2.2                            |
-| Go         | 1.20    | Go 1.21.4                           | GoLand 2023.2.4                           |
+| Go         | 1.20    | Go 1.21.4                           | GoLand 2023.2.5                           |
 | Java       | 21      | 21.0.1+12 LTS (Azul Zulu Community) | IntelliJ IDEA 2023.2.5 (Ultimate Edition) |
 | JavaScript | ES2021  | Node.js 21.1.0†                     | WebStorm 2023.2.4                         |
 | Python     | 3.12    | Python 3.12.0, (Mambaforge 1.5.3)   | PyCharm 2023.2.5 (Professional Edition)   |
