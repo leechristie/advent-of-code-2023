@@ -8,9 +8,9 @@ My solutions to Eric Wastl's [Advent of Code 2023](https://adventofcode.com/2023
 
 ⭐️ Solved ・ ⚙️ Started ・ ❌ Progress Blocked
 
-| Language | [C](/aoc23c/) | [C++](/aoc23cpp/) | [Go](/aoc23go/) | [Java](/aoc23java/) | [Python](/aoc23py/) | [Rust](/aoc23rs/) | [Swift](/aoc23swift/) | [TypeScript](/aoc23ts/) |
+| | [C](/aoc23c/) | [C++](/aoc23cpp/) | [Go](/aoc23go/) | [Java](/aoc23java/) | [Python](/aoc23py/) | [Rust](/aoc23rs/) | [Swift](/aoc23swift/) | [TypeScript](/aoc23ts/) |
 |--:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| Stars | 0<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> |
+| | 0<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> |
 |  1 | | | | | | | | |
 |  2 | | | | | | | | |
 |  3 | | | | | | | | |
