@@ -1,2 +1,5 @@
-#macOS
+# Python
+aoc23py/__pycache__/*
+
+# macOS
 .DS_Store
