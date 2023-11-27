@@ -29,7 +29,7 @@ I use the [JetBrains All Products Pack](https://www.jetbrains.com/all/) for my I
 | Python     | 3.12    | Python 3.12.0, (Mambaforge 1.5.3)   | PyCharm 2023.2.5 (Professional Edition)   |
 | Rust       | 2021    | Rust 1.73.0                         | RustRover 2023.3 EAP                      |
 | Swift      | 5.9     | Apple Clang 15.0.0†                 | AppCode 2023.1.4†                         |
-| TypeScript | 5.3     | Bun.js 1.0.4                        | WebStorm 2023.2.4                         |
+| TypeScript | 5.3     | Bun.js 1.0.4                        | WebStorm 2023.2.5                         |
 
 † May not provide full support for all features of the target language version
 
