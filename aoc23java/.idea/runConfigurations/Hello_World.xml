@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Hello World" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="aoc23java.Main" />
+    <module name="aoc23java" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
