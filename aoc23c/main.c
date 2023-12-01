@@ -2,16 +2,15 @@
 // Dr Lee A. Christie
 // @0x1ac@techhub.social
 
-#include <stdio.h>
 #include <stdlib.h>
+
 #include "day01.h"
+#include "puzzle.h"
 
 int main(int argc, char * argv[]) {
 
-    if (argc < 2) {
-        printf("Valid day not specified in command line argument.\n");
-        return 1;
-    }
+    if (argc < 2)
+        die("Valid day not specified in command line argument.");
 
     const int day = atoi(argv[argc - 1]);
     switch (day) {
@@ -19,8 +18,7 @@ int main(int argc, char * argv[]) {
             solve01();
             break;
         default:
-            printf("Valid day not specified in command line argument.\n");
-            return 1;
+            die("Valid day not specified in command line argument.");
     }
 
     return 0;
