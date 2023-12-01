@@ -2,12 +2,17 @@
 # Dr Lee A. Christie
 # @0x1ac@techhub.social
 
-
-from hello import say_hello
+import sys
+import day01
 
 
 def main() -> None:
-    say_hello()
+    arg = sys.argv[-1]
+    if arg == '1':
+        day01.solve()
+    else:
+        print('Valid day not specified in command line argument.')
+        sys.exit(1)
 
 
 if __name__ == '__main__':
