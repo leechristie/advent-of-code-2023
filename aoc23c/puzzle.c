@@ -10,7 +10,7 @@
 
 #define INPUT_PATH ("../../input/input%02d.txt")
 
-// remove 2 characters because "%02d" reduces form 4 to 2 characters
+// remove 2 characters because "%02d" reduces from 4 to 2 characters
 #define INPUT_PATH_LEN (sizeof INPUT_PATH - 2)
 
 noreturn void die(char * error_message) {
