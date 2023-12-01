@@ -4,5 +4,5 @@ project(aoc23c C)
 set(CMAKE_C_STANDARD 17)
 
 add_executable(aoc23c main.c
-        hello.c
-        hello.h)
+        day01.c
+        day01.h)

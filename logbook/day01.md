@@ -71,3 +71,7 @@ if (includeWords)
     return getWrittenDigit(line, beginIndex);
 return OptionalInt.empty();
 ```
+
+### 3. C
+
+Started by solving Day 1 Part 1 in C. Will return to Part 2 and refactor solution later.
