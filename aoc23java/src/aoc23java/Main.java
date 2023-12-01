@@ -4,14 +4,22 @@
 
 package aoc23java;
 
+import java.io.*;
+
 public final class Main {
 
     private Main() {
         throw new AssertionError();
     }
 
-    public static void main(String[] args) {
-        Hello.sayHello();
+    public static void main(String[] args) throws IOException {
+        String arg = args.length >= 1 ? args[args.length - 1] : "";
+        if (arg.equals("1")) {
+            Day01.solve();
+        } else {
+            System.out.println("Valid day not specified in command line argument.");
+            System.exit(1);
+        }
     }
 
 }

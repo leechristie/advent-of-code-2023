@@ -42,3 +42,32 @@ for line in input_lines(day=1):
     answer1 += first_and_last_digits(find_digits(line))
     answer2 += first_and_last_digits(find_digits(line, include_words=True))
 ```
+
+### 2. Java
+
+I decided to do the second implementation the same day.
+
+The solution is similar to my refactored Python solution. However, in my python `strip_digit` I return a tuple of the digit and the remaining string to be parsed. Now I know we always strip only one character off, I decided to use a `beginIndex` variable that lives in the loop instead of delegating incrementing to the strip function. This also means I don't need to find a way to return a tuple, and it means I don't keep creating substrings.
+
+The main different idea here is the `getWrittenDigit` method:
+
+```Java
+int value = 1;
+for (String s: DIGITS) {
+    if (line.indexOf(s, beginIndex) == beginIndex)
+        return OptionalInt.of(value);
+    value++;
+}
+return OptionalInt.empty();
+```
+
+I call two version of the get digit functions like this, however, I think there may be a less ugly way to combine the two resulting `OptionalInt` that I couldn't think of:
+
+```Java
+OptionalInt simple = getSimpleDigit(line, beginIndex);
+if (simple.isPresent())
+    return simple;
+if (includeWords)
+    return getWrittenDigit(line, beginIndex);
+return OptionalInt.empty();
+```
