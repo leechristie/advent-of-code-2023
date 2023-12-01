@@ -21,7 +21,7 @@ noreturn void die(char * error_message) {
 FILE * open_input_file(int day) {
     if (day < 1 || day > 25)
         die("Invalid day.");
-    char filename[INPUT_PATH_LEN] = {'\0'};
+    char filename[INPUT_PATH_LEN];
     sprintf(filename, INPUT_PATH, day);
     FILE * file = fopen(filename, "r");
     if (file == NULL)
