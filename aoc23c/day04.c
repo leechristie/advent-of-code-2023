@@ -12,15 +12,15 @@
 #define BOUND (100)
 
 static bool read_ticket(FILE *, int *, int *, int *);
-static void set_lookup(const int *, int *);
-static int calc_score(const int *, const int *);
-static void unset_lookup(const int *, int *);
+static void set_lookup(const int *, bool *);
+static int calc_score(const bool *, const int *);
+static void unset_lookup(const int *, bool *);
 
 void solve04(void) {
 
     FILE * file = open_input_file(4);
 
-    int lookup[BOUND] = {0};
+    bool lookup[BOUND] = {false};
     int answer1 = 0;
 
     int i = 1;
@@ -68,12 +68,12 @@ static bool read_ticket(FILE * file,
 
 }
 
-static void set_lookup(const int * picked, int * lookup) {
+static void set_lookup(const int * picked, bool * lookup) {
     for (size_t i = 0; i < COUNT_PICKED; i++)
-        lookup[picked[i]] = 1;
+        lookup[picked[i]] = true;
 }
 
-static int calc_score(const int * lookup, const int * winning) {
+static int calc_score(const bool * lookup, const int * winning) {
     int rv = 0;
     for (size_t i = 0; i < COUNT_WINNING; i++)
         if (lookup[winning[i]])
@@ -81,7 +81,7 @@ static int calc_score(const int * lookup, const int * winning) {
     return rv;
 }
 
-static void unset_lookup(const int * picked, int * lookup) {
+static void unset_lookup(const int * picked, bool * lookup) {
     for (size_t i = 0; i < COUNT_PICKED; i++)
-        lookup[picked[i]] = 0;
+        lookup[picked[i]] = false;
 }
