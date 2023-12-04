@@ -6,7 +6,7 @@ My solutions to Eric Wastl's [Advent of Code 2023](https://adventofcode.com/2023
 
 ## Status
 
-Day 1 is solved in Python and Java. Day 1 Part 1 solved in C. Will return to finish Day 1 Part 2 in C later then refactor.
+Just returned from vacation where I missed Day 2 and 3 due to being AFK. Solved Day 4 Part 1 in C.
 
 ## Progress
 
@@ -18,7 +18,7 @@ Day 1 is solved in Python and Java. Day 1 Part 1 solved in C. Will return to fin
 |  1 | ⭐️ | | | ⭐️⭐️ | ⭐️⭐️ | | | |
 |  2 | | | | | | | | |
 |  3 | | | | | | | | |
-|  4 | | | | | | | | |
+|  4 | ⭐️ | | | | | | | |
 |  5 | | | | | | | | |
 |  6 | | | | | | | | |
 |  7 | | | | | | | | |
