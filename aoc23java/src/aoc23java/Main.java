@@ -14,11 +14,16 @@ public final class Main {
 
     public static void main(String[] args) throws IOException {
         String arg = args.length >= 1 ? args[args.length - 1] : "";
-        if (arg.equals("1")) {
-            Day01.solve();
-        } else {
-            System.out.println("Valid day not specified in command line argument.");
-            System.exit(1);
+        switch (arg) {
+            case "1":
+                Day01.solve();
+                break;
+            case "2":
+                Day02.solve();
+                break;
+            default:
+                System.out.println("Valid day not specified in command line argument.");
+                System.exit(1);
         }
     }
 

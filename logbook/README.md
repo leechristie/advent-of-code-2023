@@ -2,7 +2,7 @@
 
 - [Introduction](introduction.md)
 - [Day 1 - Trebuchet?!](day01.md)
-- Day 2
+- [Day 2 - Cube Conundrum](day02.md)
 - Day 3
 - [Day 4 - Scratchcards](day04.md)
 - Day 5
