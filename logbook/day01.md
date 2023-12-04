@@ -61,6 +61,8 @@ for (String s: DIGITS) {
 return OptionalInt.empty();
 ```
 
+Although I'm not creating substrings, this is a still little inefficient as I'm searching all the way to the end of the string for each number.
+
 I call two version of the get digit functions like this, however, I think there may be a less ugly way to combine the two resulting `OptionalInt` that I couldn't think of:
 
 ```Java
@@ -72,6 +74,10 @@ if (includeWords)
 return OptionalInt.empty();
 ```
 
-### 3. C
+### 3. C (Part 1)
 
-Started by solving Day 1 Part 1 in C. Will return to Part 2 and refactor solution later.
+At this point I have encountered some minor spoilers on Mastodon for Day 1 Part 2 regarding a method some people are using where they reverse each number string e.g. `"four"` -> `"ruof"` to search for the last digit more quickly, however, it's not a method I was planning to consider as I don't think it's a good idea for such short strings, so I won't be using it in any of my solutions. Although I guess it does look good in functional style.
+
+In this C solution, I loop over the digits in the string, updating two variables `firstDigit` and `lastDigit` and convert them with `10 * (firstDigit - '0') + (lastDigit - '0')`.
+
+I haven't written part 2 yet but I have an idea for how to do this efficiently.

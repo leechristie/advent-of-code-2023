@@ -4,7 +4,7 @@
 
 I skipped Day 2 and 3 for now due to vacation being away from the computer. On returning, I decided to try solving Day 4 Part 1 in C first.
 
-### 1. C
+### 1. C (Part 1)
 
 Whenever I solve these in C, I always have to write using a lot of small functions to abstract the code somewhat.
 

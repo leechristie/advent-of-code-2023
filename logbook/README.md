@@ -1,10 +1,10 @@
 # Logbook
 
 - [Introduction](introduction.md)
-- [Day 1](day01.md)
+- [Day 1 - Trebuchet?!](day01.md)
 - Day 2
 - Day 3
-- Day 4
+- [Day 4 - Scratchcards](day04.md)
 - Day 5
 - Day 6
 - Day 7
