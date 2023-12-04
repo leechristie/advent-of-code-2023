@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "day01.h"
+#include "day04.h"
 #include "puzzle.h"
 
 int main(int argc, char * argv[]) {
@@ -16,6 +17,9 @@ int main(int argc, char * argv[]) {
     switch (day) {
         case 1:
             solve01();
+            break;
+        case 4:
+            solve04();
             break;
         default:
             die("Valid day not specified in command line argument.");

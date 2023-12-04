@@ -14,7 +14,7 @@
 #define INPUT_PATH_LEN (sizeof INPUT_PATH - 2)
 
 noreturn void die(char * error_message) {
-    printf("%s\n", error_message);
+    fprintf(stderr, "%s\n", error_message);
     exit(1);
 }
 
@@ -27,4 +27,31 @@ FILE * open_input_file(int day) {
     if (file == NULL)
         die("Unable to open input file.");
     return file;
+}
+
+bool ignore(FILE * file, const char * text) {
+    size_t index = 0;
+    while (text[index]) {
+        int c = fgetc(file);
+        if (c == EOF) {
+            return false;
+        }
+        if (c == ' ' || c == '\n') {
+            continue;
+        }
+        if (c == text[index]) {
+            index++;
+            continue;
+        }
+        die("ignore failed");
+    }
+    return true;
+}
+
+int read_int(FILE * file) {
+    int rv;
+    int success = fscanf(file, "%d", &rv);
+    if (success != 1)
+        die("read_int failed");
+    return rv;
 }

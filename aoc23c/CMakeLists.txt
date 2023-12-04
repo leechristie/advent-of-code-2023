@@ -7,4 +7,6 @@ add_executable(aoc23c main.c
         day01.c
         day01.h
         puzzle.c
-        puzzle.h)
+        puzzle.h
+        day04.c
+        day04.h)
