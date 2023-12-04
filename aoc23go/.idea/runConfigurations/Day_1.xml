@@ -1,7 +1,8 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Hello World" type="GoApplicationRunConfiguration" factoryName="Go Application">
+  <configuration default="false" name="Day 1" type="GoApplicationRunConfiguration" factoryName="Go Application">
     <module name="aoc23go" />
     <working_directory value="$PROJECT_DIR$" />
+    <parameters value="1" />
     <kind value="PACKAGE" />
     <package value="aoc23go" />
     <directory value="$PROJECT_DIR$" />

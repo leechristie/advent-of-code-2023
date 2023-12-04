@@ -4,8 +4,24 @@
 
 package main
 
+import (
+	"fmt"
+	"os"
+)
+
 func main() {
 
-	SayHello()
+	var args = os.Args[1:]
+	var arg string
+	if len(args) == 1 {
+		arg = args[0]
+	}
+
+	switch arg {
+	case "1":
+		Solve01()
+	default:
+		fmt.Println("Valid day not specified in command line argument.")
+	}
 
 }
