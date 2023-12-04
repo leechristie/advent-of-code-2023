@@ -55,3 +55,13 @@ int read_int(FILE * file) {
         die("read_int failed");
     return rv;
 }
+
+int read_int_checked(FILE * file, const int lower, const int bound) {
+    int rv;
+    int success = fscanf(file, "%d", &rv);
+    if (success != 1)
+        die("read_int_checked failed");
+    if (rv < lower || rv >= bound)
+        die("read_int_checked bound check failed");
+    return rv;
+}

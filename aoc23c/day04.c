@@ -57,12 +57,12 @@ static bool read_ticket(FILE * file,
 
     // read the list of picked numbers
     for (size_t i = 0; i < COUNT_PICKED; i++)
-        picked[i] = read_int(file);
+        picked[i] = read_int_checked(file, 0, BOUND);
     assert(ignore(file, "|"));
 
     // read the list of winning numbers
     for (size_t i = 0; i < COUNT_WINNING; i++)
-        winning[i] = read_int(file);
+        winning[i] = read_int_checked(file, 0, BOUND);
 
     return true;
 

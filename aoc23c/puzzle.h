@@ -13,5 +13,6 @@ noreturn void die(char * error_message);
 FILE * open_input_file(int day);
 bool ignore(FILE *, const char *);
 int read_int(FILE *);
+int read_int_checked(FILE *, int lower, int bound);
 
 #endif //AOC23C_PUZZLE_H
