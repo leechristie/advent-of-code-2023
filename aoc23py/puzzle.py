@@ -2,6 +2,7 @@
 # Dr Lee A. Christie
 # @0x1ac@techhub.social
 
+from collections import deque
 from typing import Iterator
 
 INPUT_PATH = '../input/'
@@ -15,10 +16,10 @@ def input_lines(*, day: int, example: bool = False) -> Iterator[str]:
             yield line
 
 
-def sliding_window(gen: Iterator[str], window_size: int) -> Iterator[str]:
-    lines: tuple[str] = tuple()
+def sliding_window(gen: Iterator[str], window_size: int) -> Iterator[list[str]]:
+    lines: deque[str] = deque()
     for line in gen:
-        lines += (line, )
+        lines.append(line)
         if len(lines) == window_size:
-            yield lines
-            lines = lines[1:]
+            yield list(lines)
+            lines.popleft()

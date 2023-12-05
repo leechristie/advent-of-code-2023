@@ -46,27 +46,14 @@ def solve() -> None:
     answer2 = 0
 
     current_row = 1
-    below_contains_a_symbol = False
     found: set[tuple[int, int, int]] = set()
     for above, current, below in sliding_window(input_lines(day=3), 3):
-        for e in current:
-            if not (e in SYMBOLS or e in DIGITS or e == '.'):
-                raise AssertionError(f"found invalid symbol '{e}'")
-        if current_row == 1 and contains_any(above, SYMBOLS):
-            raise AssertionError('first row contains symbol')
-        below_contains_a_symbol = contains_any(below, SYMBOLS)
-        symbol_locations = indices_of(current, SYMBOLS)
-        if 0 in symbol_locations:
-            raise AssertionError('first column contains symbol')
-        if len(current) - 1 in symbol_locations:
-            raise AssertionError('last column contains symbol')
-        col_and_value: Optional[tuple[int, int]]
-        for symbol_location in symbol_locations:
+        for symbol_location in indices_of(current, SYMBOLS):
             current_symbol = current[symbol_location]
             numbers_for_current_symbol = []
             for c in [symbol_location - 1, symbol_location, symbol_location + 1]:
 
-                col_and_value = grab_number_at(above, c)
+                col_and_value: Optional[tuple[int, int]] = grab_number_at(above, c)
                 if col_and_value:
                     column, value = col_and_value
                     new_find = column, current_row - 1, value
@@ -101,10 +88,9 @@ def solve() -> None:
 
         current_row += 1
 
-    if below_contains_a_symbol:
-        raise AssertionError('last row contains symbol')
-
     print('Advent of Code 2023')
     print('Day 1')
     print(f'Part 1: {answer1}')
+    assert answer1 == 550064
     print(f'Part 2: {answer2}')
+    assert answer2 == 85010461
