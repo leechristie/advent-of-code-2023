@@ -4,6 +4,7 @@
 
 __all__ = ['solve']
 
+from collections import deque
 from typing import Optional
 
 from puzzle import input_lines, sliding_window
@@ -13,14 +14,14 @@ SYMBOLS = ['*', '#', '$', '+', '/', '=', '%', '@', '&', '-']
 DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 
-def contains_any(haystack, needles):
+def contains_any(haystack: str, needles: list[str]) -> bool:
     for h in haystack:
         if h in needles:
             return True
     return False
 
 
-def indices_of(haystack, needles):
+def indices_of(haystack: str, needles: list[str]) -> list[int]:
     rv: list[int] = []
     for i, h in enumerate(haystack):
         if h in needles:
@@ -29,73 +30,81 @@ def indices_of(haystack, needles):
 
 
 def grab_number_at(line: str, index: int) -> Optional[tuple[int, int]]:
+
+    # ignore if not a digit
     if line[index] not in DIGITS:
         return None
-    lower = index
+
+    # find the last digit
     bound = index + 1
     while bound < len(line) and line[bound] in DIGITS:
         bound += 1
+
+    # find the first digit
+    lower = index
     while lower >= 1 and line[lower - 1] in DIGITS:
         lower -= 1
+
+    # return the location and value of the number
     return lower, int(line[lower:bound])
+
+
+def look_for_number(line: str,
+                    column: int,
+                    found: set[int],
+                    part_numbers: Optional[list[int]],
+                    answers: list[int]):
+
+    # if the location is a part of a number
+    col_and_value: Optional[tuple[int, int]] = grab_number_at(line, column)
+    if col_and_value:
+        column, value = col_and_value
+
+        # if the number has not yet been seen
+        if column not in found:
+            found.add(column)
+
+            # Part 1: the sum of all the numbers adjacent to symbols
+            answers[0] += value
+
+            # Part 2: the sum of products of two numbers around '*'
+            if part_numbers is not None:
+                part_numbers.append(value)
+                if len(part_numbers) == 2:
+                    answers[1] += part_numbers[0] * part_numbers[1]
 
 
 def solve() -> None:
 
-    answer1 = 0
-    answer2 = 0
+    answers = [0, 0]
 
-    found_above: set[tuple[int, int]] = set()
-    found_current: set[tuple[int, int]] = set()
-    found_below: set[tuple[int, int]] = set()
-    for current_row, window in enumerate(sliding_window(input_lines(day=3),
-                                                        3),
-                                         start=1):
-        above, current, below = window
+    found_sets: deque[set[int]] = deque([set(), set(), set()])
+    for window in sliding_window(input_lines(day=3), 3):
+
+        # the current line is the middle of the sliding window
+        current = window[1]
         for symbol_location in indices_of(current, SYMBOLS):
-            current_symbol = current[symbol_location]
-            numbers_for_current_symbol = []
-            for c in [symbol_location - 1, symbol_location, symbol_location + 1]:
 
-                col_and_value: Optional[tuple[int, int]] = grab_number_at(above, c)
-                if col_and_value:
-                    column, value = col_and_value
-                    new_find = column, value
-                    if new_find not in found_above:
-                        found_above.add(new_find)
-                        answer1 += value
-                        if current_symbol == '*':
-                            numbers_for_current_symbol.append(value)
+            # part_numbers is only used if the symbol is '*' indicating a gear
+            part_numbers: Optional[list[int]] = [] \
+                if current[symbol_location] == '*' else None
 
-                col_and_value = grab_number_at(current, c)
-                if col_and_value:
-                    column, value = col_and_value
-                    new_find = column, value
-                    if new_find not in found_current:
-                        found_current.add(new_find)
-                        answer1 += value
-                        if current_symbol == '*':
-                            numbers_for_current_symbol.append(value)
+            # look in the 9 positions around the symbol
+            for column in [symbol_location - 1, symbol_location, symbol_location + 1]:
+                for line, found in zip(window, found_sets):
 
-                col_and_value = grab_number_at(below, c)
-                if col_and_value:
-                    column, value = col_and_value
-                    new_find = column, value
-                    if new_find not in found_below:
-                        found_below.add(new_find)
-                        answer1 += value
-                        if current_symbol == '*':
-                            numbers_for_current_symbol.append(value)
+                    # check for numbers in those positions
+                    look_for_number(line, column,                 # in arguments
+                                    found, part_numbers, answers  # out arguments
+                                    )
 
-            if len(numbers_for_current_symbol) == 2:
-                answer2 += numbers_for_current_symbol[0] * numbers_for_current_symbol[1]
+        # no longer need to track the found set of the above line
+        found_sets.popleft()
 
-        found_above, found_current = found_current, found_below
-        found_below = set()
+        # need new set to track the next line below
+        found_sets.append(set())
 
     print('Advent of Code 2023')
     print('Day 1')
-    print(f'Part 1: {answer1}')
-    assert answer1 == 550064
-    print(f'Part 2: {answer2}')
-    assert answer2 == 85010461
+    print(f'Part 1: {answers[0]}')
+    print(f'Part 2: {answers[1]}')
