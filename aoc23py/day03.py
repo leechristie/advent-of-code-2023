@@ -45,9 +45,13 @@ def solve() -> None:
     answer1 = 0
     answer2 = 0
 
-    current_row = 1
-    found: set[tuple[int, int, int]] = set()
-    for above, current, below in sliding_window(input_lines(day=3), 3):
+    found_above: set[tuple[int, int]] = set()
+    found_current: set[tuple[int, int]] = set()
+    found_below: set[tuple[int, int]] = set()
+    for current_row, window in enumerate(sliding_window(input_lines(day=3),
+                                                        3),
+                                         start=1):
+        above, current, below = window
         for symbol_location in indices_of(current, SYMBOLS):
             current_symbol = current[symbol_location]
             numbers_for_current_symbol = []
@@ -56,9 +60,9 @@ def solve() -> None:
                 col_and_value: Optional[tuple[int, int]] = grab_number_at(above, c)
                 if col_and_value:
                     column, value = col_and_value
-                    new_find = column, current_row - 1, value
-                    if new_find not in found:
-                        found.add(new_find)
+                    new_find = column, value
+                    if new_find not in found_above:
+                        found_above.add(new_find)
                         answer1 += value
                         if current_symbol == '*':
                             numbers_for_current_symbol.append(value)
@@ -66,9 +70,9 @@ def solve() -> None:
                 col_and_value = grab_number_at(current, c)
                 if col_and_value:
                     column, value = col_and_value
-                    new_find = column, current_row, value
-                    if new_find not in found:
-                        found.add(new_find)
+                    new_find = column, value
+                    if new_find not in found_current:
+                        found_current.add(new_find)
                         answer1 += value
                         if current_symbol == '*':
                             numbers_for_current_symbol.append(value)
@@ -76,9 +80,9 @@ def solve() -> None:
                 col_and_value = grab_number_at(below, c)
                 if col_and_value:
                     column, value = col_and_value
-                    new_find = column, current_row + 1, value
-                    if new_find not in found:
-                        found.add(new_find)
+                    new_find = column, value
+                    if new_find not in found_below:
+                        found_below.add(new_find)
                         answer1 += value
                         if current_symbol == '*':
                             numbers_for_current_symbol.append(value)
@@ -86,7 +90,8 @@ def solve() -> None:
             if len(numbers_for_current_symbol) == 2:
                 answer2 += numbers_for_current_symbol[0] * numbers_for_current_symbol[1]
 
-        current_row += 1
+        found_above, found_current = found_current, found_below
+        found_below = set()
 
     print('Advent of Code 2023')
     print('Day 1')
