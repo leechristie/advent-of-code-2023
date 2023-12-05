@@ -6,7 +6,7 @@ My solutions to Eric Wastl's [Advent of Code 2023](https://adventofcode.com/2023
 
 ## Status
 
-Just returned from vacation where I missed Day 2 and 3 due to being AFK. Solved Day 4 Part 1 in C. Solved Day 2 in Java. Needs some refactoring. Also solved Day 3 in Python, intend to refactor this next.
+Just finished Day 3 in Python.
 
 ## Progress
 
