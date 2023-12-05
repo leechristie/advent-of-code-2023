@@ -21,6 +21,9 @@ public final class Main {
             case "2":
                 Day02.solve();
                 break;
+            case "5":
+                Day05.solve();
+                break;
             default:
                 System.out.println("Valid day not specified in command line argument.");
                 System.exit(1);

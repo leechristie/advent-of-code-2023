@@ -15,8 +15,13 @@ public final class Puzzle {
     }
 
     public static BufferedReader inputLines(int day) throws FileNotFoundException {
+        return inputLines(day, false);
+    }
+
+    public static BufferedReader inputLines(int day, boolean example) throws FileNotFoundException {
         String dayString = (day < 10 ? "0" : "") + day;
-        File file = new File(INPUT_PATH + "input" + dayString + ".txt");
+        String prefix = example ? "example" : "input";
+        File file = new File(INPUT_PATH + prefix + dayString + ".txt");
         return new BufferedReader(new FileReader(file));
     }
 
