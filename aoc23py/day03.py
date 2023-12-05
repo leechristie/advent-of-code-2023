@@ -62,33 +62,47 @@ def solve() -> None:
             raise AssertionError('last column contains symbol')
         col_and_value: Optional[tuple[int, int]]
         for symbol_location in symbol_locations:
+            current_symbol = current[symbol_location]
+            numbers_for_current_symbol = []
             for c in [symbol_location - 1, symbol_location, symbol_location + 1]:
 
                 col_and_value = grab_number_at(above, c)
                 if col_and_value:
                     column, value = col_and_value
                     new_find = column, current_row - 1, value
-                    found.add(new_find)
+                    if new_find not in found:
+                        found.add(new_find)
+                        answer1 += value
+                        if current_symbol == '*':
+                            numbers_for_current_symbol.append(value)
 
                 col_and_value = grab_number_at(current, c)
                 if col_and_value:
                     column, value = col_and_value
                     new_find = column, current_row, value
-                    found.add(new_find)
+                    if new_find not in found:
+                        found.add(new_find)
+                        answer1 += value
+                        if current_symbol == '*':
+                            numbers_for_current_symbol.append(value)
 
                 col_and_value = grab_number_at(below, c)
                 if col_and_value:
                     column, value = col_and_value
                     new_find = column, current_row + 1, value
-                    found.add(new_find)
+                    if new_find not in found:
+                        found.add(new_find)
+                        answer1 += value
+                        if current_symbol == '*':
+                            numbers_for_current_symbol.append(value)
+
+            if len(numbers_for_current_symbol) == 2:
+                answer2 += numbers_for_current_symbol[0] * numbers_for_current_symbol[1]
 
         current_row += 1
 
     if below_contains_a_symbol:
         raise AssertionError('last row contains symbol')
-
-    for column, row, value in found:
-        answer1 += value
 
     print('Advent of Code 2023')
     print('Day 1')
