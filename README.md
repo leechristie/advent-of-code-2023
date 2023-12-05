@@ -6,7 +6,7 @@ My solutions to Eric Wastl's [Advent of Code 2023](https://adventofcode.com/2023
 
 ## Status
 
-Just finished Day 3 in Python.
+Just completed Day 5 Part 1 in Java. Part 2 looks like it may be a little tricky.
 
 ## Progress
 
@@ -14,12 +14,12 @@ Just finished Day 3 in Python.
 
 | | [C](/aoc23c/) | [C++](/aoc23cpp/) | [Go](/aoc23go/) | [Java](/aoc23java/) | [Python](/aoc23py/) | [Rust](/aoc23rs/) | [Swift](/aoc23swift/) | [TypeScript](/aoc23ts/) |
 |--:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| | 2<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 4<sub>/50</sub> | 4<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> |
+| | 2<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 5<sub>/50</sub> | 4<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> |
 |  1 | ⭐️ | | | ⭐️⭐️ | ⭐️⭐️ | | | |
 |  2 | | | | ⭐️⭐️ | | | | |
 |  3 | | | | | ⭐️⭐️ | | | |
 |  4 | ⭐️ | | | | | | | |
-|  5 | | | | | | | | |
+|  5 | | | | ⭐️ | | | | |
 |  6 | | | | | | | | |
 |  7 | | | | | | | | |
 |  8 | | | | | | | | |
