@@ -4,13 +4,7 @@ My solutions to Eric Wastl's [Advent of Code 2023](https://adventofcode.com/2023
 
 📝 [Logbook](logbook/README.md)
 
-## Status
-
-Just got around to finishing Day 1 Part 2 in C.
-
 ## Progress
-
-⭐️ Solved ・ ⚙️ Started ・ ❌ Progress Blocked
 
 | | [C](/aoc23c/) | C++ | Go | [Java](/aoc23java/) | [Python](/aoc23py/) | Rust | Swift | TypeScript |
 |--:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
