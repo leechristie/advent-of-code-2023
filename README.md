@@ -15,11 +15,11 @@ Just got around to finishing Day 1 Part 2 in C.
 | | [C](/aoc23c/) | [C++](/aoc23cpp/) | [Go](/aoc23go/) | [Java](/aoc23java/) | [Python](/aoc23py/) | [Rust](/aoc23rs/) | [Swift](/aoc23swift/) | [TypeScript](/aoc23ts/) |
 |--:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | | 3<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 5<sub>/50</sub> | 4<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> |
-|  1 | ⭐️⭐️ | | | ⭐️⭐️ | ⭐️⭐️ | | | |
-|  2 | | | | ⭐️⭐️ | | | | |
-|  3 | | | | | ⭐️⭐️ | | | |
-|  4 | ⭐️ | | | | | | | |
-|  5 | | | | ⭐️ | | | | |
+|  [1](logbook/day01.md) | ⭐️⭐️ | | | ⭐️⭐️ | ⭐️⭐️ | | | |
+|  [2](logbook/day02.md) | | | | ⭐️⭐️ | | | | |
+|  [3](logbook/day03.md) | | | | | ⭐️⭐️ | | | |
+|  [4](logbook/day04.md) | ⭐️ | | | | | | | |
+|  [5](logbook/day05.md) | | | | ⭐️ | | | | |
 |  6 | | | | | | | | |
 |  7 | | | | | | | | |
 |  8 | | | | | | | | |
