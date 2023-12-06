@@ -12,7 +12,7 @@ Just got around to finishing Day 1 Part 2 in C.
 
 ⭐️ Solved ・ ⚙️ Started ・ ❌ Progress Blocked
 
-| | [C](/aoc23c/) | [C++](/aoc23cpp/) | [Go](/aoc23go/) | [Java](/aoc23java/) | [Python](/aoc23py/) | [Rust](/aoc23rs/) | [Swift](/aoc23swift/) | [TypeScript](/aoc23ts/) |
+| | [C](/aoc23c/) | C++ | Go | [Java](/aoc23java/) | [Python](/aoc23py/) | Rust | Swift | TypeScript |
 |--:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | | 3<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 5<sub>/50</sub> | 4<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> |
 |  [1](logbook/day01.md) | ⭐️⭐️ | | | ⭐️⭐️ | ⭐️⭐️ | | | |
