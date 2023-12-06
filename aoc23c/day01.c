@@ -9,17 +9,16 @@
 #include "puzzle.h"
 #include "day01.h"
 
-struct tagDigits {
-    char firstStandard;
-    char lastStandard;
+struct Digits {
     char first;
     char last;
 };
-typedef struct tagDigits Digits;
+typedef struct Digits Digits;
 
-static int parse_two_digits(int, int);
-static void update_digits(int, Digits *, size_t *);
-static void complete_current_line(Digits *, unsigned int *, unsigned int *, size_t *);
+static void reset_digit_positions(size_t *);
+static int parse_digits(Digits *);
+static void update_digits(int, Digits *, Digits *, size_t *);
+static void complete_current_line(Digits *, Digits *, unsigned int *, unsigned int *, size_t *);
 
 #define MAX_DIGIT_LENGTH (5)
 #define NUM_DIGITS (10)
@@ -45,23 +44,20 @@ void solve01(void) {
     unsigned int answer1 = 0;
     unsigned int answer2 = 0;
 
-    Digits digit;
-    digit.firstStandard = '\0';
-    digit.lastStandard = '\0';
-    digit.first = '\0';
-    digit.last = '\0';
+    Digits standardDigits = {'\0', '\0'};
+    Digits digits = {'\0', '\0'};
 
     int c;
     do {
         c = fgetc(file);
         if (c == '\n')
-            complete_current_line(&digit, &answer1, &answer2, digitPositions);
+            complete_current_line(&standardDigits, &digits, &answer1, &answer2, digitPositions);
         else if (c != EOF)
-            update_digits(c, &digit, digitPositions);
+            update_digits(c, &standardDigits, &digits, digitPositions);
     } while ((char) c != EOF);
 
-    assert(!digit.firstStandard && !digit.lastStandard);
-    assert(!digit.first && !digit.last);
+    assert(!standardDigits.first && !standardDigits.last);
+    assert(!digits.first && !digits.last);
 
     fclose(file);
 
@@ -70,69 +66,90 @@ void solve01(void) {
     printf("Part 1: %d\n", answer1);
     printf("Part 2: %d\n", answer2);
 
+    assert(answer1 == 54708);
+    assert(answer2 == 54087);
+
 }
 
-static int parse_two_digits(int firstDigit,
-                            int lastDigit) {
-    return 10 * (firstDigit - '0') + (lastDigit - '0');
+static int parse_digits(Digits * digits) {
+    assert(digits->first && digits->last);
+    return 10 * (digits->first - '0') + (digits->last - '0');
+}
+
+static void reset_digit_positions(size_t * digitPositions) {
+    for (size_t d = 0; d < NUM_DIGITS; d++)
+        digitPositions[d] = 0;
 }
 
 static void update_digits(int c,
+                          Digits * standardDigits,
                           Digits * digits,
                           size_t * digitPositions) {
+
     if (isdigit(c)) {
-        digits->lastStandard = (char) c;
+
+        standardDigits->last = (char) c;
         digits->last = (char) c;
-        if (!digits->firstStandard)
-            digits->firstStandard = (char) c;
+        if (!standardDigits->first)
+            standardDigits->first = (char) c;
         if (!digits->first)
             digits->first = (char) c;
-        for (size_t d = 0; d < NUM_DIGITS; d++) {
-            if (digitPositions[d])
-                digitPositions[d] = 0;
-        }
+
+        reset_digit_positions(digitPositions);
+
     } else {
+
         for (size_t d = 0; d < NUM_DIGITS; d++) {
+
+            // advanced one character in an English digit
             if (c == DIGITS_ENGLISH[d][digitPositions[d]])
                 digitPositions[d]++;
+
+            // reset to start of an English digit
             else {
-                if (digitPositions[d])
-                    digitPositions[d] = 0;
+
+                digitPositions[d] = 0;
+
+                // remember to recheck the first if reset the digit e.g. "ttwo"
                 if (c == DIGITS_ENGLISH[d][digitPositions[d]])
                     digitPositions[d]++;
+
             }
+
+            // found an English digit
             if (DIGITS_ENGLISH[d][digitPositions[d]] == '\0') {
                 digits->last = '0' + (char) d;
                 if (!digits->first)
                     digits->first = '0' + (char) d;
                 digitPositions[d] = 0;
             }
+
             assert(digitPositions[d] < MAX_DIGIT_LENGTH + 1);
+
         }
+
     }
+
 }
 
-static void complete_current_line(Digits * digits,
+static void complete_current_line(Digits * standardDigits,
+                                  Digits * digits,
                                   unsigned int * answer1,
                                   unsigned int * answer2,
                                   size_t * digitPositions) {
-    if (digits->firstStandard) {
-        assert(digits->lastStandard);
-        int num = parse_two_digits(digits->firstStandard,
-                                   digits->lastStandard);
-        *answer1 += num;
-        digits->firstStandard = '\0';
-        digits->lastStandard = '\0';
+
+    if (standardDigits->first) {
+        *answer1 += parse_digits(standardDigits);
+        standardDigits->first = '\0';
+        standardDigits->last = '\0';
     }
+
     if (digits->first) {
-        assert(digits->last);
-        int num = parse_two_digits(digits->first,
-                                   digits->last);
-        *answer2 += num;
+        *answer2 += parse_digits(digits);
         digits->first = '\0';
         digits->last = '\0';
     }
-    for (size_t d = 0; d < NUM_DIGITS; d++)
-        if (digitPositions[d])
-            digitPositions[d] = 0;
+
+    reset_digit_positions(digitPositions);
+
 }
