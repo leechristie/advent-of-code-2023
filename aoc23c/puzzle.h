@@ -11,6 +11,7 @@
 
 noreturn void die(char * error_message);
 FILE * open_input_file(int day);
+FILE * open_example_file(int day);
 bool ignore(FILE *, const char *);
 int read_int(FILE *);
 int read_int_checked(FILE *, int lower, int bound);
