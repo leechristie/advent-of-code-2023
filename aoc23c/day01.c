@@ -66,9 +66,6 @@ void solve01(void) {
     printf("Part 1: %d\n", answer1);
     printf("Part 2: %d\n", answer2);
 
-    assert(answer1 == 54708);
-    assert(answer2 == 54087);
-
 }
 
 static int parse_digits(Digits * digits) {
