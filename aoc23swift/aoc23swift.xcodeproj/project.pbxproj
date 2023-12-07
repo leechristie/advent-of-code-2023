@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2DBB83F27CFD4D0276B8C796 /* hello.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB81221EA4BF1EA14C80C0 /* hello.swift */; };
+		2DBB83F27CFD4D0276B8C796 /* day04.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB81221EA4BF1EA14C80C0 /* day04.swift */; };
 		2DBB85103ACA6157E35659D2 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB88802CCA11F0BEA57780 /* main.swift */; };
+		2DBB89FB6AE194EF74C61303 /* puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB8B5CEA34557BFF3187BB /* puzzle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,8 +25,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2DBB81221EA4BF1EA14C80C0 /* hello.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = hello.swift; sourceTree = "<group>"; };
+		2DBB81221EA4BF1EA14C80C0 /* day04.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = day04.swift; sourceTree = "<group>"; };
 		2DBB88802CCA11F0BEA57780 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		2DBB8B5CEA34557BFF3187BB /* puzzle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = puzzle.swift; sourceTree = "<group>"; };
 		2DBB8C736FF9B50EC9CFD159 /* aoc23swift */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = aoc23swift; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -60,7 +62,8 @@
 			isa = PBXGroup;
 			children = (
 				2DBB88802CCA11F0BEA57780 /* main.swift */,
-				2DBB81221EA4BF1EA14C80C0 /* hello.swift */,
+				2DBB81221EA4BF1EA14C80C0 /* day04.swift */,
+				2DBB8B5CEA34557BFF3187BB /* puzzle.swift */,
 			);
 			path = aoc23swift;
 			sourceTree = "<group>";
@@ -113,7 +116,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DBB85103ACA6157E35659D2 /* main.swift in Sources */,
-				2DBB83F27CFD4D0276B8C796 /* hello.swift in Sources */,
+				2DBB83F27CFD4D0276B8C796 /* day04.swift in Sources */,
+				2DBB89FB6AE194EF74C61303 /* puzzle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
