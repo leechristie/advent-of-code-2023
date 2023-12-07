@@ -6,7 +6,7 @@ My solutions to Eric Wastl's [Advent of Code 2023](https://adventofcode.com/2023
 
 ## Progress
 
-| | | [C](/aoc23c/) | C++ | Go | [Java](/aoc23java/) | [Python](/aoc23py/) | Rust | Swift | TypeScript |
+| | | [C](/aoc23c/) | C++ | Go | [Java](/aoc23java/) | [Python](/aoc23py/) | Rust | [Swift](/aoc23swift/) | TypeScript |
 |--:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | | | 3<sub>/50</sub> | 0<sub>/50</sub> | 0<sub>/50</sub> | 5<sub>/50</sub> | 4<sub>/50</sub> | 0<sub>/50</sub> | 1<sub>/50</sub> | 0<sub>/50</sub> |
 |  [1](logbook/day01.md) | 6<sub>/16</sub> | ⭐️⭐️ | | | ⭐️⭐️ | ⭐️⭐️ | | | |
