@@ -9,11 +9,10 @@
 #include "puzzle.h"
 #include "day01.h"
 
-struct Digits {
+typedef struct {
     char first;
     char last;
-};
-typedef struct Digits Digits;
+} Digits;
 
 static void reset_digit_positions(size_t *);
 static int parse_digits(Digits *);
@@ -54,7 +53,7 @@ void solve01(void) {
             complete_current_line(&standardDigits, &digits, &answer1, &answer2, digitPositions);
         else if (c != EOF)
             update_digits(c, &standardDigits, &digits, digitPositions);
-    } while ((char) c != EOF);
+    } while (c != EOF);
 
     assert(!standardDigits.first && !standardDigits.last);
     assert(!digits.first && !digits.last);
@@ -115,9 +114,9 @@ static void update_digits(int c,
 
             // found an English digit
             if (DIGITS_ENGLISH[d][digitPositions[d]] == '\0') {
-                digits->last = '0' + (char) d;
+                digits->last = (char) (('0' + d) & 0x7f);
                 if (!digits->first)
-                    digits->first = '0' + (char) d;
+                    digits->first = (char) (('0' + d) & 0x7f);
                 digitPositions[d] = 0;
             }
 
