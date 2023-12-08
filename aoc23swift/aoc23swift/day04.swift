@@ -58,19 +58,44 @@ private struct Card {
 
 }
 
-func solve04() {
-
-    let contents = readInput(day: 4)
-
-    var total = 0
-    for line in contents.split(separator: "\n") {
-        let card = try! Card(fromInputLine: line)
-        total += card.score
-    }
+func solve04() throws {
 
     print("Advent of Code 2023")
     print("Day 4")
+
+    let contents = readInput(day: 4)
+
+    var copies: [Int:Int] = [:]
+    var cards: [Int:Card] = [:]
+
+    var total = 0
+    var numCards = 0
+    for line in contents.split(separator: "\n") {
+        let card = try Card(fromInputLine: line)
+        total += card.score
+        copies[card.number] = 1
+        cards[card.number] = card
+        if (card.number != numCards + 1) {
+            throw InputError.UnableToParseLine
+        }
+        numCards += 1
+    }
     print("Part 1: \(total)")
-    print("Part 2: TODO")
+
+    var numScratched = 0
+    for cardNumber in 1...numCards {
+        let copiesOfCurrent = copies[cardNumber]!
+        numScratched += copiesOfCurrent
+        let card = cards[cardNumber]!
+        let matches = card.matches
+        if (matches > 0) {
+            for wonCardNumber in (cardNumber + 1)...(cardNumber + matches) {
+                if (wonCardNumber <= numCards) {
+                    copies[wonCardNumber] = copies[wonCardNumber]! + copiesOfCurrent
+                }
+            }
+        }
+    }
+    print("Part 2: \(numScratched)")
 
 }
