@@ -27,10 +27,12 @@ The `read_ticket` function reads the ticket into an array of picked numbers and 
 
 The use of a lookup boolean array should be faster than a hash set or binary tree. However, there real reason for this choice is that I'm using C and this is easier.
 
-### 2. Swift (Part 1)
+### 2. Swift
 
-I implemented Part 1 in Swift. This is the first Swift I'm doing this AoC so far.
+This is the first Swift I'm doing this AoC so far.
 
-I don't like parsing strings in Swift. I'm sure there is a better way I don't know, but there seems to be no clear way to iterate lines of a file without reading the whole file, and when you split on lines you end up dealing with `Substring` and `SubSequence` objects which are really annoying.
+I don't like parsing strings in Swift. I'm sure there is a better way I don't know, but there seems to be no clear way to iterate lines of a file without reading the whole file, and when you split on lines you end up dealing with `Substring` and `SubSequence` objects which are really annoying. I just create a `Card` struct for each line and eagerly compute the number of matches and score, then add them scores for Part 1.
 
-I just create a `Card` struct for each line and eagerly compute the number of matches and score, then add them scores for Part 1.
+In Part 2 I create a Dictionary to count the number of copies of each card and loop over once increasing the count of the upcoming cards by how many copies of the current card there are.
+
+I'm not happy with this Swift solution but might change it later when I come back to Swift.
