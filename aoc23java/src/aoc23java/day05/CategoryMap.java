@@ -62,10 +62,8 @@ final class CategoryMap {
         if (current < sourceRangeStart || current >= sourceRangeBound)
             return OptionalLong.empty();
         long offset = current - sourceRangeStart;
-        assert offset >= 0;
-        assert offset < rangeLength;
-        assert current + delta == destinationRangeStart + offset;
-        return OptionalLong.of(destinationRangeStart + offset);
+        assert 0 <= offset && offset < rangeLength;
+        return OptionalLong.of(current + delta);
     }
 
     public String toString() {
