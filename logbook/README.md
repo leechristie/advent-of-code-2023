@@ -4,7 +4,7 @@
 - [Day 1 - Trebuchet?!](day01.md) ⭐️⭐️
 - [Day 2 - Cube Conundrum](day02.md) ⭐️⭐️
 - [Day 3 - Gear Ratios](day03.md) ⭐️⭐️
-- [Day 4 - Scratchcards](day04.md) ⭐️
+- [Day 4 - Scratchcards](day04.md) ⭐️⭐️
 - [Day 5 - If You Give A Seed A Fertilizer](day05.md) ⭐️
 - Day 6
 - Day 7
