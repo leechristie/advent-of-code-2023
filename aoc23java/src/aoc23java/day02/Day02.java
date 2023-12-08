@@ -2,7 +2,9 @@
 // Dr Lee A. Christie
 // @0x1ac@techhub.social
 
-package aoc23java;
+package aoc23java.day02;
+
+import aoc23java.Puzzle;
 
 import java.io.*;
 import java.util.*;

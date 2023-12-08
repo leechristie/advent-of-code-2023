@@ -4,6 +4,10 @@
 
 package aoc23java;
 
+import aoc23java.day01.Day01;
+import aoc23java.day02.Day02;
+import aoc23java.day05.Day05;
+
 import java.io.*;
 
 public final class Main {
