@@ -83,3 +83,7 @@ In this C solution, I loop over the digits in the string, updating two variables
 I added Part 2 to my C solution, and it took a lot more code than Part 1, but I still solve both parts in a single pass through the file. Solution looks at each character and does a constant amount of work per character.
 
 The key to my Part 2 solution is to keep a `size_t[10]` array which tracks how far into each English word "one", "two" etc. we have read. If we encounter the next letter, we advance one. If we encounter a digit, we reset the pointer to 0. If we encounter a letter but not the correct next letter we reset the pointer to 0 then *(and not noticing the was a bug that took for a while to find)* importantly recheck the first letter again incase we encounter `"tt"`. With the pointers for `"two"` and `"three"` at `'w'` and `"h"`, and encountering a second `'t'` we need to recheck to see this is the first letter of `"two"` and `"three`.
+
+### 4. Go (Part 1)
+
+Wrote Part 1 in Go. This is my first Go, so it's not very good. I will have to revisit this later.
