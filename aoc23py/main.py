@@ -3,14 +3,15 @@
 # @0x1ac@techhub.social
 
 import sys
-import day01
-import day03
+from days import *
 
 
 def main() -> None:
     arg = sys.argv[-1]
     if arg == '1':
         day01.solve()
+    elif arg == '2':
+        day02.solve()
     elif arg == '3':
         day03.solve()
     else:
