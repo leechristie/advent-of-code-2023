@@ -92,6 +92,14 @@ Wrote Part 1 in Go. This is my first Go, so it's not very good. I will have to r
 
 For the C++ solution, I need to try not to just convert my C solution. This solution is actually similar to my Java solution. I had to look up a lot of string processing methods to figure out how to write this as I don't have experience with `std::string`.
 
+In loading the file, I've defined a function which just gets the file as an `ifstream`.
+
+```C++
+std::ifstream get_input_stream(int day)
+```
+
+It returns a copy of the `ifstream`, and I realise I'm not familiar with how copy elision works in C++, I assume this doesn't actually copy anything because it doesn't have to, but I don't know if I should be using `std::move` or something here.
+
 Like in the Java solution, I loop over the positions and check `line.find(digit, beginIndex)`
 
 The English words are stored as `static constexpr std::array<std::string, 10>`, which I think is the right way to have a constant array of strings.
