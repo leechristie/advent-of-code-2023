@@ -8,9 +8,9 @@ My solutions to Eric Wastl's [Advent of Code 2023](https://adventofcode.com/2023
 
 | | | [C](/aoc23c/) | [C++](/aoc23cpp/) | [Go](/aoc23/go/) | [Java](/aoc23java/) | [Python](/aoc23py/) | Rust | [Swift](/aoc23swift/) | TypeScript |
 |--:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| | | 3<sub>/50</sub> | 2<sub>/50</sub> | 1<sub>/50</sub> | 5<sub>/50</sub> | 4<sub>/50</sub> | 0<sub>/50</sub> | 2<sub>/50</sub> | 0<sub>/50</sub> |
+| | | 3<sub>/50</sub> | 2<sub>/50</sub> | 1<sub>/50</sub> | 5<sub>/50</sub> | 6<sub>/50</sub> | 0<sub>/50</sub> | 2<sub>/50</sub> | 0<sub>/50</sub> |
 |  [1](logbook/day01.md) | 9<sub>/16</sub> | ⭐️⭐️ | ⭐️⭐️ | ⭐️ | ⭐️⭐️ | ⭐️⭐️ | | | |
-|  [2](logbook/day02.md) | 2<sub>/16</sub> | | | | ⭐️⭐️ | | | | |
+|  [2](logbook/day02.md) | 4<sub>/16</sub> | | | | ⭐️⭐️ | ⭐️⭐️ | | | |
 |  [3](logbook/day03.md) | 2<sub>/16</sub> | | | | | ⭐️⭐️ | | | |
 |  [4](logbook/day04.md) | 3<sub>/16</sub> | ⭐️ | | | | | | ⭐️⭐️ | |
 |  [5](logbook/day05.md) | 1<sub>/16</sub> | | | | ⭐️ | | | | |
