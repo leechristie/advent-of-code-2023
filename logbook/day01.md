@@ -87,3 +87,19 @@ The key to my Part 2 solution is to keep a `size_t[10]` array which tracks how f
 ### 4. Go (Part 1)
 
 Wrote Part 1 in Go. This is my first Go, so it's not very good. I will have to revisit this later.
+
+### 5. C++
+
+For the C++ solution, I need to try not to just convert my C solution. This solution is actually similar to my Java solution. I had to look up a lot of string processing methods to figure out how to write this as I don't have experience with `std::string`.
+
+Like in the Java solution, I loop over the positions and check `line.find(digit, beginIndex)`
+
+The English words are stored as `static constexpr std::array<std::string, 10>`, which I think is the right way to have a constant array of strings.
+
+The loop over `beginIndex` in my implmentation this time uses two calls to a function that reads the basic digit `0` to `9` and one call to a functioin that reads the spelled digit.
+
+```C++
+read_basic_digit(line, beginIndex, firstDigit, lastDigit);
+read_basic_digit(line, beginIndex, firstBasicDigit, lastBasicDigit);
+read_spelled_digit(line, beginIndex, firstDigit, lastDigit);
+```
