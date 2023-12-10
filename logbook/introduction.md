@@ -20,16 +20,18 @@ For my own future reference, I have noted down the versions I used. All compiler
 
 I use the [JetBrains All Products Pack](https://www.jetbrains.com/all/) for my IDEs of choice for consistent developer UX. Xcode would be better for Swift and AppCode is EOL, but I'm not likely to use the UI builder or simulators and want to simplify the editor choice.
 
-| Language   | Version | Compiler/Interpreter                | IDE                                       |
-|:-----------|:--------|:------------------------------------|:------------------------------------------|
-| C          | C17     | GCC 13.2.0 (Homebrew)†              | CLion 2023.2.2                            |
-| C++        | C++20   | GCC 13.2.0 (Homebrew)†              | CLion 2023.2.2                            |
-| Go         | 1.20    | Go 1.21.4                           | GoLand 2023.2.5                           |
-| Java       | 21      | 21.0.1+12 LTS (Azul Zulu Community) | IntelliJ IDEA 2023.2.5 (Ultimate Edition) |
-| Python     | 3.12    | Python 3.12.0, (Mambaforge 1.5.3)   | PyCharm 2023.2.5 (Professional Edition)   |
-| Rust       | 2021    | Rust 1.73.0                         | RustRover 2023.3 EAP                      |
-| Swift      | 5.9     | Apple Clang 15.0.0†                 | AppCode 2023.1.4†                         |
-| TypeScript | 5.3     | Bun.js 1.0.4                        | WebStorm 2023.2.5                         |
+While I was working on AoC 2023, JetBrains released their AI assistant with version 2023.3 of their IDEs, but I'm not using, for the same reason I'm not using other people's code in my solutions, and AI assistance is just a fancier way of using other people's code.
+
+| Language   | Version | Compiler/Interpreter                | IDE                                     |
+|:-----------|:--------|:------------------------------------|:----------------------------------------|
+| C          | C17     | GCC 13.2.0 (Homebrew)†              | CLion 2023.3                            |
+| C++        | C++20   | GCC 13.2.0 (Homebrew)†              | CLion 2023.3                            |
+| Go         | 1.20    | Go 1.21.4                           | GoLand 2023.3                           |
+| Java       | 21      | 21.0.1+12 LTS (Azul Zulu Community) | IntelliJ IDEA 2023.3 (Ultimate Edition) |
+| Python     | 3.12    | Python 3.12.0, (Mambaforge 1.5.3)   | PyCharm 2023.3 (Professional Edition)   |
+| Rust       | 2021    | Rust 1.74.1                         | RustRover 2023.3 EAP 4                  |
+| Swift      | 5.9     | Apple Clang 15.0.0†                 | AppCode 2023.1.4†                       |
+| TypeScript | 5.3     | Bun.js 1.0.4                        | WebStorm 2023.3                         |
 
 † May not provide full support for all features of the target language version
 
