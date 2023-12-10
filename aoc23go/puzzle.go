@@ -16,7 +16,7 @@ func OpenInputFile(day int) (*os.File, func(), error) {
 	if day < 10 {
 		dayStr = "0" + dayStr
 	}
-	var filename = "/Users/0x1ac/Developer/leechristie/advent-of-code-2023/input/input" + dayStr + ".txt"
+	var filename = "../input/input" + dayStr + ".txt"
 	file, err := os.Open(filename)
 	if err != nil {
 		return nil, nil, err
@@ -28,7 +28,7 @@ func OpenInputFile(day int) (*os.File, func(), error) {
 }
 
 func ReadInputFile(day int) (string, error) {
-	file, closer, err := OpenInputFile(1)
+	file, closer, err := OpenInputFile(day)
 	if err != nil {
 		return "", err
 	}
@@ -42,7 +42,7 @@ func ReadInputFile(day int) (string, error) {
 }
 
 func ReadInputLines(day int) ([]string, error) {
-	lines, err := ReadInputFile(1)
+	lines, err := ReadInputFile(day)
 	if err != nil {
 		return nil, err
 	}
