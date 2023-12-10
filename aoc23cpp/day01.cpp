@@ -26,7 +26,7 @@ void read_spelled_digit(std::string line, std::size_t beginIndex, char &firstDig
     char c = line[beginIndex];
     if (c < '0' || '9' < c) {
         for (std::size_t j = 0; j < WORDS.size(); j++) {
-            std::string digit = WORDS[j];
+            const std::string& digit = WORDS[j];
             std::size_t next = line.find(digit, beginIndex);
             if (next == beginIndex) {
                 char cc = static_cast<char>(j + '0');
@@ -39,7 +39,7 @@ void read_spelled_digit(std::string line, std::size_t beginIndex, char &firstDig
 
 }
 
-void process_line(std::string line, int &answer1, int &answer2) {
+void process_line(const std::string& line, int &answer1, int &answer2) {
 
     char firstBasicDigit = '\0';
     char lastBasicDigit = '\0';

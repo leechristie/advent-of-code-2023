@@ -15,8 +15,8 @@ static constexpr color_array AVAILABLE_CUBES = color_array{12, 13, 14};
 
 class Cubes {
 public:
-    explicit Cubes(color_array colors) {
-        this->colors = colors;
+    explicit Cubes(color_array c) {
+        this->colors = c;
     }
     color_array get_colors() {
         return colors;
@@ -29,13 +29,13 @@ public:
     }
     static void parse_cube_count(color_array &arr, const std::string s) {
         for (color_array::size_type i = 0; i < arr.size(); i++) {
-            std::string color = COLOR_NAMES[i];
+            const std::string& color = COLOR_NAMES[i];
             std::string::size_type pos = s.find(color);
             if (pos != std::string::npos)
                 arr[i] = std::stoi(s.substr(0, pos - 1));
         }
     }
-    static Cubes parse(std::string line) {
+    static Cubes parse(const std::string& line) {
         color_array colors{};
         std::string::size_type lower = -1;
         std::string::size_type bound;
@@ -60,15 +60,15 @@ class Game {
 public:
     explicit Game(int n, std::vector<Cubes> c) {
         game_number = n;
-        cubes = c;
+        cubes = std::move(c);
     }
-    int get_game_number() {
+    [[nodiscard]] int get_game_number() const {
         return game_number;
     }
     std::vector<Cubes> get_cubes() {
         return cubes;
     }
-    static Game parse(std::string line) {
+    static Game parse(const std::string& line) {
 
         // parse the game number
         const std::string::size_type numLower = line.find(' ') + 1;
@@ -96,7 +96,7 @@ public:
         }
         return true;
     }
-    void update_minimum_cubes(color_array &minimum, const color_array &c) {
+    static void update_minimum_cubes(color_array &minimum, const color_array &c) {
         for (color_array::size_type i = 0; i < NUM_COLORS; i++) {
             if (c[i] > minimum[i]) {
                 minimum[i] = c[i];
@@ -122,7 +122,7 @@ std::ostream &operator<<(std::ostream &os, Cubes cube) {
                           << COLOR_NAMES[2] << '=' << colors[2] << ")";
 }
 
-std::ostream &operator<<(std::ostream &os, std::vector<Cubes> cubes) {
+std::ostream &operator<<(std::ostream &os, const std::vector<Cubes>& cubes) {
     os << '[';
     bool first = true;
     for (auto &cube : cubes) {
