@@ -4,7 +4,9 @@ project(aoc23cpp)
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(aoc23cpp main.cpp
-        day01.hpp
+        days.hpp
         day01.cpp
         puzzle.cpp
-        puzzle.hpp)
+        puzzle.hpp
+        day02.cpp
+)

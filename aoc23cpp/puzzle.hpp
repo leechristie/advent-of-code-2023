@@ -6,7 +6,9 @@
 #define AOC23CPP_PUZZLE_HPP
 
 #include <fstream>
+#include <vector>
 
-std::ifstream get_input_stream(int);
+std::ifstream get_puzzle_input(int);
+std::vector<std::string> get_puzzle_lines(int);
 
 #endif //AOC23CPP_PUZZLE_HPP

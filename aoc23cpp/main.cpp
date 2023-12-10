@@ -5,17 +5,26 @@
 #include <string>
 #include <iostream>
 
-#include "day01.hpp"
+#include "days.hpp"
 
 int main(int argc, char * argv[]) {
 
-    if (argc != 2 || std::string(argv[1]) != "1") {
+    if (argc != 2) {
         std::cout << "Valid day not specified in command line argument." << std::endl;
         return 1;
     }
-
-    solve01();
-
+    
+    switch (std::stoi(std::string(argv[1]))) {
+        case 1:
+            solve01();
+            break;
+        case 2:
+            solve02();
+            break;
+        default:
+            std::cout << "Valid day not specified in command line argument." << std::endl;
+            return 1;
+    }
     return 0;
 
 }

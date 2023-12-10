@@ -6,8 +6,9 @@
 #include <iostream>
 #include <array>
 #include "puzzle.hpp"
+#include "days.hpp"
 
-void read_basic_digit(std::string line, size_t beginIndex, char &firstDigit, char &lastDigit) {
+void read_basic_digit(std::string line, std::size_t beginIndex, char &firstDigit, char &lastDigit) {
     char c = line[beginIndex];
     if ('0' <= c && c <= '9') {
         lastDigit = c;
@@ -16,8 +17,7 @@ void read_basic_digit(std::string line, size_t beginIndex, char &firstDigit, cha
     }
 }
 
-
-void read_spelled_digit(std::string line, size_t beginIndex, char &firstDigit, char &lastDigit) {
+void read_spelled_digit(std::string line, std::size_t beginIndex, char &firstDigit, char &lastDigit) {
 
     static constexpr std::array<std::string, 10> WORDS {
             "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
@@ -25,9 +25,9 @@ void read_spelled_digit(std::string line, size_t beginIndex, char &firstDigit, c
 
     char c = line[beginIndex];
     if (c < '0' || '9' < c) {
-        for (size_t j = 0; j < WORDS.size(); j++) {
+        for (std::size_t j = 0; j < WORDS.size(); j++) {
             std::string digit = WORDS[j];
-            size_t next = line.find(digit, beginIndex);
+            std::size_t next = line.find(digit, beginIndex);
             if (next == beginIndex) {
                 char cc = static_cast<char>(j + '0');
                 lastDigit = cc;
@@ -46,7 +46,7 @@ void process_line(std::string line, int &answer1, int &answer2) {
     char firstDigit = '\0';
     char lastDigit = '\0';
 
-    for (size_t beginIndex = 0; beginIndex < line.length(); beginIndex++) {
+    for (std::size_t beginIndex = 0; beginIndex < line.length(); beginIndex++) {
 
         read_basic_digit(line, beginIndex, firstDigit, lastDigit);
         read_basic_digit(line, beginIndex, firstBasicDigit, lastBasicDigit);
@@ -72,7 +72,7 @@ void solve01() {
     std::cout << "Advent of Code 2023" << std::endl;
     std::cout << "Day 1" << std::endl;
 
-    std::ifstream in = get_input_stream(1);
+    std::ifstream in = get_puzzle_input(1);
 
     int answer1 = 0;
     int answer2 = 0;
