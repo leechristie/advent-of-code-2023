@@ -43,3 +43,29 @@ rounds = [parse_round(r) for r in line.split(': ')[1].split('; ')]
 Part one is solved by writing a `can_play(rounds: list[MatchRound]) -> bool` function that just loops over each round and checks if any of the match round require more of one cube that is available. Part two calls `power_of(minimum_required(rounds))`. If split this into two steps for simplicity.
 
 Overall, it's a lot smoother to solve these puzzles in Python than Java despite being familiar with both language to around the same extent. However, to be fair, I do tent to write more vlaidation code in Java because I end up being in more of a software engineering mindset when writing Java.
+
+### 3. C++
+
+In solving Day 2 in C++ I have written around 100 lines of code dealing with ust parsing the input into some classes representing the data.
+
+I parse to a `Game` object which contains an `int` (the game number) and a `std::vector::<Cubes>` (each of the rounds of the game played.
+
+The cubes are prepresented like this in the input file:
+
+```
+3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
+```
+
+And I could not figure out how to split strings in C++, so iterated over the positions of `;` in a while loop, then pass the resulting substrings e.g.
+
+```
+3 blue, 4 red
+```
+
+off to another parsing function as a subtring that loops again on the `,`.
+
+Colors are represented using a `std::array<int, 3>` and I build this by checking the colors against a small `std::array<std::string, 3>` of the color names. There's no point putting 3 values into an `unordered_map` to lookup.
+
+Overall I spent about an hour and a half on parsing code, and then a couple of minutes actually implementing the solve from the parsed objects to the final answers.
+
+I'm not really familiar with C++, and I'm a bit confused about when I'm actually copying things or not, whereas I don't have this confusion when I'm programming in a more familiar language.
