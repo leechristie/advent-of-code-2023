@@ -4,20 +4,21 @@
 
 package aoc23java.day05;
 
+import aoc23java.LongRange;
+
 import java.util.*;
 
 final class CategoryMap {
 
-    final long sourceRangeStart;
-    final long sourceRangeBound;
-    final long destinationRangeStart;
-    final long destinationRangeBound;
-    final long rangeLength;
+    final LongRange source;
+    final LongRange destination;
     final long delta;
+    final long length;
 
     CategoryMap(long destinationRangeStart,
                 long sourceRangeStart,
                 long rangeLength) {
+
         if (destinationRangeStart < 0)
             throw new IllegalArgumentException(
                     "destinationRangeStart = " + destinationRangeStart + ", expected >= 0");
@@ -27,24 +28,13 @@ final class CategoryMap {
         if (rangeLength <= 0)
             throw new IllegalArgumentException(
                     "rangeLength = " + rangeLength + ", expected > 0");
-        long destinationRangeBound = destinationRangeStart + rangeLength;
-        if (destinationRangeBound <= destinationRangeStart)
-            throw new IllegalArgumentException(
-                    "long overflow on destination range");
-        long sourceRangeBound = sourceRangeStart + rangeLength;
-        if (sourceRangeBound <= sourceRangeStart)
-            throw new IllegalArgumentException(
-                    "long overflow on source range");
-        long delta = destinationRangeStart - sourceRangeStart;
-        if (sourceRangeBound - 1 + delta != destinationRangeBound - 1)
-            throw new IllegalArgumentException(
-                    "long overflow on delta");
-        this.destinationRangeStart = destinationRangeStart;
-        this.destinationRangeBound = destinationRangeBound;
-        this.sourceRangeStart = sourceRangeStart;
-        this.sourceRangeBound = sourceRangeBound;
-        this.rangeLength = rangeLength;
-        this.delta = delta;
+
+        this.source = LongRange.ofLength(sourceRangeStart, rangeLength);
+        this.destination = LongRange.ofLength(destinationRangeStart, rangeLength);
+        this.delta = LongRange.differenceBetweenLowerBounds(this.source, this.destination);
+        this.length = rangeLength;
+        assert this.source.length() == this.destination.length();
+
     }
 
     static CategoryMap parse(String line) {
@@ -59,25 +49,13 @@ final class CategoryMap {
     OptionalLong map(long current) {
         if (current < 0)
             throw new IllegalArgumentException("current = " + current + ", expected >= 0");
-        if (current < sourceRangeStart || current >= sourceRangeBound)
-            return OptionalLong.empty();
-        long offset = current - sourceRangeStart;
-        assert 0 <= offset && offset < rangeLength;
-        return OptionalLong.of(current + delta);
+        if (source.contains(current))
+            return OptionalLong.of(current + delta);
+        return OptionalLong.empty();
     }
 
     public String toString() {
-        StringBuilder rv = new StringBuilder();
-        rv.append("[");
-        rv.append(this.sourceRangeStart);
-        rv.append(", ");
-        rv.append(this.sourceRangeBound);
-        rv.append(") -> [");
-        rv.append(this.destinationRangeStart);
-        rv.append(", ");
-        rv.append(this.destinationRangeBound);
-        rv.append(")");
-        return rv.toString();
+        return this.source + " -> " + this.destination;
     }
 
 }
