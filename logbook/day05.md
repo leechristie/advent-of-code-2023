@@ -1,6 +1,6 @@
 # Logbook
 
-## Day 5 - If You Give A Seed A Fertilizer ⭐️⭐️
+## Day 5 - If You Give A Seed A Fertilizer
 
 I did Part 1 on the 5th. I was going to leave this for another day but I was curious to find out what Part 2 is about so I solved Part 1 in Java and as I suspected, Part 2 looks a little tricky. This is the first puzzle this year where Part 2 is a bit time-consuming.
 
