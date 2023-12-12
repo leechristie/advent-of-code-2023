@@ -68,4 +68,8 @@ public record LongRange(long lower, long bound) {
         return "[" + lower + ", " + bound + ")";
     }
 
+    public LongRange plus(long delta) {
+        return LongRange.ofOpen(lower + delta, bound + delta);
+    }
+
 }

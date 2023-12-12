@@ -21,41 +21,19 @@ public final class Day05 {
         System.out.println("Advent of Code 2023!");
         System.out.println("Day 5");
 
-        // read input file
         Seeds seeds;
         List<CategoryMapSortedSet> allMaps;
-        try (BufferedReader in = Puzzle.inputLines(5, true)) {
+        try (BufferedReader in = Puzzle.inputLines(5)) {
             seeds = Seeds.read(in);
             allMaps = CategoryMapSortedSet.readAll(in);
         }
 
         long answer1 = solvePart1(seeds, allMaps);
         System.out.println("Part 1: " + answer1);
-        assert 35 == answer1;
-        //assert 157211394 == answer1;
 
-        // TODO: finish implementing the fast solve for part 2
-        long answer2 = slowSolvePart2(seeds, allMaps);
+        long answer2 = solvePart2(seeds, allMaps);
         System.out.println("Part 2: " + answer2);
-        assert 46 == answer2;
 
-    }
-
-    private static long slowSolvePart2(Seeds seeds, List<CategoryMapSortedSet> allMaps) {
-        long answer2 = Long.MAX_VALUE;
-        System.out.println("solving part 2");
-        for (LongRange range: seeds.asRanges()) {
-            System.out.println(range);
-            List<Long> temp = new ArrayList<>();
-            for (long seed = range.lower(); seed < range.bound(); seed++) {
-                long location = CategoryMapSortedSet.applyAll(seed, allMaps);
-                if (location < answer2)
-                    answer2 = location;
-                temp.add(location);
-            }
-            System.out.println(range + " mapped to " + temp.toString().replace('[', '{').replace(']', '}'));
-        }
-        return answer2;
     }
 
     private static long solvePart1(Seeds seeds, List<CategoryMapSortedSet> allMaps) {
@@ -66,6 +44,19 @@ public final class Day05 {
                 answer1 = location;
         }
         return answer1;
+    }
+
+    private static long solvePart2(Seeds seeds, List<CategoryMapSortedSet> allMaps) {
+        List<LongRange> ranges = seeds.asRanges();
+        for (CategoryMapSortedSet map : allMaps) {
+            ranges = map.splitRanges(ranges);
+            ranges = map.applyRanges(ranges);
+        }
+        long answer2 = Long.MAX_VALUE;
+        for (LongRange r : ranges)
+            if (r.lower() < answer2)
+                answer2 = r.lower();
+        return answer2;
     }
 
 }

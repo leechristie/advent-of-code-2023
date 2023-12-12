@@ -100,8 +100,9 @@ final class CategoryMapSortedSet
         Objects.requireNonNull(range);
 
         List<CategoryMap> maps = mapsWhereSourceIncludesRange(range);
+        assert isSorted(maps);
         if (maps.isEmpty())
-            return new ArrayList<>();
+            return List.of(range);
 
         List<LongRange> rv = new ArrayList<>(maps.size() * 2 + 1);
         if (maps.getFirst().source.lower() > range.lower()) {
@@ -114,7 +115,12 @@ final class CategoryMapSortedSet
             int j = i + 1;
             if (j < maps.size()) {
                 CategoryMap next = maps.get(i);
-                rv.add(LongRange.ofOpen(current.source.bound(), next.source.lower()));
+                if (current != next) {
+                    if (current.source.bound() >= next.source.lower()) {
+                        throw new AssertionError(current + ", " + next + " are out of order");
+                    }
+                    rv.add(LongRange.ofOpen(current.source.bound(), next.source.lower()));
+                }
             }
         }
         if (maps.getLast().source.bound() < range.bound()) {
@@ -122,6 +128,45 @@ final class CategoryMapSortedSet
         }
         return rv;
 
+    }
+
+    private boolean isSorted(List<CategoryMap> maps) {
+        for (int i = 0; i < maps.size() - 1; i++) {
+            CategoryMap current = maps.get(i);
+            CategoryMap next = maps.get(i + 1);
+            if (next.source.lower() < current.source.lower()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public List<LongRange> splitRanges(List<LongRange> ranges) {
+        List<LongRange> rv = new ArrayList<>();
+        for (LongRange range : ranges)
+            rv.addAll(splitRange(range));
+        return rv;
+    }
+
+    public List<LongRange> applyRanges(List<LongRange> ranges) {
+        List<LongRange> rv = new ArrayList<>();
+        for (LongRange range : ranges) {
+            long lower = range.lower();
+            long bound = range.bound();
+            long delta = apply(lower) - lower;
+            assert (apply(bound - 1) - (bound - 1)) == delta;
+            rv.add(range.plus(delta));
+        }
+        return rv;
+    }
+
+    @Override
+    public String toString() {
+        if (cachedOrder == null) {
+            cachedOrder = List.copyOf(maps);
+            validateCacheForOverlap();
+        }
+        return cachedOrder.toString();
     }
 
 }
