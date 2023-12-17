@@ -3,7 +3,6 @@
 // @0x1ac@techhub.social
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <assert.h>
 
@@ -15,7 +14,6 @@
 
 // a single color red, green, or blue
 typedef enum { RED, GREEN, BLUE } Color;
-#define NUM_COLORS (3)
 bool parse_color(char *, Color *);
 void print_color(Color);
 
@@ -61,19 +59,15 @@ void solve02(void) {
 }
 
 bool parse_color(char * s, Color * color) {
-    if (strcmp(s, "red") == 0) {
+    if (strcmp(s, "red") == 0)
         *color = RED;
-        return true;
-    }
-    if (strcmp(s, "green") == 0) {
+    else if (strcmp(s, "green") == 0)
         *color = GREEN;
-        return true;
-    }
-    if (strcmp(s, "blue") == 0) {
+    else if (strcmp(s, "blue") == 0)
         *color = BLUE;
-        return true;
-    }
-    return false;
+    else
+        return false;
+    return true;
 }
 
 bool read_game(FILE * file, Game * game) {
@@ -84,7 +78,7 @@ bool read_game(FILE * file, Game * game) {
     char buffer[MAX_WORD_SIZE + 1];
     if (!read_string_until(file, ':', buffer, MAX_WORD_SIZE))
         die("read_until failed 7");
-    game->number = atoi(buffer);
+    game->number = parse_int(buffer);
     ignore_char(file, ' ');
 
     int count;
@@ -96,7 +90,7 @@ bool read_game(FILE * file, Game * game) {
 
         if (!read_string_until(file, ' ', buffer, MAX_WORD_SIZE))
             die("read_until failed");
-        count = atoi(buffer);
+        count = parse_int(buffer);
         if (!read_string_until_any(file, ",;\n", buffer, MAX_WORD_SIZE, &found_delimiter))
             die("read_until failed");
         if (!parse_color(buffer, &color))

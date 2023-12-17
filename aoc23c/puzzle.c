@@ -5,6 +5,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include <errno.h>
+#include <limits.h>
 
 #include "puzzle.h"
 
@@ -109,7 +112,7 @@ bool ignore_string(FILE * file, const char * expected) {
     return true;
 }
 
-bool ignore_char(FILE * file, const char expected) {
+bool ignore_char(FILE * file, char expected) {
     int character = getc(file);
     if (character == EOF)
         return false;
@@ -154,4 +157,24 @@ int read_int_checked(FILE * file, const int lower, const int bound) {
     if (rv < lower || rv >= bound)
         die("read_int_checked bound check failed");
     return rv;
+}
+
+long parse_long(char * str) {
+    size_t length = strlen(str);
+    if (length < 1 || (str[0] != '-' && !isdigit(str[0])))
+        die("unable to parse long");
+    errno = 0;
+    char *end;
+    long rv = strtol(str, &end, 10);
+    size_t read = end - str;
+    if (errno || read != length)
+        die("unable to parse long");
+    return rv;
+}
+
+int parse_int(char * str) {
+    long rv = parse_long(str);
+    if (rv < INT_MIN || rv > INT_MAX)
+        die("unable to parse int");
+    return (int) rv;
 }
