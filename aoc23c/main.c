@@ -4,8 +4,7 @@
 
 #include <stdlib.h>
 
-#include "day01.h"
-#include "day04.h"
+#include "days.h"
 #include "puzzle.h"
 
 int main(int argc, char * argv[]) {
@@ -17,6 +16,9 @@ int main(int argc, char * argv[]) {
     switch (day) {
         case 1:
             solve01();
+            break;
+        case 2:
+            solve02();
             break;
         case 4:
             solve04();

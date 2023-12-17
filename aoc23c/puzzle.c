@@ -42,7 +42,84 @@ FILE * open_example_file(int day) {
     return file;
 }
 
-bool ignore(FILE * file, const char * text) {
+bool is_any(char c, const char * characters) {
+    size_t index = 0;
+    while (characters[index] != '\0') {
+        if (c == characters[index])
+            return true;
+        index++;
+    }
+    return false;
+}
+
+bool read_string_until(FILE * file, char delimiter, char * buffer, size_t max_length) {
+    size_t index = 0;
+    while (true) {
+        int character = getc(file);
+        if (character == EOF)
+            return false;
+        char c = (char) character;
+        if (character == delimiter) {
+            buffer[index] = '\0';
+            return true;
+        }
+        if (index >= max_length) {
+            buffer[index] = '\0';
+            return false;
+        }
+        buffer[index] = c;
+        index++;
+    }
+}
+
+bool read_string_until_any(FILE * file, const char * delimiters, char * buffer, size_t max_length, char * found_delimiter) {
+    size_t index = 0;
+    while (true) {
+        int character = getc(file);
+        if (character == EOF)
+            return false;
+        char c = (char) character;
+        if (is_any(c, delimiters)) {
+            buffer[index] = '\0';
+            *found_delimiter = c;
+            return true;
+        }
+        if (index >= max_length) {
+            buffer[index] = '\0';
+            return false;
+        }
+        buffer[index] = c;
+        index++;
+    }
+}
+
+bool ignore_string(FILE * file, const char * expected) {
+    size_t index = 0;
+    while (expected[index]) {
+        int character = getc(file);
+        if (character == EOF)
+            return false;
+        char c = (char) character;
+        if (expected[index] == c) {
+            index++;
+            continue;
+        }
+        die("ignore_string encountered wrong character");
+    }
+    return true;
+}
+
+bool ignore_char(FILE * file, const char expected) {
+    int character = getc(file);
+    if (character == EOF)
+        return false;
+    char c = (char) character;
+    if (c != expected)
+        die("ignore_char encountered wrong character");
+    return true;
+}
+
+bool _deprecated_ignore(FILE * file, const char * text) {
     size_t index = 0;
     while (text[index]) {
         int c = fgetc(file);

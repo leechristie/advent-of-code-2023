@@ -5,8 +5,8 @@ set(CMAKE_C_STANDARD 17)
 
 add_executable(aoc23c main.c
         day01.c
-        day01.h
+        days.h
         puzzle.c
         puzzle.h
         day04.c
-        day04.h)
+        day02.c)

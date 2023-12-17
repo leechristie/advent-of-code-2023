@@ -12,7 +12,12 @@
 noreturn void die(char * error_message);
 FILE * open_input_file(int day);
 FILE * open_example_file(int day);
-bool ignore(FILE *, const char *);
+bool is_any(char, const char *);
+bool read_string_until(FILE *, char, char *, size_t);
+bool read_string_until_any(FILE *, const char *, char *, size_t, char *);
+bool ignore_string(FILE *, const char *);
+bool ignore_char(FILE *, const char);
+bool _deprecated_ignore(FILE *, const char *);
 int read_int(FILE *);
 int read_int_checked(FILE *, int lower, int bound);
 

@@ -7,7 +7,7 @@
 #include <assert.h>
 
 #include "puzzle.h"
-#include "day01.h"
+#include "days.h"
 
 typedef struct {
     char first;
@@ -63,7 +63,9 @@ void solve01(void) {
     printf("Advent of Code 2023!\n");
     printf("Day 1\n");
     printf("Part 1: %d\n", answer1);
+    assert(54708 == answer1);
     printf("Part 2: %d\n", answer2);
+    assert(54087 == answer2);
 
 }
 

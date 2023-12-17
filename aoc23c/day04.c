@@ -4,7 +4,7 @@
 
 #include <stdbool.h>
 #include <assert.h>
-#include "day04.h"
+#include "days.h"
 #include "puzzle.h"
 
 #define COUNT_PICKED (10)
@@ -50,15 +50,15 @@ static bool read_ticket(FILE * file,
                         int * winning) {
 
     // read the card number (or return false if EOF)
-    if (!ignore(file, "Card"))
+    if (!_deprecated_ignore(file, "Card"))
         return false;
     *card_number = read_int(file);
-    assert(ignore(file, ":"));
+    assert(_deprecated_ignore(file, ":"));
 
     // read the list of picked numbers
     for (size_t i = 0; i < COUNT_PICKED; i++)
         picked[i] = read_int_checked(file, 0, BOUND);
-    assert(ignore(file, "|"));
+    assert(_deprecated_ignore(file, "|"));
 
     // read the list of winning numbers
     for (size_t i = 0; i < COUNT_WINNING; i++)
