@@ -20,8 +20,15 @@ bool parse_color(char *, Color *);
 void print_color(Color);
 
 // a mapping of {Color -> int} used to represent a game round
-typedef int CubeCounter[NUM_COLORS];
+typedef struct {
+    int red;
+    int green;
+    int blue;
+} CubeCounter;
 void print_cubes(CubeCounter);
+void set_color(CubeCounter *, Color, int);
+int get_color(CubeCounter *, Color);
+void clear_colors(CubeCounter *);
 
 // a game consisting of a game number and a list of rounds
 typedef struct {
@@ -94,13 +101,11 @@ bool read_game(FILE * file, Game * game) {
             die("read_until failed");
         if (!parse_color(buffer, &color))
             die("unable to parse color");
-        cubes[color] = count;
+        set_color(&cubes, color, count);
 
         if (found_delimiter == ';' || found_delimiter == '\n') {
             printf("cubes = "); print_cubes(cubes); printf("\n");
-            cubes[0] = 0;
-            cubes[1] = 0;
-            cubes[2] = 0;
+            clear_colors(&cubes);
         }
         if (found_delimiter == '\n')
             return true;
@@ -115,6 +120,41 @@ void print_game(Game * game) {
     printf("Game(number=%d)\n", game->number);
 }
 
+void set_color(CubeCounter * cubes, Color color, int count) {
+    switch (color) {
+        case RED:
+            cubes->red = count;
+            break;
+        case GREEN:
+            cubes->green = count;
+            break;
+        case BLUE:
+            cubes->blue = count;
+            break;
+        default:
+            die("invalid color");
+    }
+}
+
+int get_color(CubeCounter * cubes, Color color) {
+    switch (color) {
+        case RED:
+            return cubes->red;
+        case GREEN:
+            return cubes->green;
+        case BLUE:
+            return cubes->blue;
+        default:
+            die("invalid color");
+    }
+}
+
+void clear_colors(CubeCounter * cubes) {
+    cubes->red = 0;
+    cubes->green = 0;
+    cubes->blue = 0;
+}
+
 void print_color(Color color) {
     switch (color) {
         case RED:
@@ -126,16 +166,12 @@ void print_color(Color color) {
         case BLUE:
             printf("Color.BLUE");
             break;
+        default:
+            die("invalid color");
     }
 }
 
 void print_cubes(CubeCounter cubes) {
-    printf("CubeCounter({");
-    for (Color color = 0; color < NUM_COLORS; color++) {
-        if (color > 0)
-            printf(", ");
-        print_color(color);
-        printf(": %d", cubes[color]);
-    }
-    printf("})");
+    printf("CubeCounter(red=%d, green=%d, blue=%d)",
+           cubes.red, cubes.green, cubes.blue);
 }
