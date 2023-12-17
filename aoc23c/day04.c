@@ -49,7 +49,7 @@ static bool read_ticket(FILE * file,
                         int * picked,
                         int * winning) {
 
-    // read the card number (or return false if EOF)
+    // read the card id (or return false if EOF)
     if (!_deprecated_ignore(file, "Card"))
         return false;
     *card_number = read_int(file);

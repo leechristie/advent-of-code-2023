@@ -11,7 +11,6 @@
 
 noreturn void die(char * error_message);
 FILE * open_input_file(int day);
-FILE * open_example_file(int day);
 bool is_any(char, const char *);
 bool read_string_until(FILE *, char, char *, size_t);
 bool read_string_until_any(FILE *, const char *, char *, size_t, char *);

@@ -12,6 +12,9 @@
 // used by string buffer, longest word is "green"
 #define MAX_WORD_SIZE (5)
 
+// longest game id of rounds
+#define MAX_ROUNDS (6)
+
 // a single color red, green, or blue
 typedef enum { RED, GREEN, BLUE } Color;
 bool parse_color(char *, Color *);
@@ -23,28 +26,49 @@ typedef struct {
     int green;
     int blue;
 } CubeCounter;
-void print_cubes(CubeCounter);
+void print_cubes(const CubeCounter *);
 void set_color(CubeCounter *, Color, int);
 int get_color(CubeCounter *, Color);
 void clear_colors(CubeCounter *);
+int cube_power(CubeCounter *);
 
-// a game consisting of a game number and a list of rounds
+// a game consisting of a game id and a list of rounds
 typedef struct {
-    int number;
+    int id;
+    int round_count;
+    CubeCounter rounds[MAX_ROUNDS];
 } Game;
+bool read_game_header(FILE * file, Game * game);
 bool read_game(FILE *, Game *);
 void print_game(Game *);
+
+bool can_play_game(Game *, const CubeCounter *);
+bool can_play_round(CubeCounter *, const CubeCounter *);
+CubeCounter fewest_cubes_for_game(Game *);
+void update_fewest_cubes_for_round(CubeCounter *, CubeCounter *);
 
 void solve02(void) {
 
     FILE * file = open_input_file(2);
     Game game;
 
+    const CubeCounter LIMITS = {.red=12, .green=13, .blue=14};
+
+    int answer1 = 0;
+    int answer2 = 0;
+
     // loop while the file contains more games
     while (read_game(file, &game)) {
 
-        print_game(&game);
-        printf("\n");
+        // Part 1: sum of IDs of games which can be played
+        if (can_play_game(&game, &LIMITS))
+            answer1 += game.id;
+        assert(answer1 >= 0);
+
+        // Part 2: sum of cube powers of fewest cubes needed for game
+        CubeCounter fewest = fewest_cubes_for_game(&game);
+        answer2 += cube_power(& fewest);
+        assert(answer2 >= 0);
 
     }
 
@@ -53,8 +77,10 @@ void solve02(void) {
 
     printf("Advent of Code 2023!\n");
     printf("Day 2\n");
-    printf("Part 1: TODO\n");
-    printf("Part 2: TODO\n");
+    printf("Part 1: %d\n", answer1);
+    assert(2283 == answer1);
+    printf("Part 2: %d\n", answer2);
+    assert(78669 == answer1);
 
 }
 
@@ -70,24 +96,33 @@ bool parse_color(char * s, Color * color) {
     return true;
 }
 
-bool read_game(FILE * file, Game * game) {
-
-    // header "Game n: "
+bool read_game_header(FILE * file, Game * game) {
     if (!ignore_string(file, "Game "))
         return false;
     char buffer[MAX_WORD_SIZE + 1];
     if (!read_string_until(file, ':', buffer, MAX_WORD_SIZE))
         die("read_until failed 7");
-    game->number = parse_int(buffer);
+    game->id = parse_int(buffer);
     ignore_char(file, ' ');
+    return true;
+}
 
+bool read_game(FILE * file, Game * game) {
+
+    if (!read_game_header(file, game))
+        return false;
+
+    char buffer[MAX_WORD_SIZE + 1];
     int count;
     char found_delimiter;
     Color color;
     CubeCounter cubes = {0};
+    game->round_count = 0;
 
+    // read the rounds
     while (true) {
 
+        // read color count and color delimiter one of {',', ';', '\n'}
         if (!read_string_until(file, ' ', buffer, MAX_WORD_SIZE))
             die("read_until failed");
         count = parse_int(buffer);
@@ -97,13 +132,20 @@ bool read_game(FILE * file, Game * game) {
             die("unable to parse color");
         set_color(&cubes, color, count);
 
+        // ',' means end of color (same round)
+        // ';' means end of color and round (same game)
+        // '\n' means end of color, round, and game
         if (found_delimiter == ';' || found_delimiter == '\n') {
-            printf("cubes = "); print_cubes(cubes); printf("\n");
+            if (game->round_count >= MAX_ROUNDS)
+                die("hit MAX_ROUNDS limit");
+            game->rounds[game->round_count] = cubes;
+            game->round_count++;
             clear_colors(&cubes);
         }
         if (found_delimiter == '\n')
             return true;
 
+        // ',' and ';' are followed by a space
         ignore_char(file, ' ');
 
     }
@@ -111,7 +153,17 @@ bool read_game(FILE * file, Game * game) {
 }
 
 void print_game(Game * game) {
-    printf("Game(number=%d)\n", game->number);
+    printf("Game\n");
+    printf("----\n");
+    printf("id = %d\n", game->id);
+    printf("round_count = %d\n", game->round_count);
+    if (game->round_count < 0 || game-> round_count > MAX_ROUNDS)
+        die("invalid id of rounds");
+    for (int i = 0; i < game->round_count; i++) {
+        printf("%d: ", i);
+        print_cubes(&game->rounds[i]);
+        printf("\n");
+    }
 }
 
 void set_color(CubeCounter * cubes, Color color, int count) {
@@ -165,7 +217,44 @@ void print_color(Color color) {
     }
 }
 
-void print_cubes(CubeCounter cubes) {
+void print_cubes(const CubeCounter * cubes) {
     printf("CubeCounter(red=%d, green=%d, blue=%d)",
-           cubes.red, cubes.green, cubes.blue);
+           cubes->red, cubes->green, cubes->blue);
+}
+
+bool can_play_game(Game * game, const CubeCounter * limits) {
+    for (int i = 0; i < game->round_count; i++)
+        if (!can_play_round(&game->rounds[i], limits))
+            return false;
+    return true;
+}
+
+bool can_play_round(CubeCounter * round, const CubeCounter * limit) {
+    if (round->red > limit->red)
+        return false;
+    if (round->green > limit->green)
+        return false;
+    if (round->blue > limit->blue)
+        return false;
+    return true;
+}
+
+CubeCounter fewest_cubes_for_game(Game * game) {
+    CubeCounter rv = {0, 0, 0};
+    for (int i = 0; i < game->round_count; i++)
+        update_fewest_cubes_for_round(&game->rounds[i], &rv);
+    return rv;
+}
+
+void update_fewest_cubes_for_round(CubeCounter * round, CubeCounter * fewest) {
+    if (round->red > fewest->red)
+        fewest->red = round->red;
+    if (round->green > fewest->green)
+        fewest->green = round->green;
+    if (round->blue > fewest->blue)
+        fewest->blue = round->blue;
+}
+
+int cube_power(CubeCounter * cubes) {
+    return cubes->red * cubes->green * cubes->blue;
 }

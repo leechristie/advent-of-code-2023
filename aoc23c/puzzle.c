@@ -12,11 +12,9 @@
 #include "puzzle.h"
 
 #define INPUT_PATH ("../../input/input%02d.txt")
-#define EXAMPLE_PATH ("../../input/example%02d.txt")
 
 // remove 2 characters because "%02d" reduces from 4 to 2 characters
 #define INPUT_PATH_LEN (sizeof INPUT_PATH - 2)
-#define EXAMPLE_PATH_LEN (sizeof EXAMPLE_PATH - 2)
 
 noreturn void die(char * error_message) {
     fprintf(stderr, "%s\n", error_message);
@@ -28,17 +26,6 @@ FILE * open_input_file(int day) {
         die("Invalid day.");
     char filename[INPUT_PATH_LEN];
     sprintf(filename, INPUT_PATH, day);
-    FILE * file = fopen(filename, "r");
-    if (file == NULL)
-        die("Unable to open input file.");
-    return file;
-}
-
-FILE * open_example_file(int day) {
-    if (day < 1 || day > 25)
-        die("Invalid day.");
-    char filename[EXAMPLE_PATH_LEN];
-    sprintf(filename, EXAMPLE_PATH, day);
     FILE * file = fopen(filename, "r");
     if (file == NULL)
         die("Unable to open input file.");
