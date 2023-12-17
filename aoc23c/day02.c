@@ -28,7 +28,6 @@ typedef struct {
 } CubeCounter;
 void print_cubes(const CubeCounter *);
 void set_color(CubeCounter *, Color, int);
-int get_color(CubeCounter *, Color);
 void clear_colors(CubeCounter *);
 int cube_power(CubeCounter *);
 
@@ -177,19 +176,6 @@ void set_color(CubeCounter * cubes, Color color, int count) {
         case BLUE:
             cubes->blue = count;
             break;
-        default:
-            die("invalid color");
-    }
-}
-
-int get_color(CubeCounter * cubes, Color color) {
-    switch (color) {
-        case RED:
-            return cubes->red;
-        case GREEN:
-            return cubes->green;
-        case BLUE:
-            return cubes->blue;
         default:
             die("invalid color");
     }
