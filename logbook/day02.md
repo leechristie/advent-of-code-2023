@@ -69,3 +69,47 @@ Colors are represented using a `std::array<int, 3>` and I build this by checking
 Overall I spent about an hour and a half on parsing code, and then a couple of minutes actually implementing the solve from the parsed objects to the final answers.
 
 I'm not really familiar with C++, and I'm a bit confused about when I'm actually copying things or not, whereas I don't have this confusion when I'm programming in a more familiar language.
+
+### 4. C
+
+Parsing in C was a little more difficult.
+
+I've written some parsing functions which were useful for Day 2 and I think will be useful in the future, for example:
+
+```C
+bool read_string_until_any(FILE * file,
+                           const char * delimiters,
+                           char * buffer,
+                           size_t max_length,
+                           char * found_delimiter) {
+```
+
+This function is called to read from file `file` into string `buffer` (which is a `char[max_length + 1]`) until it encounters one of the specified `delimiters`, e.g.
+
+```C
+read_string_until_any(file, ",;\n", buffer, MAX_WORD_SIZE, &found_delimiter)
+```
+
+Reads until it encounters {`','`, `';'`, `'\n'`}. The encountered delimiter is returned into the out argument `found_delimiter`. The funtion returns `false` if it encounters `EOF`.
+
+Solution to the problem, I wrote a parsing function which reads a `Game` as defined below:
+
+```C
+typedef enum { RED, GREEN, BLUE } Color;
+
+typedef struct {
+    int red;
+    int green;
+    int blue;
+} CubeCounter;
+
+typedef struct {
+    int id;
+    int round_count;
+    CubeCounter rounds[MAX_ROUNDS];
+} Game;
+```
+
+`MAX_ROUNDS` for my input file can be 6. It seems like many of the games are 5 or 6 rounds. I don't want to go allocating for a variable-length data structure yet.
+
+Then it is simple to check if the game is playable (for Part 1), and finding the max of each color to find the minimum number of required cubes and multiply to get the cube power (for Part 2).
