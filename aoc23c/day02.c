@@ -17,8 +17,8 @@
 
 // a single color red, green, or blue
 typedef enum { RED, GREEN, BLUE } Color;
-bool parse_color(char *, Color *);
-void print_color(Color);
+static bool parse_color(char *, Color *);
+//static void print_color(Color);
 
 // a mapping of {Color -> int} used to represent a game round
 typedef struct {
@@ -26,10 +26,10 @@ typedef struct {
     int green;
     int blue;
 } CubeCounter;
-void print_cubes(const CubeCounter *);
-void set_color(CubeCounter *, Color, int);
-void clear_colors(CubeCounter *);
-int cube_power(CubeCounter *);
+//static void print_cubes(const CubeCounter *);
+static void set_color(CubeCounter *, Color, int);
+static void clear_colors(CubeCounter *);
+static int cube_power(CubeCounter *);
 
 // a game consisting of a game id and a list of rounds
 typedef struct {
@@ -37,14 +37,14 @@ typedef struct {
     int round_count;
     CubeCounter rounds[MAX_ROUNDS];
 } Game;
-bool read_game_header(FILE * file, Game * game);
-bool read_game(FILE *, Game *);
-void print_game(Game *);
+static bool read_game_header(FILE * file, Game * game);
+static bool read_game(FILE *, Game *);
+//static void print_game(Game *);
 
-bool can_play_game(Game *, const CubeCounter *);
-bool can_play_round(CubeCounter *, const CubeCounter *);
-CubeCounter fewest_cubes_for_game(Game *);
-void update_fewest_cubes_for_round(CubeCounter *, CubeCounter *);
+static bool can_play_game(Game *, const CubeCounter *);
+static bool can_play_round(CubeCounter *, const CubeCounter *);
+static CubeCounter fewest_cubes_for_game(Game *);
+static void update_fewest_cubes_for_round(CubeCounter *, CubeCounter *);
 
 void solve02(void) {
 
@@ -83,7 +83,7 @@ void solve02(void) {
 
 }
 
-bool parse_color(char * s, Color * color) {
+static bool parse_color(char * s, Color * color) {
     if (strcmp(s, "red") == 0)
         *color = RED;
     else if (strcmp(s, "green") == 0)
@@ -95,18 +95,18 @@ bool parse_color(char * s, Color * color) {
     return true;
 }
 
-bool read_game_header(FILE * file, Game * game) {
+static bool read_game_header(FILE * file, Game * game) {
     if (!ignore_string(file, "Game "))
         return false;
     char buffer[MAX_WORD_SIZE + 1];
     if (!read_string_until(file, ':', buffer, MAX_WORD_SIZE))
-        die("read_until failed 7");
+        die("read_string_until failed");
     game->id = parse_int(buffer);
     ignore_char(file, ' ');
     return true;
 }
 
-bool read_game(FILE * file, Game * game) {
+static bool read_game(FILE * file, Game * game) {
 
     if (!read_game_header(file, game))
         return false;
@@ -123,10 +123,10 @@ bool read_game(FILE * file, Game * game) {
 
         // read color count and color delimiter one of {',', ';', '\n'}
         if (!read_string_until(file, ' ', buffer, MAX_WORD_SIZE))
-            die("read_until failed");
+            die("read_string_until_any failed");
         count = parse_int(buffer);
         if (!read_string_until_any(file, ",;\n", buffer, MAX_WORD_SIZE, &found_delimiter))
-            die("read_until failed");
+            die("read_string_until_any failed");
         if (!parse_color(buffer, &color))
             die("unable to parse color");
         set_color(&cubes, color, count);
@@ -151,21 +151,21 @@ bool read_game(FILE * file, Game * game) {
 
 }
 
-void print_game(Game * game) {
-    printf("Game\n");
-    printf("----\n");
-    printf("id = %d\n", game->id);
-    printf("round_count = %d\n", game->round_count);
-    if (game->round_count < 0 || game-> round_count > MAX_ROUNDS)
-        die("invalid id of rounds");
-    for (int i = 0; i < game->round_count; i++) {
-        printf("%d: ", i);
-        print_cubes(&game->rounds[i]);
-        printf("\n");
-    }
-}
+//static void print_game(Game * game) {
+//    printf("Game\n");
+//    printf("----\n");
+//    printf("id = %d\n", game->id);
+//    printf("round_count = %d\n", game->round_count);
+//    if (game->round_count < 0 || game-> round_count > MAX_ROUNDS)
+//        die("invalid id of rounds");
+//    for (int i = 0; i < game->round_count; i++) {
+//        printf("%d: ", i);
+//        print_cubes(&game->rounds[i]);
+//        printf("\n");
+//    }
+//}
 
-void set_color(CubeCounter * cubes, Color color, int count) {
+static void set_color(CubeCounter * cubes, Color color, int count) {
     switch (color) {
         case RED:
             cubes->red = count;
@@ -181,41 +181,41 @@ void set_color(CubeCounter * cubes, Color color, int count) {
     }
 }
 
-void clear_colors(CubeCounter * cubes) {
+static void clear_colors(CubeCounter * cubes) {
     cubes->red = 0;
     cubes->green = 0;
     cubes->blue = 0;
 }
 
-void print_color(Color color) {
-    switch (color) {
-        case RED:
-            printf("Color.RED");
-            break;
-        case GREEN:
-            printf("Color.GREEN");
-            break;
-        case BLUE:
-            printf("Color.BLUE");
-            break;
-        default:
-            die("invalid color");
-    }
-}
+//static void print_color(Color color) {
+//    switch (color) {
+//        case RED:
+//            printf("Color.RED");
+//            break;
+//        case GREEN:
+//            printf("Color.GREEN");
+//            break;
+//        case BLUE:
+//            printf("Color.BLUE");
+//            break;
+//        default:
+//            die("invalid color");
+//    }
+//}
 
-void print_cubes(const CubeCounter * cubes) {
-    printf("CubeCounter(red=%d, green=%d, blue=%d)",
-           cubes->red, cubes->green, cubes->blue);
-}
+//static void print_cubes(const CubeCounter * cubes) {
+//    printf("CubeCounter(red=%d, green=%d, blue=%d)",
+//           cubes->red, cubes->green, cubes->blue);
+//}
 
-bool can_play_game(Game * game, const CubeCounter * limits) {
+static bool can_play_game(Game * game, const CubeCounter * limits) {
     for (int i = 0; i < game->round_count; i++)
         if (!can_play_round(&game->rounds[i], limits))
             return false;
     return true;
 }
 
-bool can_play_round(CubeCounter * round, const CubeCounter * limit) {
+static bool can_play_round(CubeCounter * round, const CubeCounter * limit) {
     if (round->red > limit->red)
         return false;
     if (round->green > limit->green)
@@ -225,14 +225,14 @@ bool can_play_round(CubeCounter * round, const CubeCounter * limit) {
     return true;
 }
 
-CubeCounter fewest_cubes_for_game(Game * game) {
+static CubeCounter fewest_cubes_for_game(Game * game) {
     CubeCounter rv = {0, 0, 0};
     for (int i = 0; i < game->round_count; i++)
         update_fewest_cubes_for_round(&game->rounds[i], &rv);
     return rv;
 }
 
-void update_fewest_cubes_for_round(CubeCounter * round, CubeCounter * fewest) {
+static void update_fewest_cubes_for_round(CubeCounter * round, CubeCounter * fewest) {
     if (round->red > fewest->red)
         fewest->red = round->red;
     if (round->green > fewest->green)
@@ -241,6 +241,6 @@ void update_fewest_cubes_for_round(CubeCounter * round, CubeCounter * fewest) {
         fewest->blue = round->blue;
 }
 
-int cube_power(CubeCounter * cubes) {
+static int cube_power(CubeCounter * cubes) {
     return cubes->red * cubes->green * cubes->blue;
 }

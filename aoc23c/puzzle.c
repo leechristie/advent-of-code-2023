@@ -42,6 +42,20 @@ bool is_any(char c, const char * characters) {
     return false;
 }
 
+bool read_n_characters(FILE * file, size_t n, char * buffer) {
+    size_t index = 0;
+    while (index < n) {
+        int character = getc(file);
+        if (character == EOF)
+            return false;
+        char c = (char) character;
+        buffer[index] = c;
+        index++;
+    }
+    buffer[index] = '\0';
+    return true;
+}
+
 bool read_string_until(FILE * file, char delimiter, char * buffer, size_t max_length) {
     size_t index = 0;
     while (true) {
@@ -164,4 +178,20 @@ int parse_int(char * str) {
     if (rv < INT_MIN || rv > INT_MAX)
         die("unable to parse int");
     return (int) rv;
+}
+
+char * lstrip_view(char * string) {
+    while (*string == ' ')
+        string++;
+    return string;
+}
+
+void println_array(const char * name, int * array, size_t length) {
+    printf("%s = [", name);
+    for (size_t i = 0; i < length; i++) {
+        if (i != 0)
+            printf(", ");
+        printf("%d", array[i]);
+    }
+    printf("]\n");
 }
