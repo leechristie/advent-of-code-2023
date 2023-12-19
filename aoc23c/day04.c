@@ -5,17 +5,22 @@
 #include <stdbool.h>
 #include <assert.h>
 #include "days.h"
-#include "puzzle.h"
+#include "puzzletools.h"
+#include "arraytools.h"
+#include "filetools.h"
+#include "stringtools.h"
 
 #define COUNT_PICKED (10)
 #define COUNT_WINNING (25)
 #define BOUND (100)
 
 static void set_lookup(const int *, bool *);
-static int calc_score(const bool *, const int *);
+static int calc_score(int);
+static int calc_num_matches(const bool *, const int *);
 static void unset_lookup(const int *, bool *);
 
-#define MAX_WORD_SIZE (5)
+// max parsing buffer is length 3 string for 2-digit number with leading space
+#define MAX_WORD_SIZE (3)
 
 static bool read_card(FILE *, int *, int *, int *);
 static bool read_card_header(FILE *, char *, int *);
@@ -27,28 +32,36 @@ void solve04(void) {
     FILE * file = open_input_file(4);
 
     bool lookup[BOUND] = {false};
-    int answer1 = 0;
+    int total_score = 0;
 
     int card_number;
     int picked[COUNT_PICKED];
     int winning[COUNT_WINNING];
 
-    int i = 0;
+    int extra_copies[COUNT_PICKED] = {0};
+    long total_scratched = 0;
+
     while (true) {
 
         if (!read_card(file, &card_number, picked, winning))
             break;
 
-        printf("card_number = %d\n", card_number);
-        println_array("picked", picked, COUNT_PICKED);
-        println_array("winning", winning, COUNT_WINNING);
-        printf("\n");
+        int num_copies = 1 + extra_copies[0];
+        total_scratched += num_copies;
+        assert(total_scratched > 0);
+        left_shift_array(extra_copies, COUNT_PICKED);
 
-        assert(card_number == i);
         set_lookup(picked, lookup);
-        answer1 += calc_score(lookup, winning);
-        unset_lookup(picked, lookup); // lookup = {false};
-        i++;
+        int num_matches = calc_num_matches(lookup, winning);
+        total_score += calc_score(num_matches);
+        unset_lookup(picked, lookup); // lookup = {false}
+
+        if (num_matches > 0) {
+            for (int i = 0; i < num_matches; i++) {
+                extra_copies[i] += num_copies;
+                assert(extra_copies[i] > 0);
+            }
+        }
 
     }
 
@@ -57,9 +70,11 @@ void solve04(void) {
 
     printf("Advent of Code 2023!\n");
     printf("Day 4\n");
-    printf("Part 1: %d\n", answer1);
-    assert(24542 == answer1);
-    printf("Part 2: TODO\n");
+    printf("Part 1: %d\n", total_score);
+    printf("Part 2: %ld\n", total_scratched);
+    
+    assert(24542 == total_score);
+    assert(8736438 == total_scratched);
 
 }
 
@@ -101,11 +116,18 @@ static void set_lookup(const int * picked, bool * lookup) {
         lookup[picked[i]] = true;
 }
 
-static int calc_score(const bool * lookup, const int * winning) {
+static int calc_score(const int num_matches) {
+    int rv = 0;
+    for (int i = 0; i < num_matches; i++)
+        rv = rv ? rv * 2 : 1;
+    return rv;
+}
+
+static int calc_num_matches(const bool * lookup, const int * winning) {
     int rv = 0;
     for (size_t i = 0; i < COUNT_WINNING; i++)
         if (lookup[winning[i]])
-            rv = rv ? rv * 2 : 1;
+            rv++;
     return rv;
 }
 

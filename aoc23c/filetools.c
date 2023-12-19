@@ -3,44 +3,11 @@
 // @0x1ac@techhub.social
 
 #include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <errno.h>
-#include <limits.h>
+#include <stdbool.h>
 
-#include "puzzle.h"
-
-#define INPUT_PATH ("../../input/input%02d.txt")
-
-// remove 2 characters because "%02d" reduces from 4 to 2 characters
-#define INPUT_PATH_LEN (sizeof INPUT_PATH - 2)
-
-noreturn void die(char * error_message) {
-    fprintf(stderr, "%s\n", error_message);
-    exit(1);
-}
-
-FILE * open_input_file(int day) {
-    if (day < 1 || day > 25)
-        die("Invalid day.");
-    char filename[INPUT_PATH_LEN];
-    sprintf(filename, INPUT_PATH, day);
-    FILE * file = fopen(filename, "r");
-    if (file == NULL)
-        die("Unable to open input file.");
-    return file;
-}
-
-bool is_any(char c, const char * characters) {
-    size_t index = 0;
-    while (characters[index] != '\0') {
-        if (c == characters[index])
-            return true;
-        index++;
-    }
-    return false;
-}
+#include "filetools.h"
+#include "stringtools.h"
+#include "errortools.h"
 
 bool read_n_characters(FILE * file, size_t n, char * buffer) {
     size_t index = 0;
@@ -158,40 +125,4 @@ int read_int_checked(FILE * file, const int lower, const int bound) {
     if (rv < lower || rv >= bound)
         die("read_int_checked bound check failed");
     return rv;
-}
-
-long parse_long(char * str) {
-    size_t length = strlen(str);
-    if (length < 1 || (str[0] != '-' && !isdigit(str[0])))
-        die("unable to parse long");
-    errno = 0;
-    char *end;
-    long rv = strtol(str, &end, 10);
-    size_t read = end - str;
-    if (errno || read != length)
-        die("unable to parse long");
-    return rv;
-}
-
-int parse_int(char * str) {
-    long rv = parse_long(str);
-    if (rv < INT_MIN || rv > INT_MAX)
-        die("unable to parse int");
-    return (int) rv;
-}
-
-char * lstrip_view(char * string) {
-    while (*string == ' ')
-        string++;
-    return string;
-}
-
-void println_array(const char * name, int * array, size_t length) {
-    printf("%s = [", name);
-    for (size_t i = 0; i < length; i++) {
-        if (i != 0)
-            printf(", ");
-        printf("%d", array[i]);
-    }
-    printf("]\n");
 }

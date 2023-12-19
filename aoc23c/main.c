@@ -5,14 +5,15 @@
 #include <stdlib.h>
 
 #include "days.h"
-#include "puzzle.h"
+#include "errortools.h"
+#include "stringtools.h"
 
 int main(int argc, char * argv[]) {
 
     if (argc < 2)
         die("Valid day not specified in command line argument.");
 
-    const int day = atoi(argv[argc - 1]);
+    const int day = parse_int(argv[argc - 1]);
     switch (day) {
         case 1:
             solve01();
