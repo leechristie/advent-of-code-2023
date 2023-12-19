@@ -4,7 +4,7 @@
 
 I skipped Day 2 and 3 for now due to vacation being away from the computer. On returning, I decided to try solving Day 4 Part 1 in C first.
 
-### 1. C (Part 1)
+### 1. C
 
 Whenever I solve these in C, I always have to write using a lot of small functions to abstract the code somewhat.
 
@@ -26,6 +26,20 @@ The `read_ticket` function reads the ticket into an array of picked numbers and 
 `calc_score` loops over the winning numbers an checks them against the lookup, again checking all the numbers is linear in the number of winning numbers rather than nlogn.
 
 The use of a lookup boolean array should be faster than a hash set or binary tree. However, there real reason for this choice is that I'm using C and this is easier.
+
+I finished Part 2 later after solving it in Swift. This is also after having gone back and done Day 2 in C, and writing a bunch of helper functions. The main idea for my C implmentation of Part 2 is to keep an array of 10 elements (`COUNT_PICKED`) representing how many of extra each upcomming ticket I have.
+
+```C
+int extra_copies[COUNT_PICKED] = {0};
+```
+
+To find out how many copies of the current ticket we have, take
+
+```C
+int num_copies = 1 + extra_copies[0];
+```
+
+and then shift all the numbers one place to the left (filling in a `0` at the last place). After we know how many tickets are won, add `num_copies` (number of copies of the current ticket that one) to each of the first `num_matches` places in the array.
 
 ### 2. Swift
 
