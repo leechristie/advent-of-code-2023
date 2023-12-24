@@ -3,18 +3,14 @@
 # @0x1ac@techhub.social
 
 import sys
-from days import *
+from solvers import *
 
 
 def main() -> None:
-    arg = sys.argv[-1]
-    if arg == '1':
-        day01.solve()
-    elif arg == '2':
-        day02.solve()
-    elif arg == '3':
-        day03.solve()
-    else:
+    try:
+        day = int(sys.argv[-1])
+        solvers[day]()
+    except (ValueError, IndexError):
         print('Valid day not specified in command line argument.')
         sys.exit(1)
 
