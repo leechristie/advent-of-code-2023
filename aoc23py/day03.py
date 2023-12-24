@@ -108,3 +108,5 @@ def solve() -> None:
     print('Day 1')
     print(f'Part 1: {answers[0]}')
     print(f'Part 2: {answers[1]}')
+    assert 550064 == answers[0]
+    assert 85010461 == answers[1]

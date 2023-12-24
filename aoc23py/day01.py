@@ -44,3 +44,5 @@ def solve() -> None:
     print('Day 1')
     print(f'Part 1: {answer1}')
     print(f'Part 2: {answer2}')
+    assert 54708 == answer1
+    assert 54087 == answer2
