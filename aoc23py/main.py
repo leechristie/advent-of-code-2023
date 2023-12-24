@@ -10,7 +10,7 @@ def main() -> None:
     try:
         day = int(sys.argv[-1])
         solvers[day]()
-    except (ValueError, IndexError):
+    except (ValueError, KeyError):
         print('Valid day not specified in command line argument.')
         sys.exit(1)
 
