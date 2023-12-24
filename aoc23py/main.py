@@ -7,7 +7,7 @@ from solvers import *
 
 
 def main() -> None:
-    
+
     try:
         day = int(sys.argv[-1])
         solver = solvers[day]
