@@ -7,12 +7,15 @@ from solvers import *
 
 
 def main() -> None:
+    
     try:
         day = int(sys.argv[-1])
-        solvers[day]()
+        solver = solvers[day]
     except (ValueError, KeyError):
         print('Valid day not specified in command line argument.')
         sys.exit(1)
+
+    solver()
 
 
 if __name__ == '__main__':
