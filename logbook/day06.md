@@ -28,9 +28,9 @@ However, the puzzle isn't looking for the exact zero, we want the first value of
 
 Instead of just square rooting the discriminant, I find the approximate roots:
 
-$x_1=\lfloor(T-isqrt(T^2-4D))/2\rfloor$
+$x_1\approx\lfloor(T-isqrt(T^2-4D))/2\rfloor$
 
-$x_2=\lfloor(T+isqrt(T^2-4D))/2\rfloor$
+$x_2\approx\lfloor(T+isqrt(T^2-4D))/2\rfloor$
 
 Then search nearby for the crossing points. We know near $x_1$ the slope is up and near $x_2$ the slope is down, so we just need to check a couple of nearby values to find the smallest $x$ near $x_1$ that gives positive $y$ and the largest $x$ near $x_2$ that gives positive $y$, and take the difference and add 1, this gives the solution to the problem in constant time so the solution is nearly instant. There also is no floating point math involved since I used `isqrt` and integer division.
 
