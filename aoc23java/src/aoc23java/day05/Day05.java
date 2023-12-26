@@ -16,7 +16,7 @@ public final class Day05 {
         throw new AssertionError();
     }
 
-    public static void solve() throws IOException {
+    public static void solve() {
 
         System.out.println("Advent of Code 2023!");
         System.out.println("Day 5");
@@ -26,13 +26,17 @@ public final class Day05 {
         try (BufferedReader in = Puzzle.inputLines(5)) {
             seeds = Seeds.read(in);
             allMaps = CategoryMapSortedSet.readAll(in);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
         }
 
         long answer1 = solvePart1(seeds, allMaps);
         System.out.println("Part 1: " + answer1);
+        assert 157211394 == answer1;
 
         long answer2 = solvePart2(seeds, allMaps);
         System.out.println("Part 2: " + answer2);
+        assert 50855035 == answer2;
 
     }
 

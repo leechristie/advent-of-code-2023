@@ -63,7 +63,7 @@ public final class Day01 {
         return digits.getFirst() * 10 + digits.getLast();
     }
 
-    public static void solve() throws IOException {
+    public static void solve() {
 
         System.out.println("Advent of Code 2023!");
         System.out.println("Day 1");
@@ -77,10 +77,15 @@ public final class Day01 {
                 answer1 += firstAndLastDigits(findDigits(line, false));
                 answer2 += firstAndLastDigits(findDigits(line, true));
             }
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
         }
 
         System.out.println("Part 1: " + answer1);
         System.out.println("Part 2: " + answer2);
+
+        assert 54708 == answer1;
+        assert 54087 == answer2;
 
     }
 

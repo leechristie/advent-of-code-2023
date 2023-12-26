@@ -15,7 +15,10 @@ public final class Day02 {
         throw new AssertionError();
     }
 
-    public static void solve() throws IOException {
+    public static void solve() {
+
+        System.out.println("Advent of Code 2023!");
+        System.out.println("Day 2");
 
         final UnorderedCubes LIMIT = new UnorderedCubes( 12, 13, 14);
 
@@ -35,12 +38,15 @@ public final class Day02 {
                 UnorderedCubes minimum = minimumCubesFor(game);
                 answer2 += minimum.power();
             }
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
         }
 
-        System.out.println("Advent of Code 2023!");
-        System.out.println("Day 2");
         System.out.println("Part 1: " + answer1);
         System.out.println("Part 2: " + answer2);
+
+        assert 2283 == answer1;
+        assert 78669 == answer2;
 
     }
 
