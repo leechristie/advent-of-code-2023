@@ -7,7 +7,7 @@
 - [Day 4 - Scratchcards](day04.md) ⭐️⭐️
 - [Day 5 - If You Give A Seed A Fertilizer](day05.md) ⭐️⭐️
 - [Day 6 - Wait For It](day06.md) ⭐️⭐️
-- [Day 7 - Camel Cards](day07.md) ⭐️⭐
+- [Day 7 - Camel Cards](day07.md) ⭐️
 - Day 8
 - Day 9
 - Day 10
