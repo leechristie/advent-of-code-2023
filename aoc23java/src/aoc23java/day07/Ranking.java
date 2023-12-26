@@ -76,11 +76,8 @@ sealed abstract class Ranking implements Comparable<Ranking>
         private static Optional<Ranking> attemptRank(Hand hand) {
             Objects.requireNonNull(hand);
             Map<Card, Integer> counter = count(hand);
-            if (!Ranking.valuesEquals(counter, 1, 4)) {
+            if (!Ranking.valuesEquals(counter, 1, 4))
                 return Optional.empty();
-            }
-            Card same = Ranking.invertedGet(counter, 4);
-            Card different = Ranking.invertedGet(counter, 1);
             return Optional.of(new FourOfAKind());
         }
 
@@ -120,11 +117,8 @@ sealed abstract class Ranking implements Comparable<Ranking>
         private static Optional<Ranking> attemptRank(Hand hand) {
             Objects.requireNonNull(hand);
             Map<Card, Integer> counter = count(hand);
-            if (!Ranking.valuesEquals(counter, 2, 3)) {
+            if (!Ranking.valuesEquals(counter, 2, 3))
                 return Optional.empty();
-            }
-            Card three = Ranking.invertedGet(counter, 3);
-            Card pair = Ranking.invertedGet(counter, 2);
             return Optional.of(new FullHouse());
         }
 
@@ -154,15 +148,8 @@ sealed abstract class Ranking implements Comparable<Ranking>
         private static Optional<Ranking> attemptRank(Hand hand) {
             Objects.requireNonNull(hand);
             Map<Card, Integer> counter = count(hand);
-            if (!Ranking.valuesEquals(counter, 1, 1, 3)) {
+            if (!Ranking.valuesEquals(counter, 1, 1, 3))
                 return Optional.empty();
-            }
-            Card three = Ranking.invertedGet(counter, 3);
-            List<Card> singles = Ranking.invertedMultiGet(counter, 1);
-            Collections.sort(singles);
-            assert singles.size() == 2;
-            Card low = singles.get(0);
-            Card high = singles.get(1);
             return Optional.of(new ThreeOfAKind());
         }
 
@@ -192,15 +179,8 @@ sealed abstract class Ranking implements Comparable<Ranking>
         private static Optional<Ranking> attemptRank(Hand hand) {
             Objects.requireNonNull(hand);
             Map<Card, Integer> counter = count(hand);
-            if (!Ranking.valuesEquals(counter, 1, 2, 2)) {
+            if (!Ranking.valuesEquals(counter, 1, 2, 2))
                 return Optional.empty();
-            }
-            Card single = Ranking.invertedGet(counter, 1);
-            List<Card> pairs = Ranking.invertedMultiGet(counter, 2);
-            Collections.sort(pairs);
-            assert pairs.size() == 2;
-            Card low = pairs.get(0);
-            Card high = pairs.get(1);
             return Optional.of(new TwoPair());
         }
 
@@ -230,16 +210,8 @@ sealed abstract class Ranking implements Comparable<Ranking>
         public static Optional<Ranking> attemptRank(Hand hand) {
             Objects.requireNonNull(hand);
             Map<Card, Integer> counter = count(hand);
-            if (!Ranking.valuesEquals(counter, 1, 1, 1, 2)) {
+            if (!Ranking.valuesEquals(counter, 1, 1, 1, 2))
                 return Optional.empty();
-            }
-            Card pair = Ranking.invertedGet(counter, 2);
-            List<Card> singles = Ranking.invertedMultiGet(counter, 1);
-            Collections.sort(singles);
-            assert singles.size() == 3;
-            Card low = singles.get(0);
-            Card middle = singles.get(1);
-            Card high = singles.get(2);
             return Optional.of(new OnePair());
         }
 
@@ -269,17 +241,8 @@ sealed abstract class Ranking implements Comparable<Ranking>
         public static Optional<Ranking> attemptRank(Hand hand) {
             Objects.requireNonNull(hand);
             Map<Card, Integer> counter = count(hand);
-            if (!Ranking.valuesEquals(counter, 1, 1, 1, 1, 1)) {
+            if (!Ranking.valuesEquals(counter, 1, 1, 1, 1, 1))
                 return Optional.empty();
-            }
-            List<Card> singles = Ranking.invertedMultiGet(counter, 1);
-            Collections.sort(singles);
-            assert singles.size() == 5;
-            Card lowest = singles.get(0);
-            Card low = singles.get(1);
-            Card middle = singles.get(2);
-            Card high = singles.get(3);
-            Card highest = singles.get(4);
             return Optional.of(new HighCard());
         }
 
@@ -314,23 +277,6 @@ sealed abstract class Ranking implements Comparable<Ranking>
         }
         Collections.sort(valuesList);
         return orderedValues(map).equals(valuesList);
-    }
-
-    private static <K, V> K invertedGet(Map<K, V> counter, V value) {
-        for (Map.Entry<K, V> e: counter.entrySet())
-            if (e.getValue().equals(value))
-                return e.getKey();
-        throw new NoSuchElementException("value not found: " + value);
-    }
-
-    private static <K, V> List<K> invertedMultiGet(Map<K, V> counter, V value) {
-        List<K> rv = new ArrayList<>();
-        for (Map.Entry<K, V> e: counter.entrySet())
-            if (e.getValue().equals(value))
-                rv.add(e.getKey());
-        if (rv.isEmpty())
-            throw new NoSuchElementException("value not found: " + value);
-        return rv;
     }
 
 }
