@@ -1,6 +1,6 @@
 # Logbook
 
-## Day 1 - Gear Ratios
+## Day 3 - Gear Ratios
 
 ### 1. Python
 
