@@ -7,15 +7,27 @@ package aoc23java.day07;
 import java.util.*;
 import java.util.function.*;
 
-record Hand(Card card0, Card card1, Card card2, Card card3, Card card4)
-        implements Comparable<Hand>, Iterable<Card> {
+class Hand implements Comparable<Hand>, Iterable<Card> {
 
-    Hand {
+    private Ranking ranking = null;
+
+    private final Card card0;
+    private final Card card1;
+    private final Card card2;
+    private final Card card3;
+    private final Card card4;
+
+    Hand(Card card0, Card card1, Card card2, Card card3, Card card4) {
         Objects.requireNonNull(card0);
         Objects.requireNonNull(card1);
         Objects.requireNonNull(card2);
         Objects.requireNonNull(card3);
         Objects.requireNonNull(card4);
+        this.card0 = card0;
+        this.card1 = card1;
+        this.card2 = card2;
+        this.card3 = card3;
+        this.card4 = card4;
     }
 
     static Hand parseHand(String string, boolean jokers) {
@@ -50,7 +62,9 @@ record Hand(Card card0, Card card1, Card card2, Card card3, Card card4)
     }
 
     Ranking ranking() {
-        return Ranking.rank(this);
+        if (this.ranking == null)
+            this.ranking = Ranking.rank(this);
+        return this.ranking;
     }
 
     public Card get(int index) {

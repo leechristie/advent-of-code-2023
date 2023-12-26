@@ -7,6 +7,7 @@ package aoc23java.day07;
 import aoc23java.Puzzle;
 
 import java.io.*;
+import java.time.Duration;
 import java.util.*;
 
 public final class Day07 {
@@ -17,6 +18,8 @@ public final class Day07 {
 
     public static void solve() {
 
+        long start = System.nanoTime();
+
         System.out.println("Advent of Code 2023!");
         System.out.println("Day 7");
 
@@ -25,6 +28,9 @@ public final class Day07 {
         long answer1 = computePart1(playedHands);
         System.out.println("Part 1: " + answer1);
         assert 246795406 == answer1;
+
+        long stop = System.nanoTime();
+        System.out.println(Duration.ofNanos(stop - start));
 
         List<PlayedHand> playedHandsWithJokers = readPlayedHands(true);
         System.out.println("Part 2: TODO");
