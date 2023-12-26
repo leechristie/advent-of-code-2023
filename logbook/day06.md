@@ -2,7 +2,7 @@
 
 ## Day 6 - Wait For It
 
-### Python
+### 1. Python
 
 For Part 1, the best thing to do is usually just come up with any solution that works regardless of efficiency so as to reveal the Part 2 as quickly as possible, and the sit and think.
 
