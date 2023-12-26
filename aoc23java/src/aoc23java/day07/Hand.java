@@ -18,28 +18,35 @@ record Hand(Card card0, Card card1, Card card2, Card card3, Card card4)
         Objects.requireNonNull(card4);
     }
 
-    static Hand parseHand(String string) {
+    static Hand parseHand(String string, boolean jokers) {
         Objects.requireNonNull(string);
         if (string.length() != 5)
             throw new IllegalArgumentException("string = \"" + string + "\", expected, length 5");
         Card[] card = new Card[5];
         for (int i = 0; i < 5; i++)
-            card[i] = Card.parseCard(string.charAt(i));
+            card[i] = Card.parseCard(string.charAt(i), jokers);
         return new Hand(card[0], card[1], card[2], card[3], card[4]);
     }
 
     @Override
     public int compareTo(Hand other) {
+
         Objects.requireNonNull(other);
+
+        // compare rank
         int rv = this.ranking().compareTo(other.ranking());
         if (rv != 0)
             return rv;
+
+        // compare card by hard left-to-right
         for (int i = 0; i < 5; i++) {
             rv = this.get(i).compareTo(other.get(i));
             if (rv != 0)
                 return rv;
         }
+
         return 0;
+
     }
 
     Ranking ranking() {

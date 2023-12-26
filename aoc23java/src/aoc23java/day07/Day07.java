@@ -20,12 +20,13 @@ public final class Day07 {
         System.out.println("Advent of Code 2023!");
         System.out.println("Day 7");
 
-        List<PlayedHand> playedHands = readPlayedHands();
+        List<PlayedHand> playedHands = readPlayedHands(false);
         playedHands.sort(Comparator.comparing(PlayedHand::hand));
         long answer1 = computePart1(playedHands);
         System.out.println("Part 1: " + answer1);
         assert 246795406 == answer1;
 
+        List<PlayedHand> playedHandsWithJokers = readPlayedHands(true);
         System.out.println("Part 2: TODO");
 
     }
@@ -34,7 +35,6 @@ public final class Day07 {
         long rv = 0;
         int rank = 1;
         for (PlayedHand playedHand: playedHands) {
-            System.out.println(playedHand + "\n    " + playedHand.hand().ranking() + "\n");
             rv += rank * (long) playedHand.bid();
             assert rv > 0;
             rank++;
@@ -42,12 +42,12 @@ public final class Day07 {
         return rv;
     }
 
-    private static List<PlayedHand> readPlayedHands() {
+    private static List<PlayedHand> readPlayedHands(boolean jokers) {
         List<PlayedHand> rv = new ArrayList<>();
         try (BufferedReader in = Puzzle.inputLines(7, false)) {
             String line;
             while ((line = in.readLine()) != null)
-                rv.add(PlayedHand.parsePlayedHand(line));
+                rv.add(PlayedHand.parsePlayedHand(line, jokers));
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
