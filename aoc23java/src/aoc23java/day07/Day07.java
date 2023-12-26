@@ -6,10 +6,8 @@ package aoc23java.day07;
 
 import aoc23java.Puzzle;
 
-import javax.print.attribute.HashDocAttributeSet;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.Arrays;
+import java.io.*;
+import java.util.*;
 
 public final class Day07 {
 
@@ -21,26 +19,37 @@ public final class Day07 {
 
         System.out.println("Advent of Code 2023!");
         System.out.println("Day 7");
-        System.out.println("Part 1: TODO");
+
+        List<PlayedHand> playedHands = readPlayedHands();
+        playedHands.sort(Comparator.comparing(PlayedHand::hand));
+        long answer1 = computePart1(playedHands);
+        System.out.println("Part 1: " + answer1);
+
         System.out.println("Part 2: TODO");
 
-        for (Card c: Card.values()) {
-            System.out.println(c + ", " + c.character() + ", " + Card.parseCard(c.character()));
-        }
+    }
 
+    private static long computePart1(List<PlayedHand> playedHands) {
+        long rv = 0;
+        int rank = 1;
+        for (PlayedHand playedHand: playedHands) {
+            System.out.println(playedHand + "\n    " + playedHand.hand().ranking() + "\n");
+            rv += rank * (long) playedHand.bid();
+            rank++;
+        }
+        return rv;
+    }
+
+    private static List<PlayedHand> readPlayedHands() {
+        List<PlayedHand> rv = new ArrayList<>();
         try (BufferedReader in = Puzzle.inputLines(7)) {
             String line;
-            while ((line = in.readLine()) != null) {
-                String[] tokens = line.split(" ");
-                assert tokens.length == 2;
-                int bid = Integer.parseInt(tokens[1]);
-                Hand hand = Hand.parseHand(tokens[0]);
-                System.out.println(hand + "\t" + bid);
-            }
+            while ((line = in.readLine()) != null)
+                rv.add(PlayedHand.parsePlayedHand(line));
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-
+        return rv;
     }
 
 }
