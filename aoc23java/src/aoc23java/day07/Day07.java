@@ -25,6 +25,8 @@ public final class Day07 {
         long answer1 = computePart1(playedHands);
         System.out.println("Part 1: " + answer1);
 
+        assert answer1 < 247255339; // That's not the right answer; your answer is too high.
+
         System.out.println("Part 2: TODO");
 
     }
@@ -35,6 +37,7 @@ public final class Day07 {
         for (PlayedHand playedHand: playedHands) {
             System.out.println(playedHand + "\n    " + playedHand.hand().ranking() + "\n");
             rv += rank * (long) playedHand.bid();
+            assert rv > 0;
             rank++;
         }
         return rv;
@@ -42,7 +45,7 @@ public final class Day07 {
 
     private static List<PlayedHand> readPlayedHands() {
         List<PlayedHand> rv = new ArrayList<>();
-        try (BufferedReader in = Puzzle.inputLines(7)) {
+        try (BufferedReader in = Puzzle.inputLines(7, true)) {
             String line;
             while ((line = in.readLine()) != null)
                 rv.add(PlayedHand.parsePlayedHand(line));
