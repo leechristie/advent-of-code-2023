@@ -24,8 +24,7 @@ public final class Day07 {
         playedHands.sort(Comparator.comparing(PlayedHand::hand));
         long answer1 = computePart1(playedHands);
         System.out.println("Part 1: " + answer1);
-
-        assert answer1 < 247255339; // That's not the right answer; your answer is too high.
+        assert 246795406 == answer1;
 
         System.out.println("Part 2: TODO");
 
@@ -45,7 +44,7 @@ public final class Day07 {
 
     private static List<PlayedHand> readPlayedHands() {
         List<PlayedHand> rv = new ArrayList<>();
-        try (BufferedReader in = Puzzle.inputLines(7, true)) {
+        try (BufferedReader in = Puzzle.inputLines(7, false)) {
             String line;
             while ((line = in.readLine()) != null)
                 rv.add(PlayedHand.parsePlayedHand(line));

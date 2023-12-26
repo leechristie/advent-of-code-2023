@@ -31,7 +31,15 @@ record Hand(Card card0, Card card1, Card card2, Card card3, Card card4)
     @Override
     public int compareTo(Hand other) {
         Objects.requireNonNull(other);
-        return this.ranking().compareTo(other.ranking());
+        int rv = this.ranking().compareTo(other.ranking());
+        if (rv != 0)
+            return rv;
+        for (int i = 0; i < 5; i++) {
+            rv = this.get(i).compareTo(other.get(i));
+            if (rv != 0)
+                return rv;
+        }
+        return 0;
     }
 
     Ranking ranking() {

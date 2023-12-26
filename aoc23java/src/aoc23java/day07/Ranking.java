@@ -16,6 +16,8 @@ sealed abstract class Ranking implements Comparable<Ranking>
                 Ranking.OnePair,
                 Ranking.HighCard {
 
+    static final boolean POKER_RULES = false;
+
     static Ranking rank(Hand hand) {
         Objects.requireNonNull(hand);
         List<Function<Hand, Optional<Ranking>>> rankFunctions
@@ -69,8 +71,13 @@ sealed abstract class Ranking implements Comparable<Ranking>
         @Override
         public int compareTo(Ranking other) {
             Objects.requireNonNull(other);
-            if (other.getClass() == Ranking.FiveOfAKind.class)
-                return this.card.compareTo(((FiveOfAKind) other).card);
+            if (!POKER_RULES) {
+                if (other.getClass() == Ranking.FiveOfAKind.class)
+                    return this.compareLeftToRight(other);
+            } else {
+                if (other.getClass() == Ranking.FiveOfAKind.class)
+                    return this.card.compareTo(((FiveOfAKind) other).card);
+            }
             assert this.rankClassIndex() != other.rankClassIndex();
             return Integer.compare(this.rankClassIndex(), other.rankClassIndex());
         }
@@ -115,16 +122,21 @@ sealed abstract class Ranking implements Comparable<Ranking>
         @Override
         public int compareTo(Ranking other) {
             Objects.requireNonNull(other);
-            if (other.getClass() == Ranking.FourOfAKind.class) {
+            if (!POKER_RULES) {
+                if (other.getClass() == Ranking.FourOfAKind.class)
+                    return this.compareLeftToRight(other);
+            } else {
+                if (other.getClass() == Ranking.FourOfAKind.class) {
 
-                // first compare the card which appears 4 times
-                int rv = this.same().compareTo(((FourOfAKind) other).same());
-                if (rv != 0)
-                    return rv;
+                    // first compare the card which appears 4 times
+                    int rv = this.same().compareTo(((FourOfAKind) other).same());
+                    if (rv != 0)
+                        return rv;
 
-                // last compare the other card
-                return this.different().compareTo(((FourOfAKind) other).different());
+                    // last compare the other card
+                    return this.different().compareTo(((FourOfAKind) other).different());
 
+                }
             }
             assert this.rankClassIndex() != other.rankClassIndex();
             return Integer.compare(this.rankClassIndex(), other.rankClassIndex());
@@ -165,16 +177,21 @@ sealed abstract class Ranking implements Comparable<Ranking>
         @Override
         public int compareTo(Ranking other) {
             Objects.requireNonNull(other);
-            if (other.getClass() == Ranking.FullHouse.class) {
+            if (!POKER_RULES) {
+                if (other.getClass() == Ranking.FullHouse.class)
+                    return this.compareLeftToRight(other);
+            } else {
+                if (other.getClass() == Ranking.FullHouse.class) {
 
-                // first compare the card which appears 3 times
-                int rv = this.three().compareTo(((FullHouse) other).three());
-                if (rv != 0)
-                    return rv;
+                    // first compare the card which appears 3 times
+                    int rv = this.three().compareTo(((FullHouse) other).three());
+                    if (rv != 0)
+                        return rv;
 
-                // last compare the pair
-                return this.pair().compareTo(((FullHouse) other).pair());
+                    // last compare the pair
+                    return this.pair().compareTo(((FullHouse) other).pair());
 
+                }
             }
             assert this.rankClassIndex() != other.rankClassIndex();
             return Integer.compare(this.rankClassIndex(), other.rankClassIndex());
@@ -231,21 +248,26 @@ sealed abstract class Ranking implements Comparable<Ranking>
         @Override
         public int compareTo(Ranking other) {
             Objects.requireNonNull(other);
-            if (other.getClass() == Ranking.ThreeOfAKind.class) {
+            if (!POKER_RULES) {
+                if (other.getClass() == Ranking.ThreeOfAKind.class)
+                    return this.compareLeftToRight(other);
+            } else {
+                if (other.getClass() == Ranking.ThreeOfAKind.class) {
 
-                // first compare the card which appears 3 times
-                int rv = this.three().compareTo(((ThreeOfAKind) other).three());
-                if (rv != 0)
-                    return rv;
+                    // first compare the card which appears 3 times
+                    int rv = this.three().compareTo(((ThreeOfAKind) other).three());
+                    if (rv != 0)
+                        return rv;
 
-                // then compare the high single card
-                rv = this.high().compareTo(((ThreeOfAKind) other).high());
-                if (rv != 0)
-                    return rv;
+                    // then compare the high single card
+                    rv = this.high().compareTo(((ThreeOfAKind) other).high());
+                    if (rv != 0)
+                        return rv;
 
-                // last compare the low single card
-                return this.low().compareTo(((ThreeOfAKind) other).low());
+                    // last compare the low single card
+                    return this.low().compareTo(((ThreeOfAKind) other).low());
 
+                }
             }
             assert this.rankClassIndex() != other.rankClassIndex();
             return Integer.compare(this.rankClassIndex(), other.rankClassIndex());
@@ -306,21 +328,26 @@ sealed abstract class Ranking implements Comparable<Ranking>
         @Override
         public int compareTo(Ranking other) {
             Objects.requireNonNull(other);
-            if (other.getClass() == Ranking.TwoPair.class) {
+            if (!POKER_RULES) {
+                if (other.getClass() == Ranking.TwoPair.class)
+                    return this.compareLeftToRight(other);
+            } else {
+                if (other.getClass() == Ranking.TwoPair.class) {
 
-                // first compare the high pair
-                int rv = this.high().compareTo(((TwoPair) other).high());
-                if (rv != 0)
-                    return rv;
+                    // first compare the high pair
+                    int rv = this.high().compareTo(((TwoPair) other).high());
+                    if (rv != 0)
+                        return rv;
 
-                // then compare the low pair
-                rv = this.low().compareTo(((TwoPair) other).low());
-                if (rv != 0)
-                    return rv;
+                    // then compare the low pair
+                    rv = this.low().compareTo(((TwoPair) other).low());
+                    if (rv != 0)
+                        return rv;
 
-                // last compare the single card
-                return this.single().compareTo(((TwoPair) other).single());
+                    // last compare the single card
+                    return this.single().compareTo(((TwoPair) other).single());
 
+                }
             }
             assert this.rankClassIndex() != other.rankClassIndex();
             return Integer.compare(this.rankClassIndex(), other.rankClassIndex());
@@ -387,26 +414,31 @@ sealed abstract class Ranking implements Comparable<Ranking>
         @Override
         public int compareTo(Ranking other) {
             Objects.requireNonNull(other);
-            if (other.getClass() == Ranking.OnePair.class) {
+            if (!POKER_RULES) {
+                if (other.getClass() == Ranking.OnePair.class)
+                    return this.compareLeftToRight(other);
+            } else {
+                if (other.getClass() == Ranking.OnePair.class) {
 
-                // first compare the pair
-                int rv = this.pair().compareTo(((OnePair) other).pair());
-                if (rv != 0)
-                    return rv;
+                    // first compare the pair
+                    int rv = this.pair().compareTo(((OnePair) other).pair());
+                    if (rv != 0)
+                        return rv;
 
-                // then compare the high single
-                rv = this.high().compareTo(((OnePair) other).high());
-                if (rv != 0)
-                    return rv;
+                    // then compare the high single
+                    rv = this.high().compareTo(((OnePair) other).high());
+                    if (rv != 0)
+                        return rv;
 
-                // then compare the middle single
-                rv = this.middle().compareTo(((OnePair) other).middle());
-                if (rv != 0)
-                    return rv;
+                    // then compare the middle single
+                    rv = this.middle().compareTo(((OnePair) other).middle());
+                    if (rv != 0)
+                        return rv;
 
-                // then compare the low pair
-                return this.low().compareTo(((OnePair) other).low());
+                    // then compare the low pair
+                    return this.low().compareTo(((OnePair) other).low());
 
+                }
             }
             assert this.rankClassIndex() != other.rankClassIndex();
             return Integer.compare(this.rankClassIndex(), other.rankClassIndex());
@@ -480,31 +512,36 @@ sealed abstract class Ranking implements Comparable<Ranking>
         @Override
         public int compareTo(Ranking other) {
             Objects.requireNonNull(other);
-            if (other.getClass() == Ranking.HighCard.class) {
+            if (!POKER_RULES) {
+                if (other.getClass() == Ranking.HighCard.class)
+                    return this.compareLeftToRight(other);
+            } else {
+                if (other.getClass() == Ranking.HighCard.class) {
 
-                // first compare the highest card
-                int rv = this.highest().compareTo(((HighCard) other).highest());
-                if (rv != 0)
-                    return rv;
+                    // first compare the highest card
+                    int rv = this.highest().compareTo(((HighCard) other).highest());
+                    if (rv != 0)
+                        return rv;
 
-                // then compare the high card
-                rv = this.high().compareTo(((HighCard) other).high());
-                if (rv != 0)
-                    return rv;
+                    // then compare the high card
+                    rv = this.high().compareTo(((HighCard) other).high());
+                    if (rv != 0)
+                        return rv;
 
-                // then compare the middle card
-                rv = this.middle().compareTo(((HighCard) other).middle());
-                if (rv != 0)
-                    return rv;
+                    // then compare the middle card
+                    rv = this.middle().compareTo(((HighCard) other).middle());
+                    if (rv != 0)
+                        return rv;
 
-                // then compare the low card
-                rv = this.low().compareTo(((HighCard) other).low());
-                if (rv != 0)
-                    return rv;
+                    // then compare the low card
+                    rv = this.low().compareTo(((HighCard) other).low());
+                    if (rv != 0)
+                        return rv;
 
-                // then compare the lowest card
-                return this.lowest().compareTo(((HighCard) other).lowest());
+                    // then compare the lowest card
+                    return this.lowest().compareTo(((HighCard) other).lowest());
 
+                }
             }
             assert this.rankClassIndex() != other.rankClassIndex();
             return Integer.compare(this.rankClassIndex(), other.rankClassIndex());
@@ -532,6 +569,10 @@ sealed abstract class Ranking implements Comparable<Ranking>
             return "Ranking.HighCard[highest=" + this.highest() + ", high=" + this.high()  + ", middle=" + this.middle() + ", low=" + this.low() + ", lowest=" + this.lowest() + "]";
         }
 
+    }
+
+    int compareLeftToRight(Ranking other) {
+        return 0;
     }
 
     private static Map<Card, Integer> count(Hand hand) {
