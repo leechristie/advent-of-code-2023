@@ -37,17 +37,19 @@ I'll need to try to figure out another solution, probably something to do with p
 
 Checking the cycles in ghost state (state = pair of ghost position and direction index):
 
-```
-ghost start = HVA, cycle = [2, 15001)
-ghost start = HHA, cycle = [4, 20097)
-ghost start = BVA, cycle = [3, 17266)
-ghost start = RSA, cycle = [4, 16701)
-ghost start = AAA, cycle = [2, 12171)
-ghost start = NPA, cycle = [2, 20661)
-```
+| Ghost (Start Position) | Cycle Steps [Lower, Bound) |
+| ---------------------: | :------------------------- |
+|                  `HVA` | $[2, 15001)$               |
+|                  `HHA` | $[4, 20097)$               |
+|                  `BVA` | $[3, 17266)$               |
+|                  `RSA` | $[4, 16701)$               |
+|                  `AAA` | $[2, 12171)$               |
+|                  `NPA` | $[2, 20661)$               |
 
-This is how long until each ghost gets back to a position it has been before with the 'program counter' for the direction instructions in the header pointing to the same instruction, so ghost `HVA` for example will at step `2` be in the same state as step `15002` (`15001` + `1`).
+This is how long until each ghost gets back to a position it has been before with the 'program counter' for the direction instructions in the header pointing to the same instruction, so ghost `HVA` for example will at step $2$ be in the same state as step $15002$.
 
-Unfortnately the cycles are all out of step, so I can't think of any simple way to combine these.
+Unfortnately the cycles are all out of sync, so I can't think of any simple way to combine these.
 
 I think I can maybe build generators to jump between the steps where each ghost is at an end position (`'*Z'`), and step through all 6 togethor until they line up.
+
+Maybe this will still be too inefficient and I'll need to look for more patterns to solve this.
