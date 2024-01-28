@@ -30,17 +30,22 @@ class IncremenetingLookupTable:
     def __init__(self):
         self.next_id = 0
         self.lookup_table: dict[str, int] = {}
+        self.reverse_lookup_table: list[str] = []
 
     def lookup(self, string: str) -> int:
         value: Optional[int] = self.lookup_table.get(string, None)
         if value is not None:
             return value
         self.lookup_table[string] = self.next_id
+        self.reverse_lookup_table.append(string)
         self.next_id += 1
         return self.next_id - 1
 
+    def reverse(self, integer: int) -> str:
+        return self.reverse_lookup_table[integer]
 
-def optimize(body: dict[str, tuple[str, str]]) -> tuple[int, int, list[int], list[int], list[bool], list[int]]:
+
+def optimize(body: dict[str, tuple[str, str]]) -> tuple[int, int, list[int], list[int], list[bool], list[int], IncremenetingLookupTable]:
     n = len(body)
     left = [-1] * n
     right = [-1] * n
@@ -65,7 +70,7 @@ def optimize(body: dict[str, tuple[str, str]]) -> tuple[int, int, list[int], lis
             ghosts.append(lhs)
     start = lookup.lookup('AAA')
     end = lookup.lookup('ZZZ')
-    return start, end, left, right, is_ghost_stop, ghosts
+    return start, end, left, right, is_ghost_stop, ghosts, lookup
 
 
 def solve() -> None:
@@ -81,7 +86,7 @@ def solve() -> None:
         body[lhs] = rhs
 
     # optimize the body for fast lookup
-    start, end, left, right, is_ghost_stop, ghosts_current = optimize(body)
+    start, end, left, right, is_ghost_stop, ghosts_current, lookup = optimize(body)
 
     answer1 = 0
     current = start
@@ -94,12 +99,21 @@ def solve() -> None:
     print(f'Part 1: {answer1}')
     assert 12169 == answer1
 
-    answer2 = 0
-    for direction in tqdm.tqdm(infinite_repeat(header)):
-        assert direction in ('L', 'R')
-        for ghost_index, ghost_position in enumerate(ghosts_current):
-            ghosts_current[ghost_index] = left[ghost_position] if direction == 'L' else right[ghost_position]
-        answer2 += 1
-        if all(is_ghost_stop[ghost_position] for ghost_position in ghosts_current):
-            break
-    print(f'Part 2: {answer2}')
+    # investigating state cycles for Part 2 ...
+    previous_states: dict[tuple[int, int], int] = {}
+    for ghost_start in ghosts_current:
+        steps = 0
+        current_position = ghost_start
+        for next_index, next_direction in infinite_repeat(header, enumerated=True):
+
+            # recording the current state
+            state = current_position, next_index
+            if state in previous_states:
+                print('ghost start = ', lookup.reverse(ghost_start), ', cycle = [', previous_states[state], ', ', steps, ')', sep='')
+                break
+            else:
+                previous_states[state] = steps
+
+            # moving to the nxt state
+            steps += 1
+            current_position = left[current_position] if next_direction == 'L' else right[current_position]

@@ -28,6 +28,10 @@ def sliding_window(gen: Iterator[str], window_size: int) -> Iterator[list[str]]:
 T = TypeVar('T')
 
 
-def infinite_repeat(iterable: Iterable[T]) -> Iterator[T]:
-    while True:
-        yield from iterable
+def infinite_repeat(iterable: Iterable[T], enumerated: bool = False) -> Iterator[T]:
+    if not enumerated:
+        while True:
+            yield from iterable
+    else:
+        while True:
+            yield from enumerate(iterable)
