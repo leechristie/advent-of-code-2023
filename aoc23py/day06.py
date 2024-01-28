@@ -6,6 +6,8 @@ import math
 from typing import Iterator
 from puzzle import input_lines
 
+__all__ = ['solve']
+
 
 def input_pairs() -> Iterator[tuple[int, int]]:
     lines: list[str] = list(input_lines(day=6))
