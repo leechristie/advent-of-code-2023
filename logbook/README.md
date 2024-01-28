@@ -8,7 +8,7 @@
 - [Day 5 - If You Give A Seed A Fertilizer](day05.md) ⭐️⭐️
 - [Day 6 - Wait For It](day06.md) ⭐️⭐️
 - [Day 7 - Camel Cards](day07.md) ⭐️
-- Day 8
+- [Day 8 - Haunted Wasteland](day08.md) ⭐️
 - Day 9
 - Day 10
 - Day 11
