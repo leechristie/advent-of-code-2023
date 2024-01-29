@@ -1,7 +1,10 @@
 # Advent of Code 2023
 # Dr Lee A. Christie
 # @0x1ac@techhub.social
-from typing import Iterator, Optional
+import time
+from collections import defaultdict
+from types import NoneType
+from typing import Iterator, Optional, NewType
 from puzzle import input_lines, infinite_repeat
 import tqdm
 
@@ -45,7 +48,47 @@ class IncremenetingLookupTable:
         return self.reverse_lookup_table[integer]
 
 
-def optimize(body: dict[str, tuple[str, str]]) -> tuple[int, int, list[int], list[int], list[bool], list[int], IncremenetingLookupTable]:
+class DummyLUT:
+
+    def __init__(self):
+        pass
+
+    def lookup(self, string: str) -> str:
+        return string
+
+    def reverse(self, string: str) -> str:
+        return string
+
+
+StringBody = NewType('StringBody', tuple[str, str, dict[str, str], dict[str, str], dict[str, bool], list[str], DummyLUT])
+IntBody = NewType('IntBody', tuple[int, int, list[int], list[int], list[bool], list[int], IncremenetingLookupTable])
+
+
+def _dont_optimize(body: dict[str, tuple[str, str]]) -> StringBody:
+    n = len(body)
+    left: dict[str, str] = {}
+    right: dict[str, str] = {}
+    is_ghost_stop: dict[str, bool] = defaultdict(lambda: False)
+    ghosts: list[str] = []
+    for lhs, rhs in body.items():
+        x, y = rhs
+        ghost = False
+        if lhs.endswith('A'):
+            ghost = True
+        stop = False
+        if lhs.endswith('Z'):
+            stop = True
+        left[lhs] = x
+        right[lhs] = y
+        is_ghost_stop[lhs] = stop
+        if ghost:
+            ghosts.append(lhs)
+    start = 'AAA'
+    end = 'ZZZ'
+    return StringBody((start, end, left, right, is_ghost_stop, ghosts, DummyLUT()))
+
+
+def _optimize(body: dict[str, tuple[str, str]]) -> IntBody:
     n = len(body)
     left = [-1] * n
     right = [-1] * n
@@ -70,7 +113,13 @@ def optimize(body: dict[str, tuple[str, str]]) -> tuple[int, int, list[int], lis
             ghosts.append(lhs)
     start = lookup.lookup('AAA')
     end = lookup.lookup('ZZZ')
-    return start, end, left, right, is_ghost_stop, ghosts, lookup
+    return IntBody((start, end, left, right, is_ghost_stop, ghosts, lookup))
+
+
+def process_body(body: dict[str, tuple[str, str]], optimize: bool = False) -> IntBody | StringBody:
+    if optimize:
+        return _optimize(body)
+    return _dont_optimize(body)
 
 
 def solve() -> None:
@@ -86,7 +135,9 @@ def solve() -> None:
         body[lhs] = rhs
 
     # optimize the body for fast lookup
-    start, end, left, right, is_ghost_stop, ghosts_current, lookup = optimize(body)
+    start, end, left, right, is_ghost_stop, ghosts_current, lookup = process_body(body, optimize=False)
+
+    timer = time.perf_counter()
 
     answer1 = 0
     current = start
@@ -100,8 +151,8 @@ def solve() -> None:
     assert 12169 == answer1
 
     # investigating state cycles for Part 2 ...
-    previous_states: dict[tuple[int, int], int] = {}
     for ghost_start in ghosts_current:
+        previous_states = {}
         steps = 0
         current_position = ghost_start
         for next_index, next_direction in infinite_repeat(header, enumerated=True):
@@ -117,3 +168,5 @@ def solve() -> None:
             # moving to the nxt state
             steps += 1
             current_position = left[current_position] if next_direction == 'L' else right[current_position]
+
+    print('Time :', (time.perf_counter() - timer))
