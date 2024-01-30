@@ -2,7 +2,7 @@
 
 ## Day 8 - Haunted Wasteland
 
-### 1. Python (Part 1)
+### 1. Python
 
 Coming back to Advent of Code 2023 after a long break.
 
@@ -28,8 +28,6 @@ for direction in infinite_repeat(header):
        break
 ```
 
-### 1. Python (Part 2) - In Progress
-
 For part 2, I did some optimization to the runtime by converting the strings to ints and therefor the lookup now uses two `list[int]`
 instead of `dict[str, tuple[str, str]]`, however, as expected this is not enough to solve the problem.
 
@@ -50,4 +48,10 @@ There seems to be only once step in the cycle that is the end state.
 |                  `AAA` | $[2, 12171)$               | 12169    |
 |                  `NPA` | $[2, 20661)$               | 20659    |
 
-I can build generators to jump between the steps where each ghost is at an end position (`'*Z'`), and step through all 6 togethor until they line up.
+So if we have a cycle $[lower, bound)$ which is at end step at $end$, then we have end steps every $(bound-lower)n+end$ for all non-negative integer $n$.
+
+I think there may be a mathematical way like Euclid's algorithm to find when each of the 6 sequences are at an end step, but I don't know how.
+
+So instead, I step through each sequence advancing the one in the back, and this eventually solves the problem after some amount of time, earning the second star.
+
+However, it seems that the condition $bound-lower = end$ holds for each of these, which means the formula reduce to simpler periods $end \times m$ for all positive integer $m$, which I think I can solve mathematically a lot more easily than the $An+B$ form, and will come back to very soon and try to make this way faster!
