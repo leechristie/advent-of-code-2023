@@ -35,21 +35,19 @@ instead of `dict[str, tuple[str, str]]`, however, as expected this is not enough
 
 I'll need to try to figure out another solution, probably something to do with periodicity.
 
-Checking the cycles in ghost state (state = pair of ghost position and direction index):
-
-| Ghost (Start Position) | Cycle Steps [Lower, Bound) |
-| ---------------------: | :------------------------- |
-|                  `HVA` | $[2, 15001)$               |
-|                  `HHA` | $[4, 20097)$               |
-|                  `BVA` | $[3, 17266)$               |
-|                  `RSA` | $[4, 16701)$               |
-|                  `AAA` | $[2, 12171)$               |
-|                  `NPA` | $[2, 20661)$               |
+Checking the cycles in ghost state (state = pair of ghost position and direction index).
 
 This is how long until each ghost gets back to a position it has been before with the 'program counter' for the direction instructions in the header pointing to the same instruction, so ghost `HVA` for example will at step $2$ be in the same state as step $15002$.
 
-Unfortnately the cycles are all out of sync, so I can't think of any simple way to combine these.
+There seems to be only once step in the cycle that is the end state.
 
-I think I can maybe build generators to jump between the steps where each ghost is at an end position (`'*Z'`), and step through all 6 togethor until they line up.
+| Ghost (Start Position) | Cycle Steps [Lower, Bound) | End Step |
+| ---------------------: | :------------------------- | :------- |
+|                  `HVA` | $[2, 15001)$               | 14999    |
+|                  `HHA` | $[4, 20097)$               | 20093    |
+|                  `BVA` | $[3, 17266)$               | 17263    |
+|                  `RSA` | $[4, 16701)$               | 16697    |
+|                  `AAA` | $[2, 12171)$               | 12169    |
+|                  `NPA` | $[2, 20661)$               | 20659    |
 
-Maybe this will still be too inefficient and I'll need to look for more patterns to solve this.
+I can build generators to jump between the steps where each ghost is at an end position (`'*Z'`), and step through all 6 togethor until they line up.
