@@ -5,6 +5,9 @@
 package aoc23java;
 
 import java.io.*;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
 
 public final class Puzzle {
 
@@ -27,6 +30,72 @@ public final class Puzzle {
         } catch (FileNotFoundException ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    public static Iterable<Character> repeat(String string) {
+        if (string.isEmpty()) {
+            throw new IllegalArgumentException("cannot repeat empty string");
+        }
+        final char[] chars = string.toCharArray();
+        return () -> new Iterator<>() {
+            int index = 0;
+            @Override
+            public boolean hasNext() {
+                return true;
+            }
+            @Override
+            public Character next() {
+                char rv = chars[index];
+                index = (index + 1) % chars.length;
+                return rv;
+            }
+        };
+    }
+
+    public static Iterable<Map.Entry<Integer, Character>> repeatEnumerated(String string) {
+        if (string.isEmpty()) {
+            throw new IllegalArgumentException("cannot repeat empty string");
+        }
+        final char[] chars = string.toCharArray();
+        return () -> new Iterator<>() {
+            int index = 0;
+            @Override
+            public boolean hasNext() {
+                return true;
+            }
+            @Override
+            public Map.Entry<Integer, Character> next() {
+                Map.Entry<Integer, Character> rv = Map.entry(index, chars[index]);
+                index = (index + 1) % chars.length;
+                return rv;
+            }
+        };
+    }
+
+
+    private static long _gcd(long a, long b) {
+        if (a == 0)
+            return b;
+        if (b == 0)
+            return a;
+        return _gcd(b, a % b);
+    }
+
+    public static long gcd(long a, long b) {
+        assert a > 0 && b > 0;
+        return _gcd(a, b);
+    }
+
+    public static long lcm(long a, long b) {
+        assert a > 0 && b > 0;
+        return (a * b) / gcd(a, b);
+    }
+
+    public static long lcm(Collection<Long> values) {
+        long rv = 1;
+        for (long value: values)
+            rv = lcm(rv, value);
+        return rv;
     }
 
 }
