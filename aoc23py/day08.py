@@ -23,26 +23,6 @@ def read_body(file: Iterator[str]) -> Iterator[tuple[str, tuple[str, str]]]:
         yield lhs, (x, y)
 
 
-class IncremenetingLookupTable:
-
-    def __init__(self):
-        self.next_id = 0
-        self.lookup_table: dict[str, int] = {}
-        self.reverse_lookup_table: list[str] = []
-
-    def lookup(self, string: str) -> int:
-        value: Optional[int] = self.lookup_table.get(string, None)
-        if value is not None:
-            return value
-        self.lookup_table[string] = self.next_id
-        self.reverse_lookup_table.append(string)
-        self.next_id += 1
-        return self.next_id - 1
-
-    def reverse(self, integer: int) -> str:
-        return self.reverse_lookup_table[integer]
-
-
 def preprocess_body(body: dict[str, tuple[str, str]])\
         -> tuple[dict[str, str], dict[str, str], dict[str, bool], list[str]]:
     left: dict[str, str] = {}
