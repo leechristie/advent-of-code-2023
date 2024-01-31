@@ -6,6 +6,8 @@
 
 Coming back to Advent of Code 2023 after a long break.
 
+#### Part 1
+
 In Part 1, I create a `dict` mapping the current node to the two next possible nodes.
 
 I created a helper function to loop over the header string forever:
@@ -28,16 +30,26 @@ for direction in infinite_repeat(header):
        break
 ```
 
-For part 2, I did some optimization to the runtime by converting the strings to ints and therefor the lookup now uses two `list[int]`
-instead of `dict[str, tuple[str, str]]`, however, as expected this is not enough to solve the problem.
+#### Part 2 - First Attempt (Obviously Wrong)
 
-I'll need to try to figure out another solution, probably something to do with periodicity.
+I think you should always start Part 2 by simply throwing the code you have at it and seeing what happens. Sometimes on the early problems, this just works, and on the later ones you can at least learn something about how hard it will be.
 
-Checking the cycles in ghost state (state = pair of ghost position and direction index).
+Fistly I just ran all 6 "ghosts" from the start points step by step until they are all on end points.
 
-This is how long until each ghost gets back to a position it has been before with the 'program counter' for the direction instructions in the header pointing to the same instruction, so ghost `HVA` for example will at step $2$ be in the same state as step $15002$.
+Of course, this is too simple so doesn't solve the problem in any reasonable period of time. I suspect it has something to do with periodicity but don't know exactly how to do this yet. There was at least one problem in AoC 2022 solved by periodicity but I recall that was quite a bit more obvious than in this case, as here we have a graph theory type problem.
 
-There seems to be only once step in the cycle that is the end state.
+#### Part 2 - Second Attempt (A Breif Distraction)
+
+I did some optimization to the runtime by converting the strings to ints and therefor the lookup now uses two `list[int]`
+instead of `dict[str, tuple[str, str]]`, however, as expected this is not enough to solve the problem, and I eventually removed this optimization.
+
+However, part of my motivation here was distracting myself thinking about how I would solve it in C later, I won't have such easy access to hash tables, so I will likely do this for simplicity of implementation there, not strictly as an optimization.
+
+#### Part 2 - Third Attempt (Success)
+
+Coming back to the periodicity idea, I look for cycles. I know we can't just look for cycles in the position of the ghost but rather the pairing of the "step" and the ghost position. This is because these two need to be the same for the motion to repeat.
+
+Initially, I ignore when the ghost find an end node (column 3 below), and only record the cycle lengths. But then go back and record the step of the end nodes, and there seems to be only one step in the cycle that is the end state!
 
 | Ghost (Start Position) | Cycle Steps [Lower, Bound) | End Step |
 | ---------------------: | :------------------------- | :------- |
@@ -48,10 +60,28 @@ There seems to be only once step in the cycle that is the end state.
 |                  `AAA` | $[2, 12171)$               | 12169    |
 |                  `NPA` | $[2, 20661)$               | 20659    |
 
-So if we have a cycle $[lower, bound)$ which is at end step at $end$, then we have end steps every $(bound-lower)n+end$ for all non-negative integer $n$.
+If we know that the first one is at an end node at step $14999$, then again at $14999$ plus the length of the cycle and so on. For cycle length $L$ and first stop $S$, the ghost is at an end node at $Ln+S$ for all $n \in \mathbb{Z}$. And the answer is the first step where all ghosts are at an end node. I know there is a mathematical way to solve this but at this point ignore that and go with the "dumber" solution and start at the end step and then increment by the cycle length, until the ghost line up.
 
-I think there may be a mathematical way like Euclid's algorithm to find when each of the 6 sequences are at an end step, but I don't know how.
+This solves the problem, but takes around an hour.
 
-So instead, I step through each sequence advancing the one in the back, and this eventually solves the problem after some amount of time, earning the second star.
+#### Part 2 - Fourth Attempt (Not Dumb)
 
-However, it seems that the condition $bound-lower = end$ holds for each of these, which means the formula reduce to simpler periods $end \times m$ for all positive integer $m$, which I think I can solve mathematically a lot more easily than the $An+B$ form, and will come back to very soon and try to make this way faster!
+Now that the second star is earned, I have to fix the "dumb" solution.
+
+It is only now I notice that the $Ln+S$ happens to be (by design of the puzzle setter of course) such that $L=S$ for each ghost. We can now reduce to Sm$ for all $m \in \mathbb{Z}^+$, which means we only need to find the LCM of each of the numbers $S$.
+
+I begin to think of how to find prime divisors of the numbers but then remember that Python has a `math.lcm` function as of Python 3.9.
+
+I do a bunch of tidying up, simplifying code and removing stuff.
+
+After a pre-processing step where we find the ghost periods `ghosts: dict[str, Ghost]`, this is my solution to Part 2:
+
+```Python
+answer2 = math.lcm(*[g.stop for g in ghosts.values()])
+```
+
+And since I often like to rephrase Part 1 in terms of what is found in Part 2, Part 1 becomes:
+
+```Python
+answer1 = ghosts['AAA'].stop
+```
