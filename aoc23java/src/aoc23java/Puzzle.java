@@ -5,9 +5,7 @@
 package aoc23java;
 
 import java.io.*;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public final class Puzzle {
 

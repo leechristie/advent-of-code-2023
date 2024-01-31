@@ -11,8 +11,7 @@ import aoc23java.day07.Day07;
 import aoc23java.day08.Day08;
 
 import java.io.*;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public final class Main {
 
