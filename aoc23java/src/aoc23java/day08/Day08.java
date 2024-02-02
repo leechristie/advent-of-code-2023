@@ -1,3 +1,7 @@
+// Advent of Code 2023
+// Dr Lee A. Christie
+// @0x1ac@techhub.social
+
 package aoc23java.day08;
 
 import aoc23java.Puzzle;
