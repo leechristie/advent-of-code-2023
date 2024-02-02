@@ -9,6 +9,8 @@
 #include "stringtools.h"
 #include "errortools.h"
 
+#define DEFAULT_STRING_CAPACITY (16)
+
 bool read_n_characters(FILE * file, size_t n, char * buffer) {
     size_t index = 0;
     while (index < n) {
@@ -21,6 +23,31 @@ bool read_n_characters(FILE * file, size_t n, char * buffer) {
     }
     buffer[index] = '\0';
     return true;
+}
+
+char * read_line_alloc(FILE * file) {
+    int capacity = DEFAULT_STRING_CAPACITY;
+    char * rv = malloc(capacity);
+    if (rv == NULL)
+        return NULL;
+    int length = 0;
+    while (true) {
+        int character = getc(file);
+        if (character == EOF || character == '\n') {
+            rv[length] = '\0';
+            return rv;
+        }
+        rv[length++] = (char) character;
+        if (length == capacity) {
+            capacity *= 2;
+            char * expanded = realloc(rv, capacity);
+            if (expanded == NULL) {
+                free(rv);
+                return NULL;
+            }
+            rv = expanded;
+        }
+    }
 }
 
 bool read_string_until(FILE * file, char delimiter, char * buffer, size_t max_length) {

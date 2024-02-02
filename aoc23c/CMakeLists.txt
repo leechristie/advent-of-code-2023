@@ -17,4 +17,5 @@ add_executable(aoc23c main.c
         errortools.c
         errortools.h
         filetools.c
-        filetools.h)
+        filetools.h
+        day08.c)

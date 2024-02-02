@@ -9,6 +9,7 @@
 #include <stdbool.h>
 
 bool read_n_characters(FILE *, size_t, char *);
+char * read_line_alloc(FILE *);
 bool read_string_until(FILE *, char, char *, size_t);
 bool read_string_until_any(FILE *, const char *, char *, size_t, char *);
 bool ignore_string(FILE *, const char *);
