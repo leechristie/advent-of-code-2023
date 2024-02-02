@@ -93,3 +93,9 @@ I only spent around an hour implementing the solution in Java.
 The top level logic is the same, but I managed to simplify the solution a bit further because I now know I don't really need to compute the period of the ghost movements, only the step on which they first encounter an end node.
 
 I had to implement my LCM calculation because, unlike Python, it seems there is no built-in LCM function in `java.lang.Math` (except the GCD in `BigInteger`. I simply used the standard recursive definition of GCD I didn't come up with but have seen before where you recurively call `gcd(b, a%b)`, and the identity $LCM(a, b) = |ab| / GCD(a, b)$, although there may be a better way to compute the LCM of multiple number directly.
+
+### 3. JavaScript
+
+This was the first puzzle I added a JavaScript solution to, so I spent a while trying to set up my environment and Node. I haven't used JavaScript in a very long time so my solution may be a little ugly.
+
+Structure of the solution is the same as the others but the parsing code looks different and I didn't use custom objects, just `Map` and `Set`.
