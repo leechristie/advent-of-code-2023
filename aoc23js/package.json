@@ -1,0 +1,11 @@
+{
+  "name": "aoc23js",
+  "version": "1.0.0",
+  "description": "Advent of Code 2023 in JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Dr Lee A. Christie",
+  "license": "MIT"
+}

@@ -1,5 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Hello World" type="NodeJSConfigurationType" path-to-node="$USER_HOME$/.bun/bin/bun" path-to-js-file="index.ts" working-dir="$PROJECT_DIR$">
-    <method v="2" />
-  </configuration>
-</component>
