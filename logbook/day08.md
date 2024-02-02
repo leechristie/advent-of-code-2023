@@ -96,6 +96,6 @@ I had to implement my LCM calculation because, unlike Python, it seems there is 
 
 ### 3. JavaScript
 
-This was the first puzzle I added a JavaScript solution to, so I spent a while trying to set up my envirnment and Node. I haven't used JavaScript in a very long time so my solution may be a little ugly.
+This was the first puzzle I added a JavaScript solution to, so I spent a while trying to set up my environment and Node. I haven't used JavaScript in a very long time so my solution may be a little ugly.
 
-Structure of the solution is the same as the others but the parsing code looks different and I didn't use cusotm objects, just `Map` and `Set`.
+Structure of the solution is the same as the others but the parsing code looks different and I didn't use custom objects, just `Map` and `Set`.
