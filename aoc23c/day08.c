@@ -27,7 +27,6 @@ void solve08(void) {
     char * header = read_line_alloc(file);
     if (header == NULL)
         die("unable to read header");
-    printf("header = \"%s\"\n", header);
     int headerLength = strlen(header);
 
     // expected blank line
@@ -40,21 +39,8 @@ void solve08(void) {
     while (read_body_entry(file, &entry))
         list_append(&nodeNames, &entry.lhs);
 
-    // reopen the file
-    assert(getc(file) == EOF);
-    fclose(file);
-    file = open_input_file(8);
-
-    // print out the list of nodes
-    printf("nodeNames = {");
-    for (int i = 0; i < nodeNames.length; i++) {
-        if (i != 0)
-            printf(", ");
-        char lhs[4];
-        list_get(&nodeNames, &lhs, i);
-        printf("%s", lhs);
-    }
-    printf("}\n");
+    // reset position in the file
+    fseek(file, 0, SEEK_SET);
 
     // ignore the header and blank line
     ignore_string(file, header);
@@ -74,26 +60,6 @@ void solve08(void) {
         rights[nodeIndex] = list_index_of(&nodeNames, entry.right);
     }
 
-    // print out the left and right lists
-    printf("lefts = {");
-    for (int i = 0; i < nodeNames.length; i++) {
-        if (i != 0)
-            printf(", ");
-        printf("%d", lefts[i]);
-        if (lefts[i] < 0)
-            die("missing left index");
-    }
-    printf("}\n");
-    printf("rights = {");
-    for (int i = 0; i < nodeNames.length; i++) {
-        if (i != 0)
-            printf(", ");
-        printf("%d", rights[i]);
-        if (lefts[i] < 0)
-            die("missing right index");
-    }
-    printf("}\n");
-
     // Part 1 - find the first stop for "AAA"
     int start = list_index_of(&nodeNames, "AAA");
     int stop = list_index_of(&nodeNames, "ZZZ");
@@ -108,7 +74,28 @@ void solve08(void) {
             break;
     }
 
-    long answer2 = 0;
+    // Part 2 - LCM of all cycle periods
+    long answer2 = 1;
+    for (int startIndex = 0; startIndex < nodeNames.length; startIndex++) {
+        char startName[4];
+        list_get(&nodeNames, &startName, startIndex);
+        bool isGhost = startName[2] == 'A';
+        if (isGhost) {
+            int ghostCurrent = startIndex;
+            long ghostCycle = 0;
+            for (int i = 0; i < headerLength; i = (i + 1) % headerLength) {
+                char direction = header[i];
+                assert(direction == 'L' || direction == 'R');
+                ghostCurrent = (direction == 'L') ?  lefts[ghostCurrent] : rights[ghostCurrent];
+                ghostCycle++;
+                char currentName[4];
+                list_get(&nodeNames, &currentName, ghostCurrent);
+                if (currentName[2] == 'Z')
+                    break;
+            }
+            answer2 = lcm(answer2, ghostCycle);
+        }
+    }
 
     // clean up
     list_destroy(&nodeNames);
