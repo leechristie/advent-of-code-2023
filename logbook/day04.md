@@ -50,3 +50,9 @@ I don't like parsing strings in Swift. I'm sure there is a better way I don't kn
 In Part 2 I create a Dictionary to count the number of copies of each card and loop over once increasing the count of the upcoming cards by how many copies of the current card there are.
 
 I'm not happy with this Swift solution but might change it later when I come back to Swift.
+
+### 3. Python
+
+I has been a long time since I the the previous two version of this puzzle, so I didn't remember how I solved it before.
+
+The puzzle is quite straightforward though, and parsing in Python is pretty comfortable.
