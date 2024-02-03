@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include <assert.h>
+#include <string.h>
 #include "days.h"
 #include "puzzletools.h"
 #include "filetools.h"
@@ -27,6 +28,7 @@ void solve08(void) {
     if (header == NULL)
         die("unable to read header");
     printf("header = \"%s\"\n", header);
+    int headerLength = strlen(header);
 
     // expected blank line
     assert(getc(file) == '\n');
@@ -92,7 +94,20 @@ void solve08(void) {
     }
     printf("}\n");
 
+    // Part 1 - find the first stop for "AAA"
+    int start = list_index_of(&nodeNames, "AAA");
+    int stop = list_index_of(&nodeNames, "ZZZ");
+    int current = start;
     long answer1 = 0;
+    for (int i = 0; i < headerLength; i = (i + 1) % headerLength) {
+        char direction = header[i];
+        assert(direction == 'L' || direction == 'R');
+        current = (direction == 'L') ?  lefts[current] : rights[current];
+        answer1++;
+        if (current == stop)
+            break;
+    }
+
     long answer2 = 0;
 
     // clean up
