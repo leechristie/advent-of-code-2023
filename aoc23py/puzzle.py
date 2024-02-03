@@ -3,7 +3,7 @@
 # @0x1ac@techhub.social
 
 from collections import deque
-from typing import Iterator, TypeVar, Iterable
+from typing import *
 
 INPUT_PATH = '../input/'
 
@@ -35,3 +35,14 @@ def infinite_repeat(iterable: Iterable[T], enumerated: bool = False) -> Iterator
     else:
         while True:
             yield from enumerate(iterable)
+
+
+def split(string: str, delimiter: str, dtype: Type, ctype: Type, strip: bool = False, remove_doubles: bool = False):
+    assert len(delimiter) == 1
+    if remove_doubles:
+        while (delimiter * 2) in string:
+            string = string.replace(delimiter * 2, delimiter)
+    if strip:
+        string = string.strip(delimiter)
+    rv = [dtype(e) for e in string.split(delimiter)]
+    return ctype(rv)

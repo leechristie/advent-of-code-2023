@@ -2,12 +2,12 @@
 # Dr Lee A. Christie
 # @0x1ac@techhub.social
 
+__all__ = ['solve']
+
 import math
 from collections import defaultdict
-from typing import Iterator, Optional
+from typing import Iterator
 from puzzle import input_lines, infinite_repeat
-
-__all__ = ['solve']
 
 
 def read_header(file: Iterator[str]) -> str:
