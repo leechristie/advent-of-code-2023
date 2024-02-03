@@ -99,3 +99,9 @@ I had to implement my LCM calculation because, unlike Python, it seems there is 
 This was the first puzzle I added a JavaScript solution to, so I spent a while trying to set up my environment and Node. I haven't used JavaScript in a very long time so my solution may be a little ugly.
 
 Structure of the solution is the same as the others but the parsing code looks different and I didn't use custom objects, just `Map` and `Set`.
+
+### 4. C
+
+In this solve, I created a function for reading a string into a dynamically-allocated expandable string buffer, and an created a struct for a dynamically-allocated `List` for building the list of node names. I may be abe to solve this without this, doing a few more passes over the file, but this seemed like a reasonable abstraction.
+
+I did do two passes over the first because on the first pass I read the list of node names into an array, and on the second pass read the left and right directions as integers by looking up the origonal list of names.
