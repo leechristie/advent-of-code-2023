@@ -45,3 +45,10 @@ long lcm(long a, long b) {
     assert(a > 0 && b > 0);
     return (a * b) / gcd(a, b);
 }
+
+int sum_int_array(int * array, size_t length) {
+    int rv = 0;
+    for (size_t i = 0; i < length; i++)
+        rv += array[i];
+    return rv;
+}

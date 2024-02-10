@@ -11,5 +11,6 @@ void solve02(void);
 void solve04(void);
 
 void solve08(void);
+void solve09(void);
 
 #endif //AOC23C_DAYS_H

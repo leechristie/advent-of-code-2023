@@ -45,3 +45,14 @@ char * lstrip_view(char * string) {
         string++;
     return string;
 }
+
+void print_int_array(char * name, int * array, size_t length) {
+    printf("%s = [", name);
+    for (size_t i = 0; i < length; i++) {
+        if (i != 0) {
+            printf(", ");
+        }
+        printf("%d", array[i]);
+    }
+    printf("]\n");
+}

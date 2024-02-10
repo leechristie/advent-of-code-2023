@@ -20,4 +20,5 @@ add_executable(aoc23c main.c
         filetools.h
         day08.c
         list.c
-        list.h)
+        list.h
+        day09.c)
