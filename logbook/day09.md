@@ -2,7 +2,7 @@
 
 ## Day 9 - Mirage Maintenance
 
-### 1. C (Part 1)
+### 1. C
 
 My approach to solving this was to use only one 1-D array and write over the values.
 
@@ -28,3 +28,22 @@ And here is if instead of writing to a new array, you just overwrite the previou
 The sum of these numbers if the extrapolated value. So we only need $O(n)$ space instead of $O(n^2)$ space.
 
 I don't know if there is a any to calculate this without $O(N^2)$ time though, I can't think of one. So I just wrote a basic recursive function that keeps going until it finds that all the differences are 0. Then in the wrapper / helper function to the recursive call, I sum the numbers.
+
+For Part 2, you could slightly modify the algorithm to extrapolate backwards, but in the summing step you need to alternate adding and subtracting. Instead, it's easier to simply reverse the array and run exactly rhe same extrapolate function.
+
+So Part 2 is simply writing an array reverse function, which I implmented as:
+
+```C
+void copy_int_array_backwards(const int * from, int * to, size_t length) {
+    size_t i = 0;
+    size_t j = length - 1;
+    while (i < length)
+        to[j--] = from[i++];
+}
+```
+
+then calling my extrapolate function:
+
+```C
+answer2 += extrapolate(backwards, NUMBER_OF_VALUES);
+```
