@@ -9,5 +9,7 @@
 
 void println_array(const char *, int *, size_t);
 void left_shift_array(int *, size_t);
+int sum_int_array(int *, size_t);
+void copy_int_array_backwards(const int *, int *, size_t);
 
 #endif //AOC23C_ARRAYTOOLS_H

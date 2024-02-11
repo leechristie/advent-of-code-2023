@@ -19,3 +19,17 @@ void left_shift_array(int * array, size_t length) {
         array[i-1] = array[i];
     array[length - 1] = 0;
 }
+
+int sum_int_array(int * array, size_t length) {
+    int rv = 0;
+    for (size_t i = 0; i < length; i++)
+        rv += array[i];
+    return rv;
+}
+
+void copy_int_array_backwards(const int * from, int * to, size_t length) {
+    size_t i = 0;
+    size_t j = length - 1;
+    while (i < length)
+        to[j--] = from[i++];
+}
