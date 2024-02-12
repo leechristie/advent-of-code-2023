@@ -155,6 +155,8 @@ void solve02() {
     }
 
     std::cout << "Part 1: " << answer1 << std::endl;
+    check(2283, answer1);
     std::cout << "Part 2: " << answer2 << std::endl;
+    check(78669, answer2);
 
 }

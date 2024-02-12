@@ -81,6 +81,8 @@ void solve01() {
         process_line(line, answer1, answer2);
 
     std::cout << "Part 1: " << answer1 << std::endl;
+    check(54708, answer1);
     std::cout << "Part 2: " << answer2 << std::endl;
+    check(54087, answer2);
 
 }
