@@ -8,4 +8,6 @@
 void solve01();
 void solve02();
 
+void solve09();
+
 #endif //AOC23CPP_DAYS_HPP

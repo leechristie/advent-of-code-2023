@@ -47,3 +47,9 @@ then calling my extrapolate function:
 ```C
 answer2 += extrapolate(backwards, NUMBER_OF_VALUES);
 ```
+
+### 2. C++
+
+I think I need to go back to Bjarne's book and practice a bit confused working with the `vector` and `string`, I'm not too confident with C++.
+
+Overall, not too difficult to port over my solution to C++ though as Day 9 is a pretty easy implementation, so this day is a good candidate to try some more languages.

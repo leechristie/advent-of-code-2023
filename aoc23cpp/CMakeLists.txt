@@ -9,4 +9,5 @@ add_executable(aoc23cpp main.cpp
         puzzle.cpp
         puzzle.hpp
         day02.cpp
+        day09.cpp
 )
