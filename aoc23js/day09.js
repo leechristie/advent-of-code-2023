@@ -24,7 +24,7 @@ function extrapolate(values) {
 function solve() {
 
     console.log("Advent of Code 2023");
-    console.log('Day 8');
+    console.log('Day 9');
 
     let answer1 = 0;
     let answer2 = 0;
