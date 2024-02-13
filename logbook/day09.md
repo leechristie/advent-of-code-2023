@@ -57,3 +57,7 @@ Overall, not too difficult to port over my solution to C++ though as Day 9 is a 
 ### 3. Python
 
 Relatively simple implmentation in Python. No hassle at all with `str` and `list`.
+
+### 4. JavaScript
+
+Not too difficult to write in JavaScript.
