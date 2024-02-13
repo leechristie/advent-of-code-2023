@@ -31,7 +31,7 @@ function solve() {
 
     const input = puzzle.inputLines(9);
     input.forEach((line) => {
-        let forwards = line.split(' ').map(Number);
+        let forwards = puzzle.split(line, " ", Number);
         let backwards = forwards.toReversed();
         answer1 += extrapolate(forwards);
         answer2 += extrapolate(backwards);
