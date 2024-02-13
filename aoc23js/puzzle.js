@@ -50,8 +50,13 @@ function sum(values) {
     return values.reduce((a, b) => a + b, 0);
 }
 
+function split(string, delimiter, dtype) {
+    return string.split(delimiter).map(dtype);
+}
+
 module.exports = {
     inputLines,
     lcm,
-    sum
+    sum,
+    split
 };
