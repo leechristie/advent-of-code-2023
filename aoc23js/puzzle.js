@@ -46,7 +46,12 @@ function lcm(values) {
     return rv;
 }
 
+function sum(values) {
+    return values.reduce((a, b) => a + b, 0);
+}
+
 module.exports = {
     inputLines,
-    lcm
+    lcm,
+    sum
 };

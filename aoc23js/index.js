@@ -3,6 +3,7 @@
 // @0x1ac@techhub.social
 
 const day8 = require('./day08');
+const day9 = require('./day09');
 
 if (process.argv.length !== 3) {
     throw new TypeError('Valid day not specified in command line argument.')
@@ -10,6 +11,8 @@ if (process.argv.length !== 3) {
 let day = parseInt(process.argv[2]);
 if (day === 8) {
     day8();
+} else if (day === 9) {
+    day9();
 } else {
     throw new TypeError('Valid day not specified in command line argument.')
 }
