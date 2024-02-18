@@ -7,10 +7,11 @@ from puzzle import *
 
 class Pipe:
 
-    def __init__(self, symbol: str, position: Absolute2D) -> None:
+    def __init__(self, symbol: str, position: Absolute2D, pipes: Optional['PipeMap'] = None) -> None:
         assert symbol in ('F', '7', 'J', 'L', '-', '|', '.', 'S')
         self.symbol = symbol
         self.position = position
+        self.pipes = pipes
 
     def __repr__(self) -> str:
         return f'Pipe({self.symbol}, {self.position})'
@@ -39,8 +40,9 @@ class Pipe:
     def absolute_connections(self) -> list[Absolute2D]:
         return [self.position + relative for relative in self.relative_connections()]
 
-    def connected_pipes(self, pipes: 'PipeMap') -> list['Pipe']:
-        return [pipes[position] for position in self.absolute_connections()]
+    def connected_pipes(self) -> list['Pipe']:
+        assert self.pipes is not None
+        return [self.pipes[position] for position in self.absolute_connections()]
 
 
 class PipeMap:
@@ -58,7 +60,7 @@ class PipeMap:
                 if symbol == 'S':
                     assert start_position is None
                     start_position = position
-                row.append(Pipe(symbol, position))
+                row.append(Pipe(symbol, position, self))
             self.rows.append(row)
             if width is not None:
                 assert width == len(row)
@@ -81,7 +83,7 @@ class PipeMap:
             if connected_relative == set(Pipe(possible_pipes, Absolute2D(x=0, y=0)).relative_connections()):
                 start_symbol = possible_pipes
         assert start_symbol is not None
-        self.start: Pipe = Pipe(start_symbol, start_position)
+        self.start: Pipe = Pipe(start_symbol, start_position, self)
         self.rows[start_position.y][start_position.x] = self.start
 
     def __repr__(self) -> str:
@@ -116,7 +118,7 @@ def solve() -> None:
     print('pipes :')
     print(pipes)
     print('start :', repr(pipes.start))
-    print('neighbors :', pipes.start.connected_pipes(pipes))
+    print('neighbors :', pipes.start.connected_pipes())
 
     print('Part 1: TODO')
     print('Part 2: TODO')
