@@ -13,6 +13,7 @@ import day06
 
 import day08
 import day09
+import day10
 
 __all__ = ['solvers']
 
@@ -23,5 +24,6 @@ solvers: dict[int, Callable[[], None]] = {
     4: day04.solve,
     6: day06.solve,
     8: day08.solve,
-    9: day09.solve
+    9: day09.solve,
+    10: day10.solve
 }
