@@ -117,8 +117,9 @@ def solve() -> None:
     pipes = PipeMap(['7-F7-', '.FJ|7', 'SJLL7', '|F--J', 'LJ.LJ'])
     print('pipes :')
     print(pipes)
-    print('start :', repr(pipes.start))
-    print('neighbors :', pipes.start.connected_pipes())
+    start = pipes.start
+    print('start :', repr(start))
+    print('neighbors :', start.connected_pipes())
 
     print('Part 1: TODO')
     print('Part 2: TODO')
