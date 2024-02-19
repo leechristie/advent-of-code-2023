@@ -72,6 +72,7 @@ class Absolute2D:
     def __hash__(self):
         return hash((self.x, self.y))
 
+
 class Relative2D:
 
     def __init__(self, *, dx: int, dy: int) -> None:

@@ -44,6 +44,9 @@ class Pipe:
         assert self.pipes is not None
         return [self.pipes[position] for position in self.absolute_connections()]
 
+    def __hash__(self):
+        return hash(self.position)
+
 
 class PipeMap:
 
@@ -107,19 +110,51 @@ class PipeMap:
             return Pipe('.', item)
         return self.rows[item.y][item.x]
 
+    def numbered_string(self, depth: dict[Pipe, int]) -> str:
+        rv = ''
+        for y in range(self.height):
+            line = ''
+            for x in range(self.width):
+                current_pipe = self[Absolute2D(x=x, y=y)]
+                if current_pipe in depth:
+                    line += str(depth[current_pipe])[-1]
+                else:
+                    line += '.'
+            if rv:
+                rv += '\n'
+            rv += line
+        return rv
+
+
+def breadth_first_search(start: Pipe) -> dict[Pipe, int]:
+    queued: deque[Pipe] = deque()
+    depth: dict[Pipe, int] = {start: 0}
+    queued.append(start)
+    while queued:
+        vertex: Pipe = queued.popleft()
+        for neighbor in vertex.connected_pipes():
+            if neighbor not in depth:
+                depth[neighbor] = depth[vertex] + 1
+                queued.append(neighbor)
+    return depth
+
 
 def solve() -> None:
 
     print('Advent of Code 2023')
     print('Day 10')
 
-    # pipe_map = PipeMap(input_lines(day=10))
-    pipes = PipeMap(['7-F7-', '.FJ|7', 'SJLL7', '|F--J', 'LJ.LJ'])
+    pipes = PipeMap(input_lines(day=10))
     print('pipes :')
     print(pipes)
     start = pipes.start
     print('start :', repr(start))
-    print('neighbors :', start.connected_pipes())
 
-    print('Part 1: TODO')
+    depth: dict[Pipe, int] = breadth_first_search(start)
+    print(pipes.numbered_string(depth))
+    answer1 = max(depth.values())
+
+    print(f'Part 1: {answer1}')
+    assert 6725 == answer1
+
     print('Part 2: TODO')
