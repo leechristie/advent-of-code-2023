@@ -1,6 +1,7 @@
 # Advent of Code 2023
 # Dr Lee A. Christie
 # @0x1ac@techhub.social
+import sys
 
 from puzzle import *
 
@@ -125,6 +126,38 @@ class PipeMap:
             rv += line
         return rv
 
+    def expand_edge(self):
+        new_width = self.width + 2
+        new_height = self.height + 2
+        new_header = [Pipe('.', Absolute2D(x=x, y=0), self) for x in range(new_width)]
+        new_rows = [new_header]
+        for old_y, row in enumerate(self.rows):
+            new_row = [Pipe('.', Absolute2D(x=0, y=old_y+1), self)]
+            for old_x, pipe in enumerate(row):
+                assert pipe.position.x == old_x
+                assert pipe.position.y == old_y
+                new_row.append(Pipe(pipe.symbol, Absolute2D(x=old_x+1, y=old_y+1), self))
+            new_row.append(Pipe('.', Absolute2D(x=new_width-1, y=old_y+1), self))
+            new_rows.append(new_row)
+        new_footer = [Pipe('.', Absolute2D(x=x, y=new_height-1), self) for x in range(new_width)]
+        new_rows.append(new_footer)
+        self.rows = new_rows
+        self.start = Pipe(self.start.symbol, self.start.position + Relative2D(dx=1, dy=1), self)
+        self.width = new_width
+        self.height = new_height
+
+    def create_fill_map(self, depth) -> list[list[bool]]:
+        fill_map = []
+        for y in range(self.height):
+            fill_row = []
+            for x in range(self.width):
+                if self[Absolute2D(x=x, y=y)] in depth:
+                    fill_row.append(True)
+                else:
+                    fill_row.append(False)
+            fill_map.append(fill_row)
+        return fill_map
+
 
 def breadth_first_search(start: Pipe) -> dict[Pipe, int]:
     queued: deque[Pipe] = deque()
@@ -145,13 +178,11 @@ def solve() -> None:
     print('Day 10')
 
     pipes = PipeMap(input_lines(day=10))
-    print('pipes :')
-    print(pipes)
+    pipes.expand_edge()
+
     start = pipes.start
-    print('start :', repr(start))
 
     depth: dict[Pipe, int] = breadth_first_search(start)
-    print(pipes.numbered_string(depth))
     answer1 = max(depth.values())
 
     print(f'Part 1: {answer1}')
