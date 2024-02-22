@@ -10,7 +10,7 @@
 - [Day 7 - Camel Cards](day07.md) ⭐️
 - [Day 8 - Haunted Wasteland](day08.md) ⭐️⭐️
 - [Day 9 - Mirage Maintenance](day09.md) ⭐️⭐️
-- Day 10
+- [Day 10 - Pipe Maze](day10.md) ⭐️⭐️
 - Day 11
 - Day 12
 - Day 13
