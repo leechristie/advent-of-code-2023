@@ -166,6 +166,42 @@ class PipeMap:
                     self[position].symbol = '.'
 
 
+symbol_map: dict[str, list[str]] = {
+    '|': ['▐', '▌',
+          '▐', '▌'],
+    '-': ['▄', '▄',
+          '▀', '▀'],
+    'F': ['▗', '▄',
+          '▐', '▛'],
+    '7': ['▄', '▖',
+          '▜', '▌'],
+    'J': ['▟', '▌',
+          '▀', '▘'],
+    'L': ['▐', '▙',
+          '▝', '▀'],
+    '.': ['?', ' ',
+          ' ', ' ']
+}
+
+
+valid_directions: dict[str, set[Relative2D]] = {
+    '?': {Relative2D.UP, Relative2D.DOWN, Relative2D.LEFT, Relative2D.RIGHT},
+    ' ': {Relative2D.UP, Relative2D.DOWN, Relative2D.LEFT, Relative2D.RIGHT},
+    '▐': {Relative2D.UP, Relative2D.DOWN, Relative2D.LEFT},
+    '▌': {Relative2D.UP, Relative2D.DOWN, Relative2D.RIGHT},
+    '▄': {Relative2D.UP, Relative2D.LEFT, Relative2D.RIGHT},
+    '▀': {Relative2D.DOWN, Relative2D.LEFT, Relative2D.RIGHT},
+    '▜': {Relative2D.DOWN, Relative2D.LEFT},
+    '▙': {Relative2D.UP, Relative2D.RIGHT},
+    '▟': {Relative2D.UP, Relative2D.LEFT},
+    '▛': {Relative2D.DOWN, Relative2D.RIGHT},
+    '▖': {Relative2D.UP, Relative2D.DOWN, Relative2D.LEFT, Relative2D.RIGHT},
+    '▗': {Relative2D.UP, Relative2D.DOWN, Relative2D.LEFT, Relative2D.RIGHT},
+    '▘': {Relative2D.UP, Relative2D.DOWN, Relative2D.LEFT, Relative2D.RIGHT},
+    '▝': {Relative2D.UP, Relative2D.DOWN, Relative2D.LEFT, Relative2D.RIGHT}
+}
+
+
 class Quadrent:
 
     def __init__(self, symbol: str, position: Absolute2D, pipes: 'QuadrentPipeMap'):
@@ -179,23 +215,11 @@ class Quadrent:
     def __repr__(self):
         return self.symbol
 
-
-symbol_map: dict[str, list[str]] = {
-    '|': ['▐', '▌',
-          '▐', '▌'],
-    '-': ['▄', '▄',
-          '▀', '▀'],
-    'F': [' ', '▄',
-          '▐', '▛'],
-    '7': ['▄', ' ',
-          '▜', '▌'],
-    'J': ['▟', '▌',
-          '▀', ' '],
-    'L': ['▐', '▙',
-          ' ', '▀'],
-    '.': ['▒', '▒',
-          '▒', '▒']
-}
+    def neighbours(self) -> Iterator['Quadrent']:
+        for direction in valid_directions[self.symbol]:
+            neighbour_position = self.position + direction
+            if neighbour_position in self.pipes:
+                yield self.pipes[neighbour_position]
 
 
 class QuadrentPipeMap:
@@ -240,6 +264,23 @@ class QuadrentPipeMap:
             rv += line
         return rv
 
+    def __contains__(self, position: Absolute2D) -> bool:
+        return 0 <= position.y < self.height and 0 <= position.x < self.width
+
+    def label_in_out(self, outside) -> int:
+        count_inside = 0
+        for y in range(0, self.height, 2):
+            for x in range(0, self.width, 2):
+                top_left = Absolute2D(x=x, y=y)
+                quadrent = self[top_left]
+                if quadrent.symbol == '?':
+                    if quadrent in outside:
+                        quadrent.symbol = 'O'
+                    else:
+                        quadrent.symbol = 'I'
+                        count_inside += 1
+        return count_inside
+
 
 def breadth_first_search(start: Pipe) -> dict[Pipe, int]:
     queued: deque[Pipe] = deque()
@@ -254,39 +295,37 @@ def breadth_first_search(start: Pipe) -> dict[Pipe, int]:
     return depth
 
 
+def breadth_first_search_quadrents(start: Quadrent) -> dict[Quadrent, int]:
+    queued: deque[Quadrent] = deque()
+    depth: dict[Quadrent, int] = {start: 0}
+    queued.append(start)
+    while queued:
+        vertex: Quadrent = queued.popleft()
+        for neighbor in vertex.neighbours():
+            if neighbor not in depth:
+                depth[neighbor] = depth[vertex] + 1
+                queued.append(neighbor)
+    return depth
+
+
 def solve() -> None:
 
     print('Advent of Code 2023')
     print('Day 10')
 
     pipes = PipeMap(input_lines(day=10))
-    pipes = PipeMap(['.F----7F7F7F7F-7....',
-                     '.|F--7||||||||FJ....',
-                     '.||.FJ||||||||L7....',
-                     'FJL7L7LJLJ||LJ.L-7..',
-                     'L--J.L7...LJS7F-7L7.',
-                     '....F-J..F7FJ|L7L7L7',
-                     '....L7.F7||L7|.L7L7|',
-                     '.....|FJLJ|FJ|F7|.LJ',
-                     '....FJL-7.||.||||...',
-                     '....L---J.LJ.LJLJ...'])
-
     pipes.expand_edge()
-
     start = pipes.start
     depth: dict[Pipe, int] = breadth_first_search(start)
-
-    # answer1 = max(depth.values())
-    # print(f'Part 1: {answer1}')
-    # assert 6725 == answer1
+    answer1 = max(depth.values())
+    print(f'Part 1: {answer1}')
+    assert 6725 == answer1
 
     pipes.destroy_unexplored(depth.keys())
-    print(pipes)
-
     quadrent_pipes = QuadrentPipeMap(pipes)
-    print(quadrent_pipes)
+    outside: dict[Quadrent, int] = breadth_first_search_quadrents(quadrent_pipes[Absolute2D(x=0, y=0)])
+    answer2 = quadrent_pipes.label_in_out(outside.keys())
+    # print(quadrent_pipes)
 
-
-
-
-    print('Part 2: TODO')
+    print(f'Part 2: {answer2}')
+    assert 383 == answer2
