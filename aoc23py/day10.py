@@ -9,7 +9,7 @@ from puzzle import *
 class Pipe:
 
     def __init__(self, symbol: str, position: Absolute2D, pipes: Optional['PipeMap'] = None) -> None:
-        assert symbol in ('F', '7', 'J', 'L', '-', '|', '.', 'S')
+        assert symbol in ('F', '7', 'J', 'L', '-', '|', '.', 'S'), f'invalid symbol \'{symbol}\''
         self.symbol = symbol
         self.position = position
         self.pipes = pipes
@@ -158,6 +158,88 @@ class PipeMap:
             fill_map.append(fill_row)
         return fill_map
 
+    def destroy_unexplored(self, explored):
+        for y in range(self.height):
+            for x in range(self.width):
+                position = Absolute2D(x=x, y=y)
+                if self[position] not in explored:
+                    self[position].symbol = '.'
+
+
+class Quadrent:
+
+    def __init__(self, symbol: str, position: Absolute2D, pipes: 'QuadrentPipeMap'):
+        self.symbol = symbol
+        self.position = position
+        self.pipes = pipes
+
+    def __str__(self):
+        return self.symbol
+
+    def __repr__(self):
+        return self.symbol
+
+
+symbol_map: dict[str, list[str]] = {
+    '|': ['▐', '▌',
+          '▐', '▌'],
+    '-': ['▄', '▄',
+          '▀', '▀'],
+    'F': [' ', '▄',
+          '▐', '▛'],
+    '7': ['▄', ' ',
+          '▜', '▌'],
+    'J': ['▟', '▌',
+          '▀', ' '],
+    'L': ['▐', '▙',
+          ' ', '▀'],
+    '.': ['▒', '▒',
+          '▒', '▒']
+}
+
+
+class QuadrentPipeMap:
+
+    def __init__(self, pipes: PipeMap) -> None:
+        self.height = pipes.height * 2
+        self.width = pipes.width * 2
+        self.quadrents: list[list[Quadrent]] = [[Quadrent(' ', Absolute2D(x=x, y=y), self) for x in range(self.width)] * self.width for y in range(self.height)]
+        for y in range(pipes.height):
+            for x in range(pipes.width):
+                pipe = pipes[Absolute2D(x=x, y=y)]
+                top_left = Absolute2D(x=x*2, y=y*2)
+                self.set_four_quadrents(top_left, pipe.symbol)
+
+    def set_four_quadrents(self, top_left: Absolute2D, symbol: str):
+        symbols = symbol_map[symbol]
+        top_right = top_left + Relative2D.RIGHT
+        bottom_left = top_left + Relative2D.DOWN
+        bottom_right = bottom_left + Relative2D.RIGHT
+        self[top_left].symbol = symbols[0]
+        self[top_right].symbol = symbols[1]
+        self[bottom_left].symbol = symbols[2]
+        self[bottom_right].symbol = symbols[3]
+
+    def __getitem__(self, position: Absolute2D) -> Quadrent:
+        return self.quadrents[position.y][position.x]
+
+    def __setitem__(self, position: Absolute2D, value: Quadrent) -> None:
+        self.quadrents[position.y][position.x] = value
+
+    def __repr__(self) -> str:
+        return str(self)
+
+    def __str__(self) -> str:
+        rv = ''
+        for y in range(self.height):
+            line = ''
+            for x in range(self.width):
+                line += str(self[Absolute2D(x=x, y=y)])
+            if rv:
+                rv += '\n'
+            rv += line
+        return rv
+
 
 def breadth_first_search(start: Pipe) -> dict[Pipe, int]:
     queued: deque[Pipe] = deque()
@@ -178,14 +260,33 @@ def solve() -> None:
     print('Day 10')
 
     pipes = PipeMap(input_lines(day=10))
+    pipes = PipeMap(['.F----7F7F7F7F-7....',
+                     '.|F--7||||||||FJ....',
+                     '.||.FJ||||||||L7....',
+                     'FJL7L7LJLJ||LJ.L-7..',
+                     'L--J.L7...LJS7F-7L7.',
+                     '....F-J..F7FJ|L7L7L7',
+                     '....L7.F7||L7|.L7L7|',
+                     '.....|FJLJ|FJ|F7|.LJ',
+                     '....FJL-7.||.||||...',
+                     '....L---J.LJ.LJLJ...'])
+
     pipes.expand_edge()
 
     start = pipes.start
-
     depth: dict[Pipe, int] = breadth_first_search(start)
-    answer1 = max(depth.values())
 
-    print(f'Part 1: {answer1}')
-    assert 6725 == answer1
+    # answer1 = max(depth.values())
+    # print(f'Part 1: {answer1}')
+    # assert 6725 == answer1
+
+    pipes.destroy_unexplored(depth.keys())
+    print(pipes)
+
+    quadrent_pipes = QuadrentPipeMap(pipes)
+    print(quadrent_pipes)
+
+
+
 
     print('Part 2: TODO')
