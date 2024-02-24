@@ -146,7 +146,7 @@ class PipeMap:
         self.width = new_width
         self.height = new_height
 
-    def create_fill_map(self, depth) -> list[list[bool]]:
+    def create_fill_map(self, depth: Iterable[Pipe]) -> list[list[bool]]:
         fill_map = []
         for y in range(self.height):
             fill_row = []
@@ -158,7 +158,7 @@ class PipeMap:
             fill_map.append(fill_row)
         return fill_map
 
-    def destroy_unexplored(self, explored):
+    def destroy_unexplored(self, explored: Iterable[Pipe]):
         for y in range(self.height):
             for x in range(self.width):
                 position = Absolute2D(x=x, y=y)

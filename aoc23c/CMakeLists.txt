@@ -21,4 +21,7 @@ add_executable(aoc23c main.c
         day08.c
         list.c
         list.h
-        day09.c)
+        day09.c
+        day10.c
+        matrix.c
+        matrix.h)

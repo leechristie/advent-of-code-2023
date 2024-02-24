@@ -30,6 +30,9 @@ int main(int argc, char * argv[]) {
         case 9:
             solve09();
             break;
+        case 10:
+            solve10();
+            break;
         default:
             die("Valid day not specified in command line argument.");
     }

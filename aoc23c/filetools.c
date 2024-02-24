@@ -116,3 +116,15 @@ bool ignore_char(FILE * file, char expected) {
         die("ignore_char encountered wrong character");
     return true;
 }
+
+bool chars_until(FILE * file, char terminator, size_t * count) {
+    *count = 0;
+    while (true) {
+        int character = getc(file);
+        if (character == EOF)
+            return false;
+        if (character == terminator)
+            return true;
+        (*count)++;
+    }
+}
