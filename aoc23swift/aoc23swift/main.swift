@@ -14,6 +14,8 @@ guard let arg = arg else {
 switch arg {
 case 4:
     try! solve04()
+case 11:
+    try! solve11()
 default:
     print("Valid day not specified in command line argument.")
     exit(1)
