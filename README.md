@@ -19,7 +19,7 @@ My solutions to Eric Wastl's [Advent of Code 2023](https://adventofcode.com/2023
 |  [8](logbook/day08.md) | 8<sub>/16</sub> | ⭐️⭐️ | | | ⭐️⭐️ | ⭐️⭐️ | | | ⭐️⭐️ |
 |  [9](logbook/day09.md) | 8<sub>/16</sub> | ⭐️⭐️ | ⭐️⭐️ | | | ⭐️⭐️ | | | ⭐️⭐️ |
 | [10](logbook/day10.md) | 2<sub>/16</sub> | | | | | ⭐️⭐️ | | | |
-| 11 | 0<sub>/16</sub> | | | | | | | ⭐️⭐️ | |
+| 11 | 2<sub>/16</sub> | | | | | | | ⭐️⭐️ | |
 | 12 | 0<sub>/16</sub> | | | | | | | | |
 | 13 | 0<sub>/16</sub> | | | | | | | | |
 | 14 | 0<sub>/16</sub> | | | | | | | | |
