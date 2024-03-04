@@ -8,7 +8,7 @@ My solutions to Eric Wastl's [Advent of Code 2023](https://adventofcode.com/2023
 
 | | | [C](/aoc23c/) | [C++](/aoc23cpp/) | [Go](/aoc23/go/) | [Java](/aoc23java/) | [Python](/aoc23py/) | Rust | [Swift](/aoc23swift/) | [JavaScript](/aoc23js/) |
 |--:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| | | 10<sub>/50</sub> | 6<sub>/50</sub> | 1<sub>/50</sub> | 9<sub>/50</sub> | 16<sub>/50</sub> | 0<sub>/50</sub> | 4<sub>/50</sub> | 4<sub>/50</sub> |
+| | | 10<sub>/50</sub> | 6<sub>/50</sub> | 1<sub>/50</sub> | 9<sub>/50</sub> | 16<sub>/50</sub> | 0<sub>/50</sub> | 4<sub>/50</sub> | 6<sub>/50</sub> |
 |  [1](logbook/day01.md) | 9<sub>/16</sub> | ⭐️⭐️ | ⭐️⭐️ | ⭐️ | ⭐️⭐️ | ⭐️⭐️ | | | |
 |  [2](logbook/day02.md) | 8<sub>/16</sub> | ⭐️⭐️ | ⭐️⭐️ | | ⭐️⭐️ | ⭐️⭐️ | | | |
 |  [3](logbook/day03.md) | 2<sub>/16</sub> | | | | | ⭐️⭐️ | | | |
@@ -19,7 +19,7 @@ My solutions to Eric Wastl's [Advent of Code 2023](https://adventofcode.com/2023
 |  [8](logbook/day08.md) | 8<sub>/16</sub> | ⭐️⭐️ | | | ⭐️⭐️ | ⭐️⭐️ | | | ⭐️⭐️ |
 |  [9](logbook/day09.md) | 8<sub>/16</sub> | ⭐️⭐️ | ⭐️⭐️ | | | ⭐️⭐️ | | | ⭐️⭐️ |
 | [10](logbook/day10.md) | 2<sub>/16</sub> | | | | | ⭐️⭐️ | | | |
-| 11 | 2<sub>/16</sub> | | | | | | | ⭐️⭐️ | |
+| 11 | 4<sub>/16</sub> | | | | | | | ⭐️⭐️ | ⭐️⭐️ |
 | 12 | 0<sub>/16</sub> | | | | | | | | |
 | 13 | 0<sub>/16</sub> | | | | | | | | |
 | 14 | 0<sub>/16</sub> | | | | | | | | |
