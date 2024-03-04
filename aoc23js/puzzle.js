@@ -5,14 +5,15 @@
 const assert = require("assert");
 const fs = require("fs");
 
-function inputString(day) {
+function inputString(day, example) {
+    const input_or_example = example ? "example" : "input";
     const day2digits = day < 10 ? `0${day}` : `${day}`;
-    const path = `../input/input${day2digits}.txt`;
+    const path = `../input/${input_or_example}${day2digits}.txt`;
     return fs.readFileSync(path, 'utf-8');
 }
 
-function inputLines(day) {
-    const input = inputString(day);
+function inputLines(day, example) {
+    const input = inputString(day, example);
     let rv = input.split('\n');
     // strip training line break
     while (rv[rv.length - 1].length === 0)

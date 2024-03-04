@@ -7,7 +7,7 @@ const assert = require("assert");
 const puzzle = require('./puzzle')
 
 function readInput() {
-    const input = puzzle.inputLines(8);
+    const input = puzzle.inputLines(8, false);
     assert.strictEqual(input[1], '');  // blank line between header and body
     const header = input[0];
     let body = new Map();

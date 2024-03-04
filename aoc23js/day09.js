@@ -29,7 +29,7 @@ function solve() {
     let answer1 = 0;
     let answer2 = 0;
 
-    const input = puzzle.inputLines(9);
+    const input = puzzle.inputLines(9, false);
     input.forEach((line) => {
         let forwards = puzzle.split(line, " ", Number);
         let backwards = forwards.toReversed();
