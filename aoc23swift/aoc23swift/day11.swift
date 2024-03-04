@@ -92,17 +92,17 @@ func solve11() throws {
     // calculate how much to shift the stars by
     let x_shift = calculate_shift(dimension: width, empty: empty_xs)
     let y_shift = calculate_shift(dimension: height, empty: empty_ys)
-    
+            
     // shift the stars with multiplier x2 and calculate total distance
     let moved_stars_2 = apply_shift(stars: stars, x_shift: x_shift, y_shift: y_shift, multiplier: 2)
-    var total_distance_2 = calc_total_distance(stars: moved_stars_2)
+    let total_distance_2 = calc_total_distance(stars: moved_stars_2)
     
     print("Part 1: \(total_distance_2)")
     assert(9543156 == total_distance_2)
     
     // shift the stars with multiplier x1000000 and calculate total distance
     let moved_stars_1000000 = apply_shift(stars: stars, x_shift: x_shift, y_shift: y_shift, multiplier: 1000000)
-    var total_distance_1000000 = calc_total_distance(stars: moved_stars_1000000)
+    let total_distance_1000000 = calc_total_distance(stars: moved_stars_1000000)
         
     print("Part 2: \(total_distance_1000000)")
     assert(625243292686 == total_distance_1000000)
