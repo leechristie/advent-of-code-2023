@@ -18,7 +18,7 @@ public final class Day05 {
 
     public static void solve() {
 
-        System.out.println("Advent of Code 2023!");
+        System.out.println("Advent of Code 2023");
         System.out.println("Day 5");
 
         Seeds seeds;

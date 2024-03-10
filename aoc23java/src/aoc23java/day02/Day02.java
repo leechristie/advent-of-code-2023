@@ -17,7 +17,7 @@ public final class Day02 {
 
     public static void solve() {
 
-        System.out.println("Advent of Code 2023!");
+        System.out.println("Advent of Code 2023");
         System.out.println("Day 2");
 
         final UnorderedCubes LIMIT = new UnorderedCubes( 12, 13, 14);

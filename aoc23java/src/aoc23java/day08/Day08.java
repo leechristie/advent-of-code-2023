@@ -20,7 +20,7 @@ public class Day08 {
 
     public static void solve() {
 
-        System.out.println("Advent of Code 2023!");
+        System.out.println("Advent of Code 2023");
         System.out.println("Day 8");
 
         Input input = readInput();
