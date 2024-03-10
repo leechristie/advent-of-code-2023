@@ -1,7 +1,7 @@
 # Advent of Code 2023
 # Dr Lee A. Christie
 # @0x1ac@techhub.social
-import sys
+
 import time
 from enum import Enum
 from typing import Union, Optional
@@ -10,6 +10,7 @@ from puzzle import input_lines
 
 
 class SpringState(Enum):
+
     OPERATIONAL = 0
     DAMAGED = 1
     UNKNOWN = 2
@@ -24,34 +25,15 @@ class SpringState(Enum):
             return SpringState.UNKNOWN
         raise ValueError(f"invalid symbol: '{symbol}'")
 
-    def __repr__(self) -> str:
-        return str(self)
-
-    def __str__(self) -> str:
-        if self == SpringState.OPERATIONAL:
-            return '.'
-        if self == SpringState.DAMAGED:
-            return '#'
-        if self == SpringState.UNKNOWN:
-            return '?'
-        raise ValueError(f"invalid spring stat: '{self}'")
-
 
 class SpringStates:
 
     __slots__ = ['springs']
 
-    def __init__(self, s: Union[int, 'SpringStates', list[SpringState], str]) -> None:
-        if isinstance(s, int):
-            self.springs = [SpringState.UNKNOWN] * s
-        elif isinstance(s, SpringStates):
-            self.springs = list(s.springs)
-        elif isinstance(s, list):
-            self.springs = list(s)
-        elif isinstance(s, str):
-            self.springs = [SpringState.parse_symbol(symbol) for symbol in s]
-        else:
+    def __init__(self, s: list[SpringState]) -> None:
+        if not isinstance(s, list):
             raise TypeError
+        self.springs = list(s)
 
     def __getitem__(self, item: int) -> SpringState:
         return self.springs[item]
@@ -61,55 +43,6 @@ class SpringStates:
 
     def __len__(self) -> int:
         return len(self.springs)
-
-    def __repr__(self):
-        return str(self)
-
-    def __str__(self):
-        rv = ''
-        for spring in self.springs:
-            rv += str(spring)
-        return rv
-
-    def first_unknown(self) -> Union[int, None]:
-        if SpringState.UNKNOWN in self.springs:
-            return self.springs.index(SpringState.UNKNOWN)
-        return None
-
-    def with_next_run(self, length, lower):
-        rv = SpringStates(self)
-        for i in range(lower):
-            if rv[i] == SpringState.UNKNOWN:
-                rv[i] = SpringState.OPERATIONAL
-        for i in range(lower, lower + length):
-            rv[i] = SpringState.DAMAGED
-        if lower + length < len(self):
-            rv[lower + length] = SpringState.OPERATIONAL
-        return rv
-
-    def contradicts(self, other: 'SpringStates') -> bool:
-        if not isinstance(other, SpringStates):
-            raise TypeError('invalid type for contradicts')
-        if len(self) != len(other):
-            raise ValueError('length mismatch for contradicts')
-        index = 0
-        for a, b in zip(self.springs, other.springs):
-            if a == SpringState.OPERATIONAL and b == SpringState.DAMAGED:
-                return True
-            if a == SpringState.DAMAGED and b == SpringState.OPERATIONAL:
-                return True
-            index += 1
-        return False
-
-    def with_unknown_as_operational(self):
-        rv = SpringStates(self)
-        for index, state in enumerate(rv.springs):
-            if state == SpringState.UNKNOWN:
-                rv[index] = SpringState.OPERATIONAL
-        return rv
-
-    def counts(self) -> list[int]:
-        return [len(x) for x in str(self).split('.') if x]
 
 
 def parse(line: str, multiplier: int = 1) -> tuple[SpringStates, list[int]]:
@@ -121,167 +54,97 @@ def parse(line: str, multiplier: int = 1) -> tuple[SpringStates, list[int]]:
     return SpringStates(springs), numbers
 
 
-CONSTRAINT_SPRINGS: Optional[SpringStates] = None
-CONSTRAINT_NUMBERS: Optional[list[int]] = None
-CONSTRAINT_SPRINGS_LENGTH: Optional[int] = None
-CONSTRAINT_NUMBERS_LENGTH: Optional[int] = None
-CONSTRAINT_MEMO: dict[tuple[int, int], int] = dict()
+# the number of ways to arrange the given constraint_numbers of runs
+# over the given constraint_springs
+def number_of_arrangements(constraint_springs: SpringStates,
+                           constraint_numbers: list[int]) -> int:
 
+    # noting the len values actually seems to speed up a noticeable little bit
+    constraint_springs_length = len(constraint_springs)
+    constraint_numbers_length = len(constraint_numbers)
 
-# number of arrangements possible with remaining springs, numbers
-# given that the previous index is a '.' (operational)
-# and given that the previous indices don't contradict the springs constraint
-def number_of_arrangements(lower_spring_index: int,
-                           lower_number_index: int) -> int:
+    # memoized return values
+    # it was slightly faster to use dict[tuple[int, int], int]
+    # than list[list[Optional[int]]] when I tested (and simpler)
+    memo: dict[tuple[int, int], int] = dict()
 
-    # get the problem parameters from the global setup
-    global CONSTRAINT_SPRINGS
-    global CONSTRAINT_NUMBERS
-    global CONSTRAINT_SPRINGS_LENGTH
-    global CONSTRAINT_NUMBERS_LENGTH
-    global CONSTRAINT_MEMO
+    # the number of ways to arrange the remaining runs of damaged springs
+    # on the remaining springs, *assuming we are valid up to this point*
+    # this is a closure over the constraints and the memoized return values
+    def __number_of_arrangements(lower_spring_index: int,
+                                 lower_number_index: int) -> int:
 
-    assert CONSTRAINT_SPRINGS is not None
-    assert CONSTRAINT_NUMBERS is not None
-    assert CONSTRAINT_SPRINGS_LENGTH is not None
-    assert CONSTRAINT_NUMBERS_LENGTH is not None
-    assert CONSTRAINT_MEMO is not None
+        # check for dynamic memoized return value
+        key = (lower_spring_index, lower_number_index)
+        rv: Optional[int] = memo.get(key)
+        if rv is not None:
+            return rv
+        rv: int = 0
 
-    key = (lower_spring_index, lower_number_index)
-    rv = CONSTRAINT_MEMO.get(key)
-    if rv is not None:
+        # base case - no more to assign, there is only one arrangement (i.e. the no-op)
+        if lower_number_index >= constraint_numbers_length:
+
+            # check if there are remaining unsatisfied damaged springs, there are no ways to satisfy constraints
+            for i in range(lower_spring_index, constraint_springs_length):
+                if constraint_springs[i] == SpringState.DAMAGED:
+                    return 0
+
+            # if there are no more unsatisfied, there is 1 way to satisfy constraints
+            return 1
+
+        # get the length of the current run of damaged springs
+        current = constraint_numbers[lower_number_index]
+
+        # need to leave a space at the end for the remaining runs
+        leave_space = 0
+        for i in range(lower_number_index + 1, constraint_numbers_length):
+            leave_space += 1
+            leave_space += constraint_numbers[i]
+
+        # each position `i` for the start of the next run of broken springs
+        for i in range(0, constraint_springs_length - current + 1 - leave_space - lower_spring_index):
+
+            # if the next position we cannot add an operational spring,
+            # then this is the furthest right the next run can go, stop here
+            # not applicable if the start index `i` is 0 relative to the
+            # current lower bound `lower_spring_index`
+            if i:
+                index_of_first_new_operational = lower_spring_index + i - 1
+                assert 0 <= index_of_first_new_operational < constraint_springs_length
+                if constraint_springs[index_of_first_new_operational] == SpringState.DAMAGED:
+                    break
+
+            # find where the run of damaged springs we are adding starts
+            run_start = lower_spring_index + i if lower_spring_index else i
+
+            # check each position in the run,
+            # if the spring is operational, then continue to next index in outer loop as this is an invalid position
+            do_continue = False
+            for damaged_index in range(run_start, run_start + current):
+                if constraint_springs[damaged_index] == SpringState.OPERATIONAL:
+                    do_continue = True
+                    break
+            if do_continue:
+                continue
+
+            # if the next position is not beyond the end of the list then check it
+            # if it is damaged, then continue to the next index in the outer look as this is invalid position
+            # the next index must be operational as there must be a gap between runs of damaged springs
+            final_operational_index = run_start + current
+            if final_operational_index < constraint_springs_length:
+                if constraint_springs[final_operational_index] == SpringState.DAMAGED:
+                    continue
+
+            # recursive call to find the number of ways to assign the remaining
+            # runs of damaged springs
+            rv += __number_of_arrangements(final_operational_index + 1, lower_number_index + 1)
+
+        # set the memoized return value and return
+        memo[key] = rv
         return rv
 
-    # print(f'{CONSTRAINT_SPRINGS = }')
-    # print(f'{CONSTRAINT_NUMBERS = }')
-    # print(f'{CONSTRAINT_SPRINGS_LENGTH = }')
-    # print(f'{CONSTRAINT_NUMBERS_LENGTH = }')
-    # print(f'{lower_spring_index = }')
-    # print(f'{lower_number_index = }')
-
-    if lower_number_index >= CONSTRAINT_NUMBERS_LENGTH:
-        #print(f'there are no numbers because {lower_number_index = } which is outside [0, {CONSTRAINT_NUMBERS_LENGTH})')
-        for i in range(lower_spring_index, CONSTRAINT_SPRINGS_LENGTH):
-            if CONSTRAINT_SPRINGS[i] == SpringState.DAMAGED:
-                #print(f'index {i} is damages, cannot do, returning 0')
-                return 0
-        #print(f'no damaged from index {lower_spring_index} on, can do, returning 1')
-        return 1
-
-    current = CONSTRAINT_NUMBERS[lower_number_index]
-
-    #print(f'{current = }')
-    #print(f'remaining = {CONSTRAINT_NUMBERS[lower_number_index + 1:]}')
-
-    # need to leave a space at the end for the remaining runs
-    leave_space = 0
-    for i in range(lower_number_index + 1, CONSTRAINT_NUMBERS_LENGTH):
-        leave_space += 1
-        leave_space += CONSTRAINT_NUMBERS[i]
-    #print(f'{leave_space = }')
-
-    number_of_ways = 0
-
-    # # each position `i` for the start of the next run of broken springs
-    #print(f'{lower_spring_index = }')
-    broke_because_start_dot = False
-    for i in range(0, CONSTRAINT_SPRINGS_LENGTH - current + 1 - leave_space - lower_spring_index):
-
-        #print()
-        #print(f'{i = }')
-
-        # if the next position we cannot add an operational spring,
-        # then this is the furthest right the next run can go, stop here
-        # not applicable if the start index `i` is 0 relative to the
-        # current lower bound `lower_spring_index`
-        if i:
-            index_of_first_new_operational = lower_spring_index + i - 1
-            assert 0 <= index_of_first_new_operational < CONSTRAINT_SPRINGS_LENGTH
-            # print(f'{index_of_first_new_operational = }')
-            if CONSTRAINT_SPRINGS[index_of_first_new_operational] == SpringState.DAMAGED:
-                #print(f'stopping at {i = }')
-                broke_because_start_dot = True
-                break
-            else:
-                pass  #print(f'start dot at index {index_of_first_new_operational} is okay')
-
-        # display the current and next
-        #print(CONSTRAINT_SPRINGS, '<-- constraints')
-        leave_start = 0
-        temp = ''
-        count_before_first_hash = 0
-        if lower_spring_index:
-            temp += 'o' * (lower_spring_index - 1)  # non-contradictory and fixed (unknown to this stack frame)
-            temp += ','  # single non-contradictory '.' (operational)
-            leave_start += lower_spring_index
-            count_before_first_hash += lower_spring_index
-        temp += '.' * i  # speculative - '.' (operational)
-        count_before_first_hash += i
-        temp += '#' * current  # speculative - current position
-        if leave_space:
-            temp += ','  # the first leave space will be a '.'
-            temp += '!' * (leave_space - 1)  # leave space for remaining
-        #print(f'{temp} <- current plan')
-        #print(f'{count_before_first_hash = }')
-
-        run_start = count_before_first_hash
-        run_end = run_start + current
-        do_continue = False
-        for damaged_index in range(run_start, run_end):
-            # print(f'# at index {damaged_index}', end='')
-            #print(f'will check position {damaged_index} to ensure can be damaged')
-            if CONSTRAINT_SPRINGS[damaged_index] == SpringState.OPERATIONAL:
-                #print(f'position {damaged_index} - IS CONTRADICTORY because it cannot be damaged!')
-                do_continue = True
-                break
-        if do_continue:
-            #print('continuing to next')
-            continue
-
-        final_operational_index = count_before_first_hash + current
-        if final_operational_index < CONSTRAINT_SPRINGS_LENGTH:
-            # print(f'. at index {lower_number_index + i + current}', end='')
-            if CONSTRAINT_SPRINGS[final_operational_index] == SpringState.DAMAGED:
-                #print(f'end dot position {final_operational_index} - IS CONTRADICTORY because it cannot be operational!')
-                continue
-            else:
-                #print(f'end dot position {final_operational_index} - is okay because it can be operational!')
-                pass  # print(' is okay')
-
-        #print_numbers(CONSTRAINT_SPRINGS_LENGTH)
-        #print(CONSTRAINT_SPRINGS)
-        #print(f'{temp} <- current plan')
-        #print(f'    number_of_arrangements({final_operational_index + 1}, {lower_number_index + 1})')
-        #print()
-        number_of_ways += number_of_arrangements(final_operational_index + 1, lower_number_index + 1)
-
-    if broke_because_start_dot:
-        pass #print('broke because start dot')
-
-    CONSTRAINT_MEMO[key] = number_of_ways
-    return number_of_ways
-
-
-def count_setup2(constraint_springs: SpringStates,
-                 constraint_numbers: list[int]) -> None:
-
-    # store problem parameters
-    global CONSTRAINT_SPRINGS
-    global CONSTRAINT_NUMBERS
-    global CONSTRAINT_SPRINGS_LENGTH
-    global CONSTRAINT_NUMBERS_LENGTH
-    global CONSTRAINT_MEMO
-    CONSTRAINT_SPRINGS = constraint_springs
-    CONSTRAINT_NUMBERS = constraint_numbers
-    CONSTRAINT_SPRINGS_LENGTH = len(constraint_springs)
-    CONSTRAINT_NUMBERS_LENGTH = len(constraint_numbers)
-    CONSTRAINT_MEMO = dict()
-
-
-def count_helper2(constraint_springs: SpringStates,
-                  constraint_numbers: list[int]) -> int:
-    count_setup2(constraint_springs, constraint_numbers)
-    return number_of_arrangements(0, 0)
+    # makes the first call the closure with the initial case of (0, 0) - all springs, all numbers
+    return __number_of_arrangements(0, 0)
 
 
 def solve() -> None:
@@ -292,13 +155,13 @@ def solve() -> None:
     answer1 = 0
     for line in input_lines(day=12):
         springs, numbers = parse(line)
-        answer1 += count_helper2(springs, numbers)
+        answer1 += number_of_arrangements(springs, numbers)
     print(f'Part 1: {answer1}')
     assert 7939 == answer1
 
     answer2 = 0
     for line in input_lines(day=12):
         springs, numbers = parse(line, multiplier=5)
-        answer2 += count_helper2(springs, numbers)
+        answer2 += number_of_arrangements(springs, numbers)
     print(f'Part 2: {answer2}')
     assert 850504257483930 == answer2
