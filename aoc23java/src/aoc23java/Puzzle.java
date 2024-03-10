@@ -6,6 +6,7 @@ package aoc23java;
 
 import java.io.*;
 import java.util.*;
+import java.util.function.Consumer;
 
 public final class Puzzle {
 
@@ -28,6 +29,21 @@ public final class Puzzle {
         } catch (FileNotFoundException ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    public static void inputLines(int day, Consumer<String> consumer, boolean example) {
+        try (BufferedReader input = Puzzle.inputLines(day, example)) {
+            String line;
+            while ((line = input.readLine()) != null) {
+                consumer.accept(line);
+            }
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static void inputLines(int day, Consumer<String> consumer) {
+        inputLines(day, consumer, false);
     }
 
     public static Iterable<Character> repeat(String string) {
