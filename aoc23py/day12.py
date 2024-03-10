@@ -121,87 +121,11 @@ def parse(line: str, multiplier: int = 1) -> tuple[SpringStates, list[int]]:
     return SpringStates(springs), numbers
 
 
-def count(constraint_springs: SpringStates,
-          constraint_numbers: list[int],
-          partial_solution: SpringStates,
-          remaining: list[int]) -> int:
-
-    # there are no remaining runs of broken springs to assign
-    if not remaining:
-
-        # if the solution is non-contradictory, then there is one solution, otherwise none
-        return 0 if partial_solution.contradicts(constraint_springs) else 1
-
-    # there is at least one remaining run of broken springs
-    current, remaining = remaining[0], remaining[1:]
-
-    # find the first unknown position in the partial solution if there is one
-    first_unknown = partial_solution.first_unknown()
-
-    # no way to assign remaining run of broken springs
-    if first_unknown is None:
-        return 0
-
-    # result (counter the total ways to assign the runs of broken springs)
-    total_ways = 0
-
-    # each position `i` for the start of the next run of broken springs
-    leave_space = sum(remaining) + len(remaining)
-    for i in range(first_unknown, len(constraint_springs) - current + 1 - leave_space):
-
-        # update the partial solution for this new run
-        new_partial_solution = partial_solution.with_next_run(length=current, lower=i)
-
-        # only continue to consider this solution if there is no contradiction
-        if not new_partial_solution.contradicts(constraint_springs):
-
-            # solution is complete
-            if not remaining:
-
-                # get solution
-                complete_solution = new_partial_solution.with_unknown_as_operational()
-                solution_counts = complete_solution.counts()
-
-                # check solution
-                assert solution_counts == constraint_numbers
-
-                # skip current if the solution contradicts
-                if complete_solution.contradicts(constraint_springs):
-                    continue
-
-                # DEBUGGING - uncomment to print each possible arrangement - DEBUGGING
-                #print(complete_solution, solution_counts)
-
-            # recursive call to count out the total ways to arrange the remaining runs
-            total_ways += count(constraint_springs,
-                                constraint_numbers,
-                                new_partial_solution,
-                                remaining)
-
-    # return the total count
-    return total_ways
-
-
-def count_helper(constraint_springs: SpringStates,
-                 constraint_numbers: list[int]) -> int:
-    return count(constraint_springs,
-                 constraint_numbers,
-                 SpringStates(len(constraint_springs)),
-                 list(constraint_numbers))
-
-
 CONSTRAINT_SPRINGS: Optional[SpringStates] = None
 CONSTRAINT_NUMBERS: Optional[list[int]] = None
 CONSTRAINT_SPRINGS_LENGTH: Optional[int] = None
 CONSTRAINT_NUMBERS_LENGTH: Optional[int] = None
 CONSTRAINT_MEMO: dict[tuple[int, int], int] = dict()
-
-
-def print_numbers(n: int) -> None:
-    for i in range(n):
-        s = str(i)[-1]
-        print(s, end='')
-    print()
 
 
 # number of arrangements possible with remaining springs, numbers
@@ -365,41 +289,16 @@ def solve() -> None:
     print('Advent of Code')
     print('Day 12')
 
-    # for line in input_lines(day=12):
-    #     springs, numbers = parse(line)
-    #     springs[5] = SpringState.DAMAGED
-    #     if count_helper(springs, numbers) >= 70:
-    #         print(f'actual answer = {count_helper2(springs, numbers)}')
-    #         print(f'expected answer = {count_helper(springs, numbers)}')
-    #         break
-
-    # springs = SpringStates('??????#???.?????#?#???????####??????#?#??...#.?????')
-    # numbers = [2, 2, 1, 2, 5, 1, 4]
-    # start = time.perf_counter()
-    # print(f'actual answer = {count_helper2(springs, numbers)}')
-    # print(f'time = {time.perf_counter() - start}')
-    # start = time.perf_counter()
-    # print(f'expected answer = {count_helper(springs, numbers)}')
-    # print(f'time = {time.perf_counter() - start}')
-
-    start = time.perf_counter()
     answer1 = 0
     for line in input_lines(day=12):
         springs, numbers = parse(line)
         answer1 += count_helper2(springs, numbers)
     print(f'Part 1: {answer1}')
-    print(f'time = {time.perf_counter() - start}')
     assert 7939 == answer1
 
     answer2 = 0
-    i = 1
     for line in input_lines(day=12):
         springs, numbers = parse(line, multiplier=5)
-        print(f'{i}. {springs} {numbers}')
-        i += 1
-        current = count_helper2(springs, numbers)
-        print(f'Current: {current}.')
-        answer2 += current
-        print(f'Running Total: {answer2} . . . ')
-        print()
+        answer2 += count_helper2(springs, numbers)
     print(f'Part 2: {answer2}')
+    assert 850504257483930 == answer2
