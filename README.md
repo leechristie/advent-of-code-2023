@@ -6,7 +6,7 @@ My solutions to Eric Wastl's [Advent of Code 2023](https://adventofcode.com/2023
 
 ## Progress
 
-| | | [C](/aoc23c/) | [C++](/aoc23cpp/) | [Go](/aoc23/go/) | [Java](/aoc23java/) | [Python](/aoc23py/) | Rust | [Swift](/aoc23swift/) | [JavaScript](/aoc23js/) |
+| | | [![C](logos/c.png)](/aoc23c/) | [![C++](logos/cpp.png)](/aoc23cpp/) | [![Go](logos/go.png)](/aoc23go/) | [![Java++](logos/java.png)](/aoc23java/) | [![Python](logos/py.png)](/aoc23py/) | [![Rust](logos/rs.png)](/aoc23rs/) | [![Swift](logos/swift.png)](/aoc23swift/) | [![JavaScript](logos/js.png)](/aoc23js/) |
 |--:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | | | 10<sub>/50</sub> | 6<sub>/50</sub> | 1<sub>/50</sub> | 9<sub>/50</sub> | 18<sub>/50</sub> | 0<sub>/50</sub> | 4<sub>/50</sub> | 6<sub>/50</sub> |
 |  [1](logbook/day01.md) | 9<sub>/16</sub> | ⭐️⭐️ | ⭐️⭐️ | ⭐️ | ⭐️⭐️ | ⭐️⭐️ | | | |
