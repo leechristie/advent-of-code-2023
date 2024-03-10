@@ -2,9 +2,8 @@
 # Dr Lee A. Christie
 # @0x1ac@techhub.social
 
-import time
 from enum import Enum
-from typing import Union, Optional
+from typing import Optional
 
 from puzzle import input_lines
 
