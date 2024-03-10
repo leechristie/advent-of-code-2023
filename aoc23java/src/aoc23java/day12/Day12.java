@@ -5,7 +5,6 @@
 package aoc23java.day12;
 
 import java.math.*;
-import java.time.Duration;
 import java.util.*;
 
 public class Day12 {
