@@ -8,36 +8,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a235e190-3a8b-4f08-8e53-4f0afc967a15" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/.idea/.idea.aoc23cs/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/.idea/.idea.aoc23cs/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/bin/Debug/net8.0/aoc23cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/bin/Debug/net8.0/aoc23cs.deps.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/bin/Debug/net8.0/aoc23cs.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/bin/Debug/net8.0/aoc23cs.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/bin/Debug/net8.0/aoc23cs.runtimeconfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/Debug/net8.0/.NETCoreApp,Version=v8.0.AssemblyAttributes.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/Debug/net8.0/aoc23cs.AssemblyInfo.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/Debug/net8.0/aoc23cs.AssemblyInfoInputs.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/Debug/net8.0/aoc23cs.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/Debug/net8.0/aoc23cs.GlobalUsings.g.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/Debug/net8.0/aoc23cs.assets.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/Debug/net8.0/aoc23cs.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/Debug/net8.0/aoc23cs.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/Debug/net8.0/aoc23cs.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/Debug/net8.0/aoc23cs.genruntimeconfig.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/Debug/net8.0/aoc23cs.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/Debug/net8.0/aoc23cs.sourcelink.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/Debug/net8.0/apphost" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/Debug/net8.0/ref/aoc23cs.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/Debug/net8.0/refint/aoc23cs.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/aoc23cs.csproj.nuget.dgspec.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/aoc23cs.csproj.nuget.g.props" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/aoc23cs.csproj.nuget.g.targets" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/project.assets.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/project.nuget.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/project.packagespec.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/rider.project.model.nuget.info" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aoc23cs/obj/rider.project.restore.info" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../aoc23cs/.run/Day 1.run.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../aoc23cs/Day01.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../aoc23cs/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../aoc23cs/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +82,7 @@
       <workItem from="1710375117614" duration="62000" />
       <workItem from="1710375183965" duration="1356000" />
       <workItem from="1710440324116" duration="3242000" />
-      <workItem from="1710615776063" duration="3298000" />
+      <workItem from="1710615776063" duration="4954000" />
     </task>
     <servers />
   </component>
