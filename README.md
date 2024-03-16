@@ -7,7 +7,7 @@ My solutions to Eric Wastl's [Advent of Code 2023](https://adventofcode.com/2023
 ## Progress
 
 | | [![C](logos/c.png)](/aoc23c/) | [![C++](logos/cpp.png)](/aoc23cpp/) | [![Go](logos/go.png)](/aoc23go/) | [![Java++](logos/java.png)](/aoc23java/) | [![JavaScript](logos/js.png)](/aoc23js/) | [![Python](logos/py.png)](/aoc23py/) | [![Rust](logos/rs.png)](/aoc23rs/) | [![Swift](logos/swift.png)](/aoc23swift/) |
-|--:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+|--:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 |  [1](logbook/day01.md) | ⭐️⭐️ | ⭐️⭐️ | ⭐️ | ⭐️⭐️ | | ⭐️⭐️ | ⭐️⭐️ | |
 |  [2](logbook/day02.md) | ⭐️⭐️ | ⭐️⭐️ | | ⭐️⭐️ | | ⭐️⭐️ | | | |
 |  [3](logbook/day03.md) | | | | | | ⭐️⭐️ | | |
