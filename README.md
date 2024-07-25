@@ -4,7 +4,7 @@ My solutions to Eric Wastl's [Advent of Code 2023](https://adventofcode.com/2023
 
 ## Progress
 
-| | [![C](logos/c.png)](/aoc23c/) | [![Java++](logos/java.png)](/aoc23java/) | [![Python](logos/py.png)](/aoc23py/) | [![Swift](logos/swift.png)](/aoc23swift/) |
+| | [![C](aoc23c/c.png)](/aoc23c/)<br>[C](/aoc23c/) | [![Java++](aoc23java/java.png)](/aoc23java/)<br>[Java](/aoc23java/) | [![Python](aoc23py/py.png)](/aoc23py/)<br>[Python](/aoc23py/) | [![Swift](aoc23swift/swift.png)](/aoc23swift/)<br>[Swift](/aoc23swift/) |
 |--:|:-:|:-:|:-:|:-:|
 |  1 | ⭐️⭐️ | ⭐️⭐️ | ⭐️⭐️ | |
 |  2 | ⭐️⭐️ | ⭐️⭐️ | ⭐️⭐️ | ||
