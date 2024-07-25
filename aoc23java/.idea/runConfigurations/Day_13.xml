@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Day 13" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="aoc23java.Main" />
+    <module name="aoc23java" />
+    <option name="PROGRAM_PARAMETERS" value="13" />
+    <option name="VM_PARAMETERS" value="-ea" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

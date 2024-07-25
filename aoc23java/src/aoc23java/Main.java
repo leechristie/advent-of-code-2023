@@ -10,6 +10,7 @@ import aoc23java.day05.Day05;
 import aoc23java.day07.Day07;
 import aoc23java.day08.Day08;
 import aoc23java.day12.Day12;
+import aoc23java.day13.Day13;
 
 import java.io.*;
 import java.util.*;
@@ -28,7 +29,8 @@ public final class Main {
                                                        Map.entry(5, Day05::solve),
                                                        Map.entry(7, Day07::solve),
                                                        Map.entry(8, Day08::solve),
-                                                       Map.entry(12, Day12::solve));
+                                                       Map.entry(12, Day12::solve),
+                                                       Map.entry(13, Day13::solve));
 
         int day;
         try {
