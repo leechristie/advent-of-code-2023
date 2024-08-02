@@ -6,10 +6,11 @@
 #include <assert.h>
 #include <string.h>
 #include "days.h"
-#include "puzzletools.h"
-#include "filetools.h"
-#include "errortools.h"
-#include "list.h"
+#include "old_puzzletools.h"
+#include "old_filetools.h"
+#include "old_errortools.h"
+#include "old_list.h"
+#include "old_mathtools.h"
 
 typedef struct {
     char lhs[4];
@@ -21,29 +22,29 @@ static bool read_body_entry(FILE *, BodyEntry *);
 void solve08(void) {
 
     // open the input file
-    FILE * file = open_input_file(8);
+    FILE * file = old_open_input_file(8);
 
     // read the header (sequence of moves on the graph)
-    char * header = read_line_alloc(file);
+    char * header = old_read_line_alloc(file);
     if (header == NULL)
-        die("unable to read header");
+        old_die("unable to read header");
     int headerLength = strlen(header);
 
     // expected blank line
     assert(getc(file) == '\n');
 
     // get a list of only the LHS to enumerate the nodes
-    List nodeNames;
-    list_create(&nodeNames, 4);
+    OldList nodeNames;
+    old_list_create(&nodeNames, 4);
     BodyEntry entry;
     while (read_body_entry(file, &entry))
-        list_append(&nodeNames, &entry.lhs);
+        old_list_append(&nodeNames, &entry.lhs);
 
     // reset position in the file
     fseek(file, 0, SEEK_SET);
 
     // ignore the header and blank line
-    ignore_string(file, header);
+    old_ignore_string(file, header);
     assert(getc(file) == '\n'); // line break in header line
     assert(getc(file) == '\n'); // blank line
 
@@ -55,14 +56,14 @@ void solve08(void) {
         rights[i] = -1;
     }
     while (read_body_entry(file, &entry)) {
-        int nodeIndex = list_index_of(&nodeNames, entry.lhs);
-        lefts[nodeIndex] = list_index_of(&nodeNames, entry.left);
-        rights[nodeIndex] = list_index_of(&nodeNames, entry.right);
+        int nodeIndex = old_list_index_of(&nodeNames, entry.lhs);
+        lefts[nodeIndex] = old_list_index_of(&nodeNames, entry.left);
+        rights[nodeIndex] = old_list_index_of(&nodeNames, entry.right);
     }
 
     // Part 1 - find the first stop for "AAA"
-    int start = list_index_of(&nodeNames, "AAA");
-    int stop = list_index_of(&nodeNames, "ZZZ");
+    int start = old_list_index_of(&nodeNames, "AAA");
+    int stop = old_list_index_of(&nodeNames, "ZZZ");
     int current = start;
     long answer1 = 0;
     for (int i = 0; i < headerLength; i = (i + 1) % headerLength) {
@@ -78,7 +79,7 @@ void solve08(void) {
     long answer2 = 1;
     for (int startIndex = 0; startIndex < nodeNames.length; startIndex++) {
         char startName[4];
-        list_get(&nodeNames, &startName, startIndex);
+        old_list_get(&nodeNames, &startName, startIndex);
         bool isGhost = startName[2] == 'A';
         if (isGhost) {
             int ghostCurrent = startIndex;
@@ -89,16 +90,16 @@ void solve08(void) {
                 ghostCurrent = (direction == 'L') ?  lefts[ghostCurrent] : rights[ghostCurrent];
                 ghostCycle++;
                 char currentName[4];
-                list_get(&nodeNames, &currentName, ghostCurrent);
+                old_list_get(&nodeNames, &currentName, ghostCurrent);
                 if (currentName[2] == 'Z')
                     break;
             }
-            answer2 = lcm(answer2, ghostCycle);
+            answer2 = old_lcm(answer2, ghostCycle);
         }
     }
 
     // clean up
-    list_destroy(&nodeNames);
+    old_list_destroy(&nodeNames);
     free(lefts);
     free(rights);
     free(header);
@@ -119,15 +120,15 @@ void solve08(void) {
 
 static bool read_body_entry(FILE * file, BodyEntry * bodyEntry) {
 
-    if (!read_n_characters(file, 3, bodyEntry->lhs))
+    if (!old_read_n_characters(file, 3, bodyEntry->lhs))
         return false;
-    ignore_string(file, " = (");
-    if (!read_n_characters(file, 3, bodyEntry->left))
+    old_ignore_string(file, " = (");
+    if (!old_read_n_characters(file, 3, bodyEntry->left))
         return false;
-    ignore_string(file, ", ");
-    if (!read_n_characters(file, 3, bodyEntry->right))
+    old_ignore_string(file, ", ");
+    if (!old_read_n_characters(file, 3, bodyEntry->right))
         return false;
-    ignore_string(file, ")\n");
+    old_ignore_string(file, ")\n");
 
     return true;
 

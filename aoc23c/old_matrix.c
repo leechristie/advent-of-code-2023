@@ -3,18 +3,18 @@
 // @0x1ac@techhub.social
 
 #include <stdlib.h>
-#include "matrix.h"
-#include "errortools.h"
+#include "old_matrix.h"
+#include "old_errortools.h"
 
-void dimensions_print(Dimensions dimensions) {
+void old_dimensions_print(OldDimensions dimensions) {
     printf("%zu x %zu", dimensions.width, dimensions.height);
 }
 
-void absolute_2d_print(Absolute2D point) {
+void old_absolute_2d_print(OldAbsolute2D point) {
     printf("(%d, %d)", point.x, point.y);
 }
 
-void relative_2d_print(Relative2D point) {
+void old_relative_2d_print(OldRelative2D point) {
     printf("[");
     if (point.dx > 0)
         printf("+");
@@ -26,25 +26,25 @@ void relative_2d_print(Relative2D point) {
     printf("]");
 }
 
-void matrix_create(Matrix * matrix, size_t element_size, Dimensions dimensions) {
+void old_matrix_create(OldMatrix * matrix, size_t element_size, OldDimensions dimensions) {
     if (matrix == NULL)
-        die("cannot init NULL matrix");
+        old_die("cannot init NULL matrix");
     matrix->element_size = element_size;
     matrix->dimensions = dimensions;
     matrix->array = malloc(element_size * dimensions.width * dimensions.height);
     if (matrix->array == NULL)
-        die("cannot allocate to init matrix");
+        old_die("cannot allocate to init matrix");
 }
 
-void matrix_set(Matrix * matrix, Absolute2D position, void * element) {
+void old_matrix_set(OldMatrix * matrix, OldAbsolute2D position, void * element) {
     if (position.x < 0)
-        die("negative x position in set");
+        old_die("negative x position in set");
     if (position.y < 0)
-        die("negative y position in set");
+        old_die("negative y position in set");
     if ((size_t) position.x >= matrix->dimensions.width)
-        die("too large x position in set");
+        old_die("too large x position in set");
     if ((size_t) position.y >= matrix->dimensions.height)
-        die("too large y position in set");
+        old_die("too large y position in set");
     char * source = (char *) element;
     size_t offset = (matrix->dimensions.width) * (size_t) position.y + (size_t) position.x;
     char * dest = matrix->array + (matrix->element_size * offset);
@@ -52,15 +52,15 @@ void matrix_set(Matrix * matrix, Absolute2D position, void * element) {
         dest[i] = source[i];
 }
 
-void matrix_get(Matrix * matrix, Absolute2D position, void * return_address) {
+void old_matrix_get(OldMatrix * matrix, OldAbsolute2D position, void * return_address) {
     if (position.x < 0)
-        die("negative x position in set");
+        old_die("negative x position in set");
     if (position.y < 0)
-        die("negative y position in set");
+        old_die("negative y position in set");
     if ((size_t) position.x >= matrix->dimensions.width)
-        die("too large x position in set");
+        old_die("too large x position in set");
     if ((size_t) position.y >= matrix->dimensions.height)
-        die("too large y position in set");
+        old_die("too large y position in set");
     char * dest = (char *) return_address;
     size_t offset = (matrix->dimensions.width) * (size_t) position.y + (size_t) position.x;
     char * source = matrix->array + (matrix->element_size * offset);
@@ -68,9 +68,9 @@ void matrix_get(Matrix * matrix, Absolute2D position, void * return_address) {
         dest[i] = source[i];
 }
 
-void matrix_destroy(Matrix * matrix) {
+void old_matrix_destroy(OldMatrix * matrix) {
     if (matrix == NULL)
-        die("cannot destroy NULL matrix");
+        old_die("cannot destroy NULL matrix");
     if (matrix->array != NULL)
         free(matrix->array);
 }

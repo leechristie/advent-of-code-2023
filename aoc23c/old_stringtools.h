@@ -7,9 +7,9 @@
 
 #include <stdbool.h>
 
-long parse_long(char * str);
-int parse_int(char * str);
-char * lstrip_view(char *);
-bool is_any(char, const char *);
+long old_parse_long(char * str);
+int old_parse_int(char * str);
+char * old_lstrip_view(char *);
+bool old_is_any(char, const char *);
 
 #endif //AOC23C_STRINGTOOLS_H

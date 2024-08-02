@@ -9,6 +9,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-noreturn void die(const char *);
+noreturn void old_die(const char *);
 
 #endif //AOC23C_ERRORTOOLS_H

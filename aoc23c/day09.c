@@ -5,10 +5,10 @@
 #include <assert.h>
 
 #include "days.h"
-#include "puzzletools.h"
-#include "filetools.h"
-#include "stringtools.h"
-#include "arraytools.h"
+#include "old_puzzletools.h"
+#include "old_filetools.h"
+#include "old_stringtools.h"
+#include "old_arraytools.h"
 
 #define NUMBER_OF_VALUES (21)
 #define BUFFER_SIZE (10)
@@ -29,11 +29,11 @@ void solve09(void) {
     char found_delimiter = '\0';
     size_t index = 0;
 
-    FILE * file = open_input_file(9);
-    while (read_string_until_any(file, " \n", buffer, BUFFER_SIZE - 1, &found_delimiter)) {
+    FILE * file = old_open_input_file(9);
+    while (old_read_string_until_any(file, " \n", buffer, BUFFER_SIZE - 1, &found_delimiter)) {
 
         // read the current string buffer as an integer
-        int number = parse_int(buffer);
+        int number = old_parse_int(buffer);
 
         // check there aren't more values than expected, and store the value
         assert(index < NUMBER_OF_VALUES);
@@ -47,7 +47,7 @@ void solve09(void) {
             index = 0;
 
             // copy the values backwards for Part 2
-            copy_int_array_backwards(forwards, backwards, NUMBER_OF_VALUES);
+            old_copy_int_array_backwards(forwards, backwards, NUMBER_OF_VALUES);
 
             // extrapolate based on the array of exactly NUMBER_OF_VALUES values
             answer1 += extrapolate(forwards, NUMBER_OF_VALUES);
@@ -80,6 +80,6 @@ static void extrapolate_pass(int * values, size_t bound) {
 
 static int extrapolate(int * values, size_t length) {
     extrapolate_pass(values, length);
-    int extrapolated = sum_int_array(values, length);
+    int extrapolated = old_sum_int_array(values, length);
     return extrapolated;
 }

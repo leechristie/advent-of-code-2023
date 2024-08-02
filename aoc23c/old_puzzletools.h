@@ -7,8 +7,6 @@
 
 #include <stdio.h>
 
-FILE * open_input_file(int day);
-long gcd(long, long);
-long lcm(long, long);
+FILE * old_open_input_file(int day);
 
 #endif //AOC23C_PUZZLETOOLS_H

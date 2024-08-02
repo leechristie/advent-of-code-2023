@@ -6,7 +6,7 @@
 #include <ctype.h>
 #include <assert.h>
 
-#include "puzzletools.h"
+#include "old_puzzletools.h"
 #include "days.h"
 
 typedef struct {
@@ -36,7 +36,7 @@ static const char DIGITS_ENGLISH[NUM_DIGITS][MAX_DIGIT_LENGTH + 1] = {
 
 void solve01(void) {
 
-    FILE * file = open_input_file(1);
+    FILE * file = old_open_input_file(1);
 
     size_t digitPositions[NUM_DIGITS] = {0};
 

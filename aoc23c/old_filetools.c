@@ -5,13 +5,13 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#include "filetools.h"
-#include "stringtools.h"
-#include "errortools.h"
+#include "old_filetools.h"
+#include "old_stringtools.h"
+#include "old_errortools.h"
 
 #define DEFAULT_STRING_CAPACITY (16)
 
-bool read_n_characters(FILE * file, size_t n, char * buffer) {
+bool old_read_n_characters(FILE * file, size_t n, char * buffer) {
     size_t index = 0;
     while (index < n) {
         int character = getc(file);
@@ -25,7 +25,7 @@ bool read_n_characters(FILE * file, size_t n, char * buffer) {
     return true;
 }
 
-char * read_line_alloc(FILE * file) {
+char * old_read_line_alloc(FILE * file) {
     int capacity = DEFAULT_STRING_CAPACITY;
     char * rv = malloc(capacity);
     if (rv == NULL)
@@ -33,6 +33,9 @@ char * read_line_alloc(FILE * file) {
     int length = 0;
     while (true) {
         int character = getc(file);
+        if (character == EOF && length == 0) {
+            return NULL;
+        }
         if (character == EOF || character == '\n') {
             rv[length] = '\0';
             return rv;
@@ -50,7 +53,7 @@ char * read_line_alloc(FILE * file) {
     }
 }
 
-bool read_string_until(FILE * file, char delimiter, char * buffer, size_t max_length) {
+bool old_read_string_until(FILE * file, char delimiter, char * buffer, size_t max_length) {
     size_t index = 0;
     while (true) {
         int character = getc(file);
@@ -70,14 +73,14 @@ bool read_string_until(FILE * file, char delimiter, char * buffer, size_t max_le
     }
 }
 
-bool read_string_until_any(FILE * file, const char * delimiters, char * buffer, size_t max_length, char * found_delimiter) {
+bool old_read_string_until_any(FILE * file, const char * delimiters, char * buffer, size_t max_length, char * found_delimiter) {
     size_t index = 0;
     while (true) {
         int character = getc(file);
         if (character == EOF)
             return false;
         char c = (char) character;
-        if (is_any(c, delimiters)) {
+        if (old_is_any(c, delimiters)) {
             buffer[index] = '\0';
             *found_delimiter = c;
             return true;
@@ -91,7 +94,7 @@ bool read_string_until_any(FILE * file, const char * delimiters, char * buffer, 
     }
 }
 
-bool ignore_string(FILE * file, const char * expected) {
+bool old_ignore_string(FILE * file, const char * expected) {
     size_t index = 0;
     while (expected[index]) {
         int character = getc(file);
@@ -102,22 +105,22 @@ bool ignore_string(FILE * file, const char * expected) {
             index++;
             continue;
         }
-        die("ignore_string encountered wrong character");
+        old_die("ignore_string encountered wrong character");
     }
     return true;
 }
 
-bool ignore_char(FILE * file, char expected) {
+bool old_ignore_char(FILE * file, char expected) {
     int character = getc(file);
     if (character == EOF)
         return false;
     char c = (char) character;
     if (c != expected)
-        die("ignore_char encountered wrong character");
+        old_die("ignore_char encountered wrong character");
     return true;
 }
 
-bool chars_until(FILE * file, char terminator, size_t * count) {
+bool old_chars_until(FILE * file, char terminator, size_t * count) {
     *count = 0;
     while (true) {
         int character = getc(file);

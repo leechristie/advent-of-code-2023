@@ -5,10 +5,10 @@
 #include <stdbool.h>
 #include <assert.h>
 #include "days.h"
-#include "puzzletools.h"
-#include "arraytools.h"
-#include "filetools.h"
-#include "stringtools.h"
+#include "old_puzzletools.h"
+#include "old_arraytools.h"
+#include "old_filetools.h"
+#include "old_stringtools.h"
 
 #define COUNT_PICKED (10)
 #define COUNT_WINNING (25)
@@ -29,7 +29,7 @@ static bool read_n_numbers(FILE *, char *, int *, int, char *);
 
 void solve04(void) {
 
-    FILE * file = open_input_file(4);
+    FILE * file = old_open_input_file(4);
 
     bool lookup[BOUND] = {false};
     int total_score = 0;
@@ -49,7 +49,7 @@ void solve04(void) {
         int num_copies = 1 + extra_copies[0];
         total_scratched += num_copies;
         assert(total_scratched > 0);
-        left_shift_array(extra_copies, COUNT_PICKED);
+        old_left_shift_array(extra_copies, COUNT_PICKED);
 
         set_lookup(picked, lookup);
         int num_matches = calc_num_matches(lookup, winning);
@@ -86,10 +86,10 @@ static bool read_card(FILE * file, int * card_number, int * picked, int * winnin
 }
 
 static bool read_card_header(FILE * file, char * buffer, int * rv) {
-    ignore_string(file, "Card ");
-    if (!read_string_until(file, ':', buffer, MAX_WORD_SIZE))
+    old_ignore_string(file, "Card ");
+    if (!old_read_string_until(file, ':', buffer, MAX_WORD_SIZE))
         return false;
-    *rv = parse_int(lstrip_view(buffer));
+    *rv = old_parse_int(old_lstrip_view(buffer));
     return true;
 }
 
@@ -100,14 +100,14 @@ static bool read_n_numbers(FILE * file, char * buffer, int * rv, int count, char
             return false;
         rv[i] = chosen_number;
     }
-    ignore_string(file, terminator);
+    old_ignore_string(file, terminator);
     return true;
 }
 
 static bool read_single_card_number(FILE * file, char * buffer, int * rv) {
-    if (!read_n_characters(file, 3, buffer))
+    if (!old_read_n_characters(file, 3, buffer))
         return false;
-    *rv = parse_int(lstrip_view(buffer));
+    *rv = old_parse_int(old_lstrip_view(buffer));
     return true;
 }
 

@@ -8,10 +8,10 @@
 #include <stdbool.h>
 
 #include "days.h"
-#include "puzzletools.h"
-#include "filetools.h"
-#include "errortools.h"
-#include "stringtools.h"
+#include "old_puzzletools.h"
+#include "old_filetools.h"
+#include "old_errortools.h"
+#include "old_stringtools.h"
 
 // used by string buffer, longest word is "green"
 #define MAX_WORD_SIZE (5)
@@ -52,7 +52,7 @@ static void update_fewest_cubes_for_round(CubeCounter *, CubeCounter *);
 
 void solve02(void) {
 
-    FILE * file = open_input_file(2);
+    FILE * file = old_open_input_file(2);
     Game game;
 
     const CubeCounter LIMITS = {.red=12, .green=13, .blue=14};
@@ -101,13 +101,13 @@ static bool parse_color(char * s, Color * color) {
 }
 
 static bool read_game_header(FILE * file, Game * game) {
-    if (!ignore_string(file, "Game "))
+    if (!old_ignore_string(file, "Game "))
         return false;
     char buffer[MAX_WORD_SIZE + 1];
-    if (!read_string_until(file, ':', buffer, MAX_WORD_SIZE))
-        die("read_string_until failed");
-    game->id = parse_int(buffer);
-    ignore_char(file, ' ');
+    if (!old_read_string_until(file, ':', buffer, MAX_WORD_SIZE))
+        old_die("read_string_until failed");
+    game->id = old_parse_int(buffer);
+    old_ignore_char(file, ' ');
     return true;
 }
 
@@ -127,13 +127,13 @@ static bool read_game(FILE * file, Game * game) {
     while (true) {
 
         // read color count and color delimiter one of {',', ';', '\n'}
-        if (!read_string_until(file, ' ', buffer, MAX_WORD_SIZE))
-            die("read_string_until_any failed");
-        count = parse_int(buffer);
-        if (!read_string_until_any(file, ",;\n", buffer, MAX_WORD_SIZE, &found_delimiter))
-            die("read_string_until_any failed");
+        if (!old_read_string_until(file, ' ', buffer, MAX_WORD_SIZE))
+            old_die("read_string_until_any failed");
+        count = old_parse_int(buffer);
+        if (!old_read_string_until_any(file, ",;\n", buffer, MAX_WORD_SIZE, &found_delimiter))
+            old_die("read_string_until_any failed");
         if (!parse_color(buffer, &color))
-            die("unable to parse color");
+            old_die("unable to parse color");
         set_color(&cubes, color, count);
 
         // ',' means end of color (same round)
@@ -141,7 +141,7 @@ static bool read_game(FILE * file, Game * game) {
         // '\n' means end of color, round, and game
         if (found_delimiter == ';' || found_delimiter == '\n') {
             if (game->round_count >= MAX_ROUNDS)
-                die("hit MAX_ROUNDS limit");
+                old_die("hit MAX_ROUNDS limit");
             game->rounds[game->round_count] = cubes;
             game->round_count++;
             clear_colors(&cubes);
@@ -150,7 +150,7 @@ static bool read_game(FILE * file, Game * game) {
             return true;
 
         // ',' and ';' are followed by a space
-        ignore_char(file, ' ');
+        old_ignore_char(file, ' ');
 
     }
 
@@ -182,7 +182,7 @@ static void set_color(CubeCounter * cubes, Color color, int count) {
             cubes->blue = count;
             break;
         default:
-            die("invalid color");
+            old_die("invalid color");
     }
 }
 
