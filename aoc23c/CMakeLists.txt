@@ -27,4 +27,10 @@ add_executable(aoc23c main.c
         old_matrix.h
         day13.c
         old_mathtools.c
-        old_mathtools.h)
+        old_mathtools.h
+        file_tools.c
+        file_tools.h
+        error_tools.c
+        error_tools.h
+        string_tools.c
+        string_tools.h)
