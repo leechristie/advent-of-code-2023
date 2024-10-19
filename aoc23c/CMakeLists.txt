@@ -3,6 +3,8 @@ project(aoc23c C)
 
 set(CMAKE_C_STANDARD 17)
 
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} ${COMMON_FLAGS} -g3 -O0 -fsanitize=address,undefined -fno-omit-frame-pointer -fstack-protector-strong -fno-inline -fno-eliminate-unused-debug-types -fdiagnostics-color=always -fno-common")
+
 add_executable(aoc23c main.c
         day01.c
         days.h
